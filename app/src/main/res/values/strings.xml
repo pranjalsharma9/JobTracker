@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Job Tracker</string>
+    <string-array name="datatype_selection_array">
+        <item>Text</item>
+        <item>Numeric</item>
+        <item>Date</item>
+    </string-array>
+</resources>

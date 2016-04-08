@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.pranjals.nsit.jobtracker.CustomerAddActivity">
+
+
+    <EditText
+        android:id="@+id/customerAdd_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Customer Name"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/customerAdd_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:layout_below="@id/customerAdd_name"
+        android:layout_alignEnd="@id/customerAdd_name"
+        android:hint="Mobile No." />
+
+    <EditText
+        android:id="@+id/customerAdd_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textWebEmailAddress"
+        android:ems="10"
+        android:layout_below="@id/customerAdd_mobile"
+        android:layout_alignEnd="@id/customerAdd_mobile"
+        android:hint="Email Id" />
+
+    <EditText
+        android:id="@+id/customerAdd_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textLongMessage"
+        android:hint="Address"
+        android:ems="10"
+        android:layout_below="@id/customerAdd_email"
+        android:layout_alignEnd="@id/customerAdd_email" />
+
+    <Button
+        android:id="@+id/customerAdd_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:layout_below="@id/customerAdd_address"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

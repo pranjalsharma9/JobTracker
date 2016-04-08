@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/builddb_customer_fragment"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/builddb_customer_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="All the customers have a name, phone number and email id. \nAdd any new fields using the button below."/>
+
+        <ImageButton
+            android:id="@+id/builddb_customer_add_new_field_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black_48dp"
+            android:onClick="onAddFieldButtonTapped" />
+
+    </LinearLayout>
+</ScrollView>

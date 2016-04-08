@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pranjals.nsit.jobtracker">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".OrderAddActivity" />
+        <activity android:name=".OrderListActivity" />
+        <activity android:name=".OrderViewActivity" />
+        <activity android:name=".CustomerAddActivity" />
+        <activity android:name=".CustomerListActivity" />
+        <activity android:name=".CustomerViewActivity" />
+        <activity android:name=".QrCodeScanActivity" />
+
+        <provider
+            android:name=".contentprovider.DBContentProvider"
+            android:authorities="com.pranjals.nsit.jobtracker.contentprovider"></provider>
+
+        <activity android:name=".BuildDBActivity"></activity>
+    </application>
+
+</manifest>

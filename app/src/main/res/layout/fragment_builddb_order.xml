@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/builddb_order_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="All the orders have a name, date of order, date of completion and customer and employee ids associated with them. \nAdd any new fields using the button below."/>
+
+        <ImageButton
+            android:id="@+id/builddb_order_add_new_field_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black_48dp"
+            android:onClick="onAddFieldButtonTapped" />
+
+    </LinearLayout>
+</ScrollView>
