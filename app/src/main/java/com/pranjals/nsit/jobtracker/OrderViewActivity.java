@@ -30,7 +30,7 @@ public class OrderViewActivity extends AppCompatActivity {
         TextView doo = (TextView)findViewById(R.id.orderView_doo);
         TextView doc = (TextView)findViewById(R.id.orderView_doc);
 
-        String[] colValues = new String[5 + extraCols.size()];
+        String[] colValues = new String[7 + extraCols.size()];
 
 
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, null, "_id = "+OrderIdTobeViewed, null, null);
@@ -49,7 +49,7 @@ public class OrderViewActivity extends AppCompatActivity {
         for(int i=0;i<extraCols.size();i++){
             View viewToAdd = inflater.inflate(R.layout.order_view_dynamic_row,null);
             TextView tv = (TextView)viewToAdd.findViewById(R.id.orderViewDynamic_tv);
-            tv.setText(colValues[i+5]);
+            tv.setText(colValues[i+7]);
             container.addView(viewToAdd);
         }
 

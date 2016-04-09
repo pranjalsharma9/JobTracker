@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private Context callingActivity;
     private static DBHelper dbHelper;
-    private int DEF_ORDERS_COLS = 5;
+    private int DEF_ORDERS_COLS = 7;
 
     private DBHelper(Context context) {
         super(context, "DB.db", null, 1);
@@ -70,12 +70,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void createTables(String createOrderTableString, String createCustomerTableString, String createEmployeeTableString){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("CREATE TABLE orders (_id INTEGER PRIMARY KEY, name TEXT, cid INTEGER, eid INTEGER, doo TEXT, doc TEXT"
+        db.execSQL("CREATE TABLE orders (_id INTEGER PRIMARY KEY, name TEXT, cid INTEGER, eid INTEGER, doo TEXT, doc TEXT, curStage INTEGER, stageId INTEGER"
                 + createOrderTableString + ")");
         db.execSQL("CREATE TABLE customers (_id INTEGER PRIMARY KEY, name TEXT, mobile TEXT, email TEXT, address TEXT"
                 + createCustomerTableString + ")");
         db.execSQL("CREATE TABLE employees (_id INTEGER PRIMARY KEY, name TEXT, mobile TEXT"
                 + createEmployeeTableString + ")");
+        db.execSQL("CREATE TABLE stages (_id INTEGER PRIMARY KEY, type TEXT,total INTEGER, names TEXT)");
 
         /*Code to test the execution of instructions above!!!!
         Cursor c = db.rawQuery("SELECT * FROM orders", null);
