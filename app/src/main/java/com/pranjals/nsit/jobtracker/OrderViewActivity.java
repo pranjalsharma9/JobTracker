@@ -30,25 +30,26 @@ public class OrderViewActivity extends AppCompatActivity {
         TextView doo = (TextView)findViewById(R.id.orderView_doo);
         TextView doc = (TextView)findViewById(R.id.orderView_doc);
 
-        String[] cols = new String[5 + extraCols.size()];
+        String[] colValues = new String[5 + extraCols.size()];
+
 
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, null, "_id = "+OrderIdTobeViewed, null, null);
         if(c!=null && c.moveToFirst()){
-            for(int i=1;i<=cols.length;i++)
-                cols[i-1] = c.getString(i);
+            for(int i=1;i<=colValues.length;i++)
+                colValues[i-1] = c.getString(i);
             c.close();
         }
 
-        name.setText(cols[0]);
-        cid.setText(cols[1]);
-        eid.setText(cols[2]);
-        doo.setText(cols[3]);
-        doc.setText(cols[4]);
+        name.setText(colValues[0]);
+        cid.setText(colValues[1]);
+        eid.setText(colValues[2]);
+        doo.setText(colValues[3]);
+        doc.setText(colValues[4]);
 
         for(int i=0;i<extraCols.size();i++){
             View viewToAdd = inflater.inflate(R.layout.order_view_dynamic_row,null);
             TextView tv = (TextView)viewToAdd.findViewById(R.id.orderViewDynamic_tv);
-            tv.setText(cols[i+5]);
+            tv.setText(colValues[i+5]);
             container.addView(viewToAdd);
         }
 
