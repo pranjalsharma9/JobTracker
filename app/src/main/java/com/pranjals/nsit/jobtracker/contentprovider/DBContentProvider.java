@@ -80,14 +80,14 @@ public class DBContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int rowsDeleted = DBHelper.getInstance(getContext()).getWritableDatabase().delete("orders", selection, selectionArgs);
+        int rowsDeleted = DBHelper.getInstance(getContext()).getWritableDatabase().delete("order", selection, selectionArgs);
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsDeleted;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        int rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().update("orders", values, selection, selectionArgs);
+        int rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().update("order", values, selection, selectionArgs);
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsUpdated;
     }

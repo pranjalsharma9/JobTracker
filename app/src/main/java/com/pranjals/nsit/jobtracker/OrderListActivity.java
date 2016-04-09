@@ -7,51 +7,49 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
-public class OrderListActivity extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+import java.util.ArrayList;
 
-    private SimpleCursorAdapter adapter;
-    private LoaderManager loaderManager;
-    private CursorLoader cursorLoader;
-
+public class OrderListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
-        loaderManager = getLoaderManager();
+        ArrayList<Order> orders = new ArrayList<>();
 
-        //the names of the columns that are to be mapped
-        String[] bindFrom = {"name", "doo", "doc", "cid"};
+        String projection[] = {"_id","name", "doo", "doc", "cid","eid"};
+        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,null);
+        if (c.moveToFirst()) {
+            do {
+                String name = c.getString(c.getColumnIndex("name"));
+                String doo = c.getString(c.getColumnIndex("doo"));
+                String doc = c.getString(c.getColumnIndex("doc"));
+                String cid = c.getString(c.getColumnIndex("cid"));
+                String eid = c.getString(c.getColumnIndex("eid"));
+                orders.add(new Order(name,Long.parseLong(cid),Long.parseLong(eid),doo,doc));
+            } while(c.moveToNext());
+        }
 
-        //the ids of the view where the columns are to be mapped
-        int[] bindTo = {R.id.orderCard_name, R.id.orderCard_doo, R.id.orderCard_doc, R.id.orderCard_cid};
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.OrderRecyclerView);
+        OrderRecyclerView adapter = new OrderRecyclerView(orders);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new SimpleCursorAdapter(this, R.layout.order_card, null, bindFrom, bindTo, 0);
-        setListAdapter(adapter);
-        loaderManager.initLoader(1, null, this);
+
     }
 
-    //link the cursorLoader with the DBContentProvider
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection= {"_id", "name", "doo", "doc", "cid"};
-        cursorLoader = new CursorLoader(OrderListActivity.this, DBContentProvider.ORDER_URI,projection, null, null, null);
-        return cursorLoader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
 
 }

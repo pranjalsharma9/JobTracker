@@ -33,7 +33,6 @@ public class CustomerListActivity extends AppCompatActivity implements LoaderMan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
         loaderManager = getLoaderManager();
-        Log.e("luck","jskjdjskdjksjkdsdsdsdssdsssdsssss");
         //the names of the columns that are to be mapped
         String[] bindFrom = {"name", "mobile", "email", "address"};
         ListView listView = (ListView)findViewById(R.id.customer_ListView);

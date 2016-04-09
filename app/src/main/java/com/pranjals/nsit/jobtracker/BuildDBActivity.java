@@ -25,7 +25,7 @@ import android.widget.PopupWindow;
 
 public class BuildDBActivity extends FragmentActivity {
 
-    private static final int NUM_PAGES = 6;
+    private static final int NUM_PAGES = 5;
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
