@@ -56,12 +56,18 @@
         android:layout_below="@id/orderAdd_doo"
         android:layout_alignEnd="@id/orderAdd_doo" />
 
+    <LinearLayout
+        android:id="@+id/orderAdd_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/orderAdd_doc"
+        android:orientation="vertical"></LinearLayout>
     <Button
         android:id="@+id/orderAdd_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ADD"
-        android:layout_below="@id/orderAdd_doc"
+        android:layout_below="@id/orderAdd_container"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

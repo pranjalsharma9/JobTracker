@@ -1,10 +1,7 @@
-package com.pranjals.nsit.jobtracker;
+package com.pranjals.nsit.jobtracker.BuildDB;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.app.Fragment;
@@ -14,14 +11,21 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+
+import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragment;
+import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentCustomer;
+import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentEmployee;
+import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentFinish;
+import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentOrder;
+import com.pranjals.nsit.jobtracker.CustomFields;
+import com.pranjals.nsit.jobtracker.DBHelper;
+import com.pranjals.nsit.jobtracker.R;
 
 public class BuildDBActivity extends FragmentActivity {
 

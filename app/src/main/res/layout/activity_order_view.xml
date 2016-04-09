@@ -9,4 +9,49 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pranjals.nsit.jobtracker.OrderViewActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/orderView_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/orderView_cid"
+        android:layout_below="@+id/orderView_name"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/orderView_eid"
+        android:layout_below="@+id/orderView_cid"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/orderView_doo"
+        android:layout_below="@+id/orderView_eid"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/orderView_doc"
+        android:layout_below="@+id/orderView_doo"
+        android:layout_alignParentStart="true" />
+    <LinearLayout
+        android:layout_below="@id/orderView_doc"
+        android:orientation="vertical"
+        android:id="@+id/orderView_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></LinearLayout>
 </RelativeLayout>

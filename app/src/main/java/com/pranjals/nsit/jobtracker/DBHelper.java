@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by Pranjal on 12-03-2016.
@@ -13,6 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private Context callingActivity;
     private static DBHelper dbHelper;
+    private int DEF_ORDERS_COLS = 5;
 
     private DBHelper(Context context) {
         super(context, "DB.db", null, 1);
@@ -67,7 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void createTables(String createOrderTableString, String createCustomerTableString, String createEmployeeTableString){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("CREATE TABLE orders (_id INTEGER PRIMARY KEY, name TEXT, cid INTEGER, eid INTEGER, doo TEXT, doc TEXT"
-                    + createOrderTableString + ")");
+                + createOrderTableString + ")");
         db.execSQL("CREATE TABLE customers (_id INTEGER PRIMARY KEY, name TEXT, mobile TEXT, email TEXT, address TEXT"
                 + createCustomerTableString + ")");
         db.execSQL("CREATE TABLE employees (_id INTEGER PRIMARY KEY, name TEXT, mobile TEXT"
@@ -93,4 +97,18 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.v("DBHelper", result.toString());
         Log.v("DBHelper", "I created the tables!");*/
     }
+
+    //function returns the list of all the column names of table 'orders' added dynaically in begining.
+    public ArrayList<String> getExtraOrderCols(){
+
+        ArrayList<String> cols = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query("orders",null,null,null,null,null,null);
+            String[] allCols = c.getColumnNames();
+            for(int i=DEF_ORDERS_COLS+1;i<c.getColumnCount();i++)
+                cols.add(allCols[i]);
+            c.close();
+        return cols;
+    }
+
 }

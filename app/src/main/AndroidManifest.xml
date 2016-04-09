@@ -27,7 +27,7 @@
             android:name=".contentprovider.DBContentProvider"
             android:authorities="com.pranjals.nsit.jobtracker.contentprovider"></provider>
 
-        <activity android:name=".BuildDBActivity"></activity>
+        <activity android:name=".BuildDB.BuildDBActivity"></activity>
     </application>
 
 </manifest>

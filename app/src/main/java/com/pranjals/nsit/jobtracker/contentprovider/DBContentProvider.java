@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Switch;
 
 import com.pranjals.nsit.jobtracker.DBHelper;
 
@@ -73,9 +74,20 @@ public class DBContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("order", null, values);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return Uri.parse(ORDER_TABLE + "/" + id);
+        long id;
+        switch(dbURIMatcher.match(uri)){
+           case 1 :
+                id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("orders", null, values);
+               getContext().getContentResolver().notifyChange(uri, null);
+               return Uri.parse(ORDER_TABLE + "/" + id);
+            case 2 :
+                 id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("customers", null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(CUSTOMER_TABLE + "/" + id);
+
+            default:
+               return Uri.parse(ORDER_TABLE + "/" + 0);
+        }
     }
 
     @Override
