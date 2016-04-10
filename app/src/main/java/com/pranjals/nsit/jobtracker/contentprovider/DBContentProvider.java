@@ -57,10 +57,10 @@ public class DBContentProvider extends ContentProvider {
         switch (dbURIMatcher.match(uri)){
 
             case 1 :  queryBuilder.setTables("orders");
-                      break;
+                break;
 
             case 2 : queryBuilder.setTables("customers");
-                     break;
+                break;
 
             case 3 : queryBuilder.setTables("stages");
 
@@ -84,10 +84,10 @@ public class DBContentProvider extends ContentProvider {
         switch(dbURIMatcher.match(uri)){
             case 1 :
                 id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("orders", null, values);
-               getContext().getContentResolver().notifyChange(uri, null);
-               return Uri.parse(ORDER_TABLE + "/" + id);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(ORDER_TABLE + "/" + id);
             case 2 :
-                 id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("customers", null, values);
+                id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("customers", null, values);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return Uri.parse(CUSTOMER_TABLE + "/" + id);
             case 3 :
@@ -96,7 +96,7 @@ public class DBContentProvider extends ContentProvider {
                 return Uri.parse(STAGE_TABLE + "/" + id);
 
             default:
-               return Uri.parse(ORDER_TABLE + "/" + 0);
+                return Uri.parse(ORDER_TABLE + "/" + 0);
         }
     }
 

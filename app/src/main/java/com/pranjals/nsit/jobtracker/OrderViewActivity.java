@@ -2,11 +2,15 @@ package com.pranjals.nsit.jobtracker;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
@@ -14,6 +18,10 @@ import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 import java.util.ArrayList;
 
 public class OrderViewActivity extends AppCompatActivity {
+
+    private ProgressBar progressBar;
+    private int totalStages;
+    private int currentStage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +37,6 @@ public class OrderViewActivity extends AppCompatActivity {
         TextView eid = (TextView)findViewById(R.id.orderView_eid);
         TextView doo = (TextView)findViewById(R.id.orderView_doo);
         TextView doc = (TextView)findViewById(R.id.orderView_doc);
-        TextView stageType = (TextView)findViewById(R.id.orderView_stageType);
 
         String[] colValues = new String[7 + extraCols.size()];
 
@@ -48,10 +55,7 @@ public class OrderViewActivity extends AppCompatActivity {
         doc.setText(colValues[4]);
         String stageId = colValues[6];
         Cursor stageCursor = getContentResolver().query(DBContentProvider.STAGE_URI,null,"_id = "+stageId,null,null);
-        if(stageCursor.moveToFirst()) {
-            stageType.setText(stageCursor.getString(stageCursor.getColumnIndex("type")));
-            stageCursor.close();
-        }
+
         for(int i=0;i<extraCols.size();i++){
             View viewToAdd = inflater.inflate(R.layout.order_view_dynamic_row,null);
             TextView tv = (TextView)viewToAdd.findViewById(R.id.orderViewDynamic_tv);
@@ -59,5 +63,39 @@ public class OrderViewActivity extends AppCompatActivity {
             container.addView(viewToAdd);
         }
 
+        //Setting the progress bar
+        progressBar = (ProgressBar) findViewById(R.id.view_order_progress_bar);
+        totalStages = stageCursor.getInt(stageCursor.getColumnIndex("total"));
+        String[] stageNames = stageCursor.getString(stageCursor.getColumnIndex("names")).split(";");
+        currentStage = Integer.parseInt(colValues[5]);
+        progressBar.setMax(totalStages);
+        progressBar.setProgress(currentStage);
+
+        ViewGroup stepperViewGroup = (ViewGroup) findViewById(R.id.stepper_view_group);
+        LayoutInflater layoutInflater = getLayoutInflater();
+
+        ViewGroup stepperItem;
+        TextView textView;
+
+        for(int i = 0; i < currentStage - 1; i++){
+            stepperItem = (ViewGroup) layoutInflater.inflate(R.layout.stepper_item, null);
+            stepperItem.getChildAt(0).setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.stepper_circle_done));
+            ((TextView) stepperItem.getChildAt(1)).setText(stageNames[i]);
+        }
+
+        stepperItem = (ViewGroup) layoutInflater.inflate(R.layout.stepper_item, null);
+        textView = (TextView) stepperItem.getChildAt(0);
+        textView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.stepper_circle));
+        textView.setText((currentStage - 1));
+        ((TextView) stepperItem.getChildAt(1)).setText(stageNames[currentStage - 1]);
+
+        for(int i = currentStage; i < totalStages; i++){
+            stepperItem = (ViewGroup) layoutInflater.inflate(R.layout.stepper_item, null);
+            textView = (TextView) stepperItem.getChildAt(0);
+            textView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.stepper_circle_pending));
+            textView.setText((currentStage - 1));
+            ((TextView) stepperItem.getChildAt(1)).setText(stageNames[i]);
+        }
     }
+
 }
