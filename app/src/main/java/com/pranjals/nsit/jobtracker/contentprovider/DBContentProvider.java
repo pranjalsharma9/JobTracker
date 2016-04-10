@@ -102,9 +102,8 @@ public class DBContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int rowsDeleted = DBHelper.getInstance(getContext()).getWritableDatabase().delete("order", selection, selectionArgs);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return rowsDeleted;
+
+        return 0;
     }
 
     @Override
