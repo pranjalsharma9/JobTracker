@@ -27,12 +27,16 @@ public class DBContentProvider extends ContentProvider {
     private static final String AUTHORITY = "com.pranjals.nsit.jobtracker.contentprovider";
     private static final String ORDER_TABLE = "order";
     private static final String CUSTOMER_TABLE = "customer";
+    private static final String STAGE_TABLE = "stages";
     public static final Uri ORDER_URI = Uri.parse("content://" + AUTHORITY + "/" + ORDER_TABLE);
     public static final Uri CUSTOMER_URI = Uri.parse("content://" + AUTHORITY + "/" + CUSTOMER_TABLE);
+    public static final Uri STAGE_URI = Uri.parse("content://" + AUTHORITY + "/" + STAGE_TABLE);
+
     private static final UriMatcher dbURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static{
         dbURIMatcher.addURI(AUTHORITY, ORDER_TABLE, 1); //Code 1 for the first URI
         dbURIMatcher.addURI(AUTHORITY,CUSTOMER_TABLE,2);
+        dbURIMatcher.addURI(AUTHORITY,STAGE_TABLE,3);
 
     }
 
@@ -58,6 +62,8 @@ public class DBContentProvider extends ContentProvider {
             case 2 : queryBuilder.setTables("customers");
                      break;
 
+            case 3 : queryBuilder.setTables("stages");
+
             default : break;
         }
 
@@ -76,7 +82,7 @@ public class DBContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         long id;
         switch(dbURIMatcher.match(uri)){
-           case 1 :
+            case 1 :
                 id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("orders", null, values);
                getContext().getContentResolver().notifyChange(uri, null);
                return Uri.parse(ORDER_TABLE + "/" + id);
@@ -84,6 +90,10 @@ public class DBContentProvider extends ContentProvider {
                  id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("customers", null, values);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return Uri.parse(CUSTOMER_TABLE + "/" + id);
+            case 3 :
+                id = DBHelper.getInstance(getContext()).getWritableDatabase().insert("stages", null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(STAGE_TABLE + "/" + id);
 
             default:
                return Uri.parse(ORDER_TABLE + "/" + 0);

@@ -1,5 +1,6 @@
 package com.pranjals.nsit.jobtracker;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.pranjals.nsit.jobtracker.BuildDB.BuildDBActivity;
+import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +19,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ContentValues values = new ContentValues();
+        values.put("type","polish");
+        values.put("names","stage1;stage2;stage3");
+        values.put("total",3);
+        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+        values.put("type","paint");
+        values.put("names","stage1;stage2");
+        values.put("total",2);
+        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+        values.put("type","garnish");
+        values.put("names","stage1");
+        values.put("total",1);
+        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+        values.put("type","assembly");
+        values.put("names","stage1;stage2;stage3");
+        values.put("total",3);
+        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+
         SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         if(!(sharedPreferences.contains(isFirstTime))){
             Intent intent = new Intent(this, BuildDBActivity.class);
@@ -26,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("isFirstTime", false);
             editor.commit();
         }
+
+
+
+
     }
 
     public void onButtonTapped(View view){

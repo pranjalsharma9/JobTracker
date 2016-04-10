@@ -62,12 +62,33 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/orderAdd_doc"
         android:orientation="vertical"></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/orderAdd_spinner_container"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_below="@id/orderAdd_container">
+        <Spinner
+            android:layout_below="@+id/orderAdd_container"
+            android:id="@+id/addOrderStage_spinner"
+            android:layout_width="match_parent"
+            android:spinnerMode="dropdown"
+            android:layout_weight="2"
+            android:dropDownVerticalOffset="-50dp"
+            android:layout_height="wrap_content"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black_48dp"
+            android:layout_weight="0"/>
+    </LinearLayout>
     <Button
         android:id="@+id/orderAdd_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ADD"
-        android:layout_below="@id/orderAdd_container"
+        android:layout_below="@id/orderAdd_spinner_container"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

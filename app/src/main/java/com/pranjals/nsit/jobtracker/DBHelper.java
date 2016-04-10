@@ -99,7 +99,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.v("DBHelper", "I created the tables!");*/
     }
 
-    //function returns the list of all the column names of table 'orders' added dynaically in begining.
+    //function returns the list of all the column names of table 'orders' added dynaically in beginning.
     public ArrayList<String> getExtraOrderCols(){
 
         ArrayList<String> cols = new ArrayList<>();
