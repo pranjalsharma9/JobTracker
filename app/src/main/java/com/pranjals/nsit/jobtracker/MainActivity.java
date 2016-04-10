@@ -19,24 +19,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ContentValues values = new ContentValues();
-        values.put("type","polish");
-        values.put("names","stage1;stage2;stage3");
-        values.put("total",3);
-        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
-        values.put("type","paint");
-        values.put("names","stage1;stage2");
-        values.put("total",2);
-        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
-        values.put("type","garnish");
-        values.put("names","stage1");
-        values.put("total",1);
-        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
-        values.put("type","assembly");
-        values.put("names","stage1;stage2;stage3");
-        values.put("total",3);
-        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+//
+//        ContentValues values = new ContentValues();
+//        values.put("type","polish");
+//        values.put("names","stage1;stage2;stage3");
+//        values.put("total",3);
+//        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+//        values.put("type","paint");
+//        values.put("names","stage1;stage2");
+//        values.put("total",2);
+//        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+//        values.put("type","garnish");
+//        values.put("names","stage1");
+//        values.put("total",1);
+//        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
+//        values.put("type","assembly");
+//        values.put("names","stage1;stage2;stage3");
+//        values.put("total",3);
+//        getContentResolver().insert(DBContentProvider.STAGE_URI,values);
 
         SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         if(!(sharedPreferences.contains(isFirstTime))){
