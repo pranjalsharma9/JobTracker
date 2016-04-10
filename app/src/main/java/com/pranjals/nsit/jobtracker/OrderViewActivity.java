@@ -19,7 +19,7 @@ public class OrderViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_view);
-        String OrderIdTobeViewed = "2";
+        String OrderIdTobeViewed = "1";
         LinearLayout container = (LinearLayout)findViewById(R.id.orderView_container);
         LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ArrayList<String> extraCols = DBHelper.getInstance(OrderViewActivity.this).getExtraOrderCols();
@@ -29,6 +29,7 @@ public class OrderViewActivity extends AppCompatActivity {
         TextView eid = (TextView)findViewById(R.id.orderView_eid);
         TextView doo = (TextView)findViewById(R.id.orderView_doo);
         TextView doc = (TextView)findViewById(R.id.orderView_doc);
+        TextView stageType = (TextView)findViewById(R.id.orderView_stageType);
 
         String[] colValues = new String[7 + extraCols.size()];
 
@@ -45,7 +46,12 @@ public class OrderViewActivity extends AppCompatActivity {
         eid.setText(colValues[2]);
         doo.setText(colValues[3]);
         doc.setText(colValues[4]);
-
+        String stageId = colValues[6];
+        Cursor stageCursor = getContentResolver().query(DBContentProvider.STAGE_URI,null,"_id = "+stageId,null,null);
+        if(stageCursor.moveToFirst()) {
+            stageType.setText(stageCursor.getString(stageCursor.getColumnIndex("type")));
+            stageCursor.close();
+        }
         for(int i=0;i<extraCols.size();i++){
             View viewToAdd = inflater.inflate(R.layout.order_view_dynamic_row,null);
             TextView tv = (TextView)viewToAdd.findViewById(R.id.orderViewDynamic_tv);
