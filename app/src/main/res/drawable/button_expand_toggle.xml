@@ -5,8 +5,8 @@
     <item>
         <shape android:shape="oval">
             <solid android:color="#0066ff" />
-            <corners android:radius="24dp" />
+            <corners android:radius="36dp" />
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_done_white_18_in_24dp" />
+    <item android:drawable="@drawable/ic_expand_more_white_24_in_36dp" />
 </layer-list>
