@@ -28,6 +28,8 @@
             android:authorities="com.pranjals.nsit.jobtracker.contentprovider"></provider>
 
         <activity android:name=".BuildDB.BuildDBActivity"></activity>
+        <activity android:name=".StageAddActivity"></activity>
+
     </application>
 
 </manifest>

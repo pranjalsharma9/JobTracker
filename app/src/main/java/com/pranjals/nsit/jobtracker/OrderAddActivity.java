@@ -2,6 +2,7 @@ package com.pranjals.nsit.jobtracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 public class OrderAddActivity extends AppCompatActivity {
 
     private String stageId = "1";
-
+    private StageSpinnerAdapter spinnerAdapter;
 
     private  ArrayList<String> extraCols;
     @Override
@@ -36,12 +38,16 @@ public class OrderAddActivity extends AppCompatActivity {
 
          extraCols = DBHelper.getInstance(OrderAddActivity.this).getExtraOrderCols();
         Button add = (Button) findViewById(R.id.orderAdd_button);
+        ImageButton addStage = (ImageButton)findViewById(R.id.orderAdd_imageButton);
+
         Spinner spinner = (Spinner)findViewById(R.id.addOrderStage_spinner);
 
         String projection[] = {"_id","type"};
         Cursor stageCursor = getContentResolver().query(DBContentProvider.STAGE_URI,projection,null,null,null);
-        StageSpinnerAdapter spinnerAdapter = new StageSpinnerAdapter(OrderAddActivity.this,stageCursor,0);
+         spinnerAdapter = new StageSpinnerAdapter(OrderAddActivity.this,stageCursor,0);
+
         spinner.setAdapter(spinnerAdapter);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -66,6 +72,15 @@ public class OrderAddActivity extends AppCompatActivity {
             container.addView(viewToAdd);
         }
 
+
+        addStage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(OrderAddActivity.this,StageAddActivity.class);
+                startActivityForResult(intent, 2);
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +110,7 @@ public class OrderAddActivity extends AppCompatActivity {
                     values.put(extraCols.get(i),((EditText)findViewById(i)).getText().toString());
 
                 getContentResolver().insert(DBContentProvider.ORDER_URI, values);
+                Toast.makeText(OrderAddActivity.this, "Added stage id :"+stageId, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -126,4 +142,16 @@ public class OrderAddActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode==2 && resultCode ==RESULT_OK){
+            String projection[] = {"_id","type"};
+            stageId = data.getExtras().getString("stageId");
+            spinnerAdapter.changeCursor( getContentResolver().query(DBContentProvider.STAGE_URI,projection,null,null,null));
+            spinnerAdapter.notifyDataSetChanged();
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
