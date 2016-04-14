@@ -154,8 +154,8 @@ public class OrderViewActivity extends AppCompatActivity {
             textView = (TextView) stepperItem.findViewById(R.id.stepper_circle_container);
             textView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.stepper_circle_pending));
             textView.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RobotoTTF/Roboto-Regular.ttf"));
-            textView.setText(Integer.toString(i+1));
-            ((TextView) stepperItem.getChildAt(1)).setText(stageNames[i]);
+            textView.setText(Integer.toString(i + 1));
+            ((TextView) stepperItem.getChildAt(1)).setText(stageNames[i] + "\nHello\nHello again");
             stepperViewGroup.addView(stepperItem);
         }
 
@@ -304,6 +304,23 @@ public class OrderViewActivity extends AppCompatActivity {
 
         stepperViewGroup.measure(0, 0);
         stepperViewGroupHeight = stepperViewGroup.getMeasuredHeight();
+
+        final View orderProgressGroup = findViewById(R.id.order_progress_group);
+        orderProgressGroup.measure(0, 0);
+        if(orderProgressGroup.getHeight() != orderProgressGroup.getMeasuredHeight()){
+            ValueAnimator heightAnimation = ValueAnimator.ofInt((int) orderProgressGroup.getHeight(), (int) orderProgressGroup.getMeasuredHeight());
+            heightAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = orderProgressGroup.getLayoutParams();
+                    layoutParams.height = val;
+                    orderProgressGroup.setLayoutParams(layoutParams);
+                }
+            });
+            heightAnimation.setDuration(300);
+            heightAnimation.start();
+        }
 
         progressBar.setProgress(currentStage);
 
