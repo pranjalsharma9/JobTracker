@@ -27,17 +27,12 @@
                 android:elevation="4dp"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             />
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="HELLO WORLD!"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/OrderRecyclerView_homescreen"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:padding="10dp"
                 />
-
         </LinearLayout>
     </FrameLayout>
 
