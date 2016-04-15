@@ -47,12 +47,19 @@
         android:layout_below="@id/customerAdd_email"
         android:layout_alignEnd="@id/customerAdd_email" />
 
+    <LinearLayout
+        android:id="@+id/customerAdd_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customerAdd_address"
+        android:orientation="vertical"></LinearLayout>
+
     <Button
         android:id="@+id/customerAdd_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ADD"
-        android:layout_below="@id/customerAdd_address"
+        android:layout_below="@id/customerAdd_container"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -1,24 +1,13 @@
 package com.pranjals.nsit.jobtracker;
 
-import android.app.Activity;
-import android.app.ListActivity;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
+
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 

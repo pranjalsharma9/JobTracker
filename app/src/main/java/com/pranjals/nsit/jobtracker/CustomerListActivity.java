@@ -1,68 +1,56 @@
 package com.pranjals.nsit.jobtracker;
 
-import android.app.ListActivity;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
+import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
-/**
- * Created by Pranjal Verma on 3/22/2016.
- */
-public class CustomerListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+import java.util.ArrayList;
 
-    private SimpleCursorAdapter adapter;
-    private LoaderManager loaderManager;
-    private CursorLoader cursorLoader;
-
+public class CustomerListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
-        loaderManager = getLoaderManager();
-        //the names of the columns that are to be mapped
-        String[] bindFrom = {"name", "mobile", "email", "address"};
-        ListView listView = (ListView)findViewById(R.id.customer_ListView);
-        //the ids of the view where the columns are to be mapped
-        int[] bindTo = {R.id.customerCard_name, R.id.customerCard_mobile, R.id.customerCard_email, R.id.customerCard_address};
-        adapter = new SimpleCursorAdapter(this,R.layout.customer_card,null,bindFrom,bindTo,0);
+        ArrayList<Customer> customers = new ArrayList<>();
+        final ArrayList<Customer> customersFinal = customers;
 
-        listView.setAdapter(adapter);
+        String projection[] = {"_id", "name", "mobile", "email", "address"};
+        Cursor c = getContentResolver().query(DBContentProvider.CUSTOMER_URI,projection,null,null,null);
+        if (c.moveToFirst()) {
+            do {
+                String _id = c.getString(c.getColumnIndex("_id"));
+                String name = c.getString(c.getColumnIndex("name"));
+                String mobile = c.getString(c.getColumnIndex("mobile"));
+                String email = c.getString(c.getColumnIndex("email"));
+                String address = c.getString(c.getColumnIndex("address"));
+                customers.add(new Customer(Long.parseLong(_id), name, mobile, email, address));
+            } while(c.moveToNext());
+        }
 
-        loaderManager.initLoader(1, null, this);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.CustomerRecyclerView);
+        CustomerRecyclerView adapter = new CustomerRecyclerView(customers);
+        adapter.setOnItemClickListener(new CustomerRecyclerView.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startCustomerViewActivity(customersFinal.get(position).get_id());
 
-
-
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {"_id","name", "mobile", "email", "address"};
-        cursorLoader = new CursorLoader(CustomerListActivity.this, DBContentProvider.CUSTOMER_URI,projection,null,null,null);
-        return cursorLoader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-         adapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
+
+    private void startCustomerViewActivity(Long _id){
+        Intent intent = new Intent(this, CustomerViewActivity.class);
+        intent.putExtra(CustomerViewActivity.START_WITH_ID,_id);
+        startActivity(intent);
+    }
+
 }

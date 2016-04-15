@@ -56,7 +56,7 @@ public class OrderViewActivity extends AppCompatActivity {
         isFirstLayoutLoad = true;
 
         //Remove for testing
-        ArrayList<String> extraCols = DBHelper.getInstance(OrderViewActivity.this).getExtraOrderCols();
+        ArrayList<String> extraCols = DBHelper.getInstance(OrderViewActivity.this).getExtraOrderCols(0);
 
         /*Just for testing, Temporary code
         ArrayList<String> extraCols = new ArrayList<>();

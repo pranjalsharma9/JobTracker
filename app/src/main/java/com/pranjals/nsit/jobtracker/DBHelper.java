@@ -16,7 +16,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private Context callingActivity;
     private static DBHelper dbHelper;
-    private int DEF_ORDERS_COLS = 7;
+    private int DEF_ORDER_COLS = 7;
+    private int DEF_CUSTOMER_COLS = 4;
+    private int DEF_EMPLOYEE_COLS = 2;
 
     private DBHelper(Context context) {
         super(context, "DB.db", null, 1);
@@ -100,15 +102,35 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //function returns the list of all the column names of table 'orders' added dynaically in beginning.
-    public ArrayList<String> getExtraOrderCols(){
+    public ArrayList<String> getExtraOrderCols(int tableSelection){
 
         ArrayList<String> cols = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query("orders",null,null,null,null,null,null);
-            String[] allCols = c.getColumnNames();
-            for(int i=DEF_ORDERS_COLS+1;i<c.getColumnCount();i++)
-                cols.add(allCols[i]);
-            c.close();
+        String tableToQuery;
+        int constantToRefer;
+        switch(tableSelection){
+            case 0:
+                tableToQuery = "orders";
+                constantToRefer = DEF_ORDER_COLS;
+                break;
+            case 1:
+                tableToQuery = "customers";
+                constantToRefer = DEF_CUSTOMER_COLS;
+                break;
+            case 2:
+                tableToQuery = "employees";
+                constantToRefer = DEF_EMPLOYEE_COLS;
+                break;
+            default:
+                tableToQuery = "orders";
+                constantToRefer = DEF_ORDER_COLS;
+                break;
+        }
+        Cursor c = db.query(tableToQuery,null,null,null,null,null,null);
+        String[] allCols = c.getColumnNames();
+        for(int i=constantToRefer+1;i<c.getColumnCount();i++)
+            cols.add(allCols[i]);
+        c.close();
         return cols;
     }
 

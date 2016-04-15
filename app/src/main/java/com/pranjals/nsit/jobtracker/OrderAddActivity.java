@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,7 @@ public class OrderAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_add);
 
-        extraCols = DBHelper.getInstance(OrderAddActivity.this).getExtraOrderCols();
+        extraCols = DBHelper.getInstance(OrderAddActivity.this).getExtraOrderCols(0);
         Button add = (Button) findViewById(R.id.orderAdd_button);
         ImageButton addStage = (ImageButton)findViewById(R.id.orderAdd_imageButton);
 
