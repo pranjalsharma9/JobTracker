@@ -42,12 +42,13 @@ public class OrderViewActivity extends AppCompatActivity {
     private long orderIdTobeViewed;
     private String[] colValues;
     private String[] colNames;
+    public static final String START_WITH_ID = "_idOfOrderToView";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_view);
-        orderIdTobeViewed = 1;
+        orderIdTobeViewed = getIntent().getLongExtra(START_WITH_ID, 1);
         stepperMinHeight = 64f*(getResources().getDisplayMetrics().density);
         doneButtonHeight = 40f*(getResources().getDisplayMetrics().density);
         LinearLayout container = (LinearLayout)findViewById(R.id.orderView_container);

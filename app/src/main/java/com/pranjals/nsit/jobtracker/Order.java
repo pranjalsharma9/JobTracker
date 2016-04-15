@@ -6,15 +6,18 @@ package com.pranjals.nsit.jobtracker;
 public class Order {
 
     private String name, doo, doc;
-    private long cid, eid;
+    private long _id, cid, eid;
 
-    Order(String name, long cid, long eid, String doo, String doc){
+    Order(long _id, String name, long cid, long eid, String doo, String doc){
+        this._id = _id;
         this.name = name;
         this.cid = cid;
         this.eid = eid;
         this.doo = doo;
         this.doc = doc;
     }
+
+    public long get_id(){ return _id; }
 
     public long getCid() {
         return cid;
