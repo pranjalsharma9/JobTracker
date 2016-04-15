@@ -337,7 +337,6 @@ public class OrderViewActivity extends AppCompatActivity {
         //update in database!
 
 
-
     }
 
 }
