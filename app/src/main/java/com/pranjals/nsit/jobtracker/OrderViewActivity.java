@@ -328,6 +328,7 @@ public class OrderViewActivity extends AppCompatActivity {
                     orderProgressGroup.setLayoutParams(layoutParams);
                 }
             });
+
             heightAnimation.setDuration(300);
             heightAnimation.start();
         }
