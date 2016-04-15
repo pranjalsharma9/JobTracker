@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+    <item
+        android:id="@+id/order_list"
+        android:checked="false"
+        android:icon="@drawable/ic_done_black_24dp"
+        android:title="Orders" />
+
+    <item
+        android:id="@+id/customer_list"
+        android:checked="false"
+        android:icon="@drawable/ic_done_black_24dp"
+        android:title="Customers" />
+
+    <item
+        android:id="@+id/employees_list"
+        android:checked="false"
+        android:icon="@drawable/ic_done_black_24dp"
+        android:title="Employees"
+        />
+    </group>
+</menu>

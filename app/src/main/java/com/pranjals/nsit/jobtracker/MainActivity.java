@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
         switch(activityToStart){
             case R.id.orderAddButton : intent = new Intent(this, OrderAddActivity.class);
                 break;
-            case R.id.orderViewButton : intent = new Intent(this, OrderViewActivity.class);
-                break;
             case R.id.orderListButton : intent = new Intent(this, OrderListActivity.class);
                 break;
             case R.id.customerAddButton : intent = new Intent(this, CustomerAddActivity.class);

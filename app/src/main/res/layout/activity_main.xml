@@ -20,12 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button android:id="@+id/orderViewButton"
-            android:text="VIEW ORDER"
-            android:onClick="onButtonTapped"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <Button android:id="@+id/orderListButton"
             android:text="LIST ORDER"
             android:onClick="onButtonTapped"
