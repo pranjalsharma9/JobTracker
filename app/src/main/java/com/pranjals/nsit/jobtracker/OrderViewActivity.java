@@ -342,7 +342,7 @@ public class OrderViewActivity extends AppCompatActivity {
             contentValues.put(colNames[i+1], colValues[i]);
         }
         getContentResolver().update(DBContentProvider.ORDER_URI, contentValues, "_id = " + orderIdTobeViewed, null);
-=======
+
 
     }
 
