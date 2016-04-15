@@ -36,7 +36,7 @@ public class OrderAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_add);
 
-         extraCols = DBHelper.getInstance(OrderAddActivity.this).getExtraOrderCols();
+        extraCols = DBHelper.getInstance(OrderAddActivity.this).getExtraOrderCols();
         Button add = (Button) findViewById(R.id.orderAdd_button);
         ImageButton addStage = (ImageButton)findViewById(R.id.orderAdd_imageButton);
 
@@ -104,6 +104,7 @@ public class OrderAddActivity extends AppCompatActivity {
                     values.put("doo", doo);
                     values.put("doc", doc);
                     values.put("stageId", stageId);
+                    values.put("curStage", 0);
 
 
                 for(int i=0;i<extraCols.size();i++)
