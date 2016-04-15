@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,17 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
     private  int DETAILED = 1,BRIEF = 0;
     public OrderRecyclerView(ArrayList<Order> orders){
         this.orders = orders;
+    }
+
+    //Code to handle clicks
+    private static OnItemClickListener listener;
+    // Define the listener interface
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+    // Define the method that allows the parent activity or fragment to define the listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -91,7 +103,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView name,doo,doc,cid;
         ImageView orderImg;
 
-        public MyItemHolder(CardView itemView) {
+        public MyItemHolder(final CardView itemView) {
             super(itemView);
             name = (TextView)itemView.findViewById(R.id.cardView_name);
             doo = (TextView)itemView.findViewById(R.id.cardView_doo);
@@ -99,6 +111,15 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             cid = (TextView)itemView.findViewById(R.id.cardView_cid);
             orderImg = (ImageView)itemView.findViewById(R.id.cardView_image);
 
+            // Setup the click listener
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null)
+                        listener.onItemClick(itemView, getLayoutPosition());
+                }
+            });
         }
 
         public void setCid(String s) {
@@ -116,6 +137,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
         public void setName(String s) {
             name.setText(s);
         }
+
     }
 
 
@@ -124,7 +146,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView name,doo,doc,cid;
         ImageView orderImg;
 
-        public MyItemHolder_detailed(CardView itemView) {
+        public MyItemHolder_detailed(final CardView itemView) {
             super(itemView);
             name = (TextView)itemView.findViewById(R.id.cardView_detail_name);
             doo = (TextView)itemView.findViewById(R.id.cardView_detail_doo);
@@ -132,7 +154,15 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             cid = (TextView)itemView.findViewById(R.id.cardView_detail_cid);
             orderImg = (ImageView)itemView.findViewById(R.id.cardView_detail_image);
 
-
+            // Setup the click listener
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null)
+                        listener.onItemClick(itemView, getLayoutPosition());
+                }
+            });
         }
 
         public void setCid(String s) {
