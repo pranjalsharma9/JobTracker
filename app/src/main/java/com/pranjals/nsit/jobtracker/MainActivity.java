@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 break;*/
             case R.id.scanQrcodeButton : intent = new Intent(this, QrCodeScanActivity.class);
                 break;
+            case R.id.HomeScreenButton : intent = new Intent(this, HomeScreen.class);
+                break;
             default : intent = new Intent();
         }
         startActivity(intent);

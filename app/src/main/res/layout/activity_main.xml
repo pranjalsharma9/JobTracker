@@ -56,6 +56,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Button android:id="@+id/HomeScreenButton"
+            android:text="HOME SCREEN"
+            android:onClick="onButtonTapped"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </ScrollView>
