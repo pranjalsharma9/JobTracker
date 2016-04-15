@@ -325,6 +325,7 @@ public class OrderViewActivity extends AppCompatActivity {
         progressBar.setProgress(currentStage);
 
         //update in database!
+        
 
     }
 

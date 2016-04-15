@@ -108,8 +108,26 @@ public class DBContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        int rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().update("order", values, selection, selectionArgs);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return rowsUpdated;
+        int rowsUpdated=0;
+
+        switch(dbURIMatcher.match(uri)){
+            case 1 :
+                    rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().update("orders", values, selection, selectionArgs);
+                    getContext().getContentResolver().notifyChange(uri, null);
+                    return rowsUpdated;
+            case 2 :
+                    rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().update("customers", values, selection, selectionArgs);
+                    getContext().getContentResolver().notifyChange(uri, null);
+                    return rowsUpdated;
+            case 3 :
+                rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().update("stages", values, selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return rowsUpdated;
+
+            default:
+                return rowsUpdated;
+
+        }
+
     }
 }
