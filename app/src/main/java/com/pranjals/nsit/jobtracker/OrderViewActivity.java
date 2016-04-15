@@ -328,7 +328,6 @@ public class OrderViewActivity extends AppCompatActivity {
                     orderProgressGroup.setLayoutParams(layoutParams);
                 }
             });
-
             heightAnimation.setDuration(300);
             heightAnimation.start();
         }
@@ -336,7 +335,12 @@ public class OrderViewActivity extends AppCompatActivity {
         progressBar.setProgress(currentStage);
 
         //update in database!
-
+        colValues[5] = Integer.toString(currentStage);
+        ContentValues contentValues = new ContentValues();
+        for(int i = 0; i < colValues.length; i++){
+            contentValues.put(colNames[i+1], colValues[i]);
+        }
+        getContentResolver().update(DBContentProvider.ORDER_URI, contentValues, "_id = " + orderIdTobeViewed, null);
 
     }
 
