@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <group
+        android:id="@+id/drawer_view_all"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_orders"
+            app:actionLayout ="@layout/drawer_list_count"
+            android:checked="true"
+            android:icon="@drawable/ic_done_black_24dp"
+            android:title="Orders"/>
+
+        <item
+            android:id="@+id/drawer_customers"
+            app:actionLayout ="@layout/drawer_list_count"
+            android:icon="@drawable/ic_done_black_24dp"
+            android:title="Customers"/>
+
+        <item
+            android:id="@+id/drawer_employees"
+            app:actionLayout ="@layout/drawer_list_count"
+            android:icon="@drawable/ic_done_black_24dp"
+            android:title="Employees"/>
+
+    </group>
+    <item
+        android:id="@+id/drawer_add_new"
+        android:title="Add new">
+        <menu>
+            <item
+                android:id="@+id/drawer_add_order"
+                android:icon="@drawable/ic_done_black_24dp"
+                android:title="Order"/>
+
+            <item
+                android:id="@+id/drawer_add_customer"
+                android:icon="@drawable/ic_done_black_24dp"
+                android:title="Customer"/>
+            <item
+                android:id="@+id/drawer_add_employee"
+                android:icon="@drawable/ic_done_black_24dp"
+                android:title="Employee"/>
+        </menu>
+    </item>
+    <group
+        android:id="@+id/drawer_settings"
+        android:checkableBehavior="single"
+        >
+        <item
+            android:id="@+id/drawer_setting_activity"
+            android:icon="@drawable/ic_done_black_24dp"
+            android:title="Settings"
+            />
+    </group>
+</menu>

@@ -3,6 +3,8 @@ package com.pranjals.nsit.jobtracker;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
@@ -24,7 +27,8 @@ import java.util.ArrayList;
  */
 public class HomeScreen extends AppCompatActivity {
 
-    RecyclerView menu;
+    //RecyclerView menu;
+    NavigationView navigationView;
     DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class HomeScreen extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
          drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-         menu = (RecyclerView)findViewById(R.id.list_slidermenu);
+         navigationView = (NavigationView)findViewById(R.id.navigation_view);
         ActionBarDrawerToggle barDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_closed){
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -56,59 +60,111 @@ public class HomeScreen extends AppCompatActivity {
         };
         drawerLayout.setDrawerListener(barDrawerToggle);
         barDrawerToggle.syncState();
-        ArrayList<String> menuItems = new ArrayList<>();
-        menuItems.add("Orders");
-        menuItems.add("Customers");
-        menuItems.add("Employees");
-        menuItems.add("Add Order");
-        menuItems.add("Add Customer");
-        menuItems.add("Add Employer");
-        menuItems.add("Settings");
-        NavDrawerListAdapter adapter = new NavDrawerListAdapter(menuItems,"Pranjal Verma","pranjal.verma80@gmail.com");
-        adapter.setClickListener(new NavDrawerListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                switch (position) {
+//        ArrayList<String> menuItems = new ArrayList<>();
+//        menuItems.add("Orders");
+//        menuItems.add("Customers");
+//        menuItems.add("Employees");
+//        menuItems.add("Add Order");
+//        menuItems.add("Add Customer");
+//        menuItems.add("Add Employer");
+//        menuItems.add("Settings");
+//        NavDrawerListAdapter adapter = new NavDrawerListAdapter(menuItems,"Pranjal Verma","pranjal.verma80@gmail.com");
+//        adapter.setClickListener(new NavDrawerListAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                switch (position) {
+//
+//                    case 1:
+//                        Toast.makeText(HomeScreen.this, "Order List Activity launched", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(menu);
+//                        break;
+//                    case 2:
+//                        Toast.makeText(HomeScreen.this, "Customer List Activity launched", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(menu);
+//                        break;
+//                    case 3:
+//                        Toast.makeText(HomeScreen.this, "Employer List Activity launched", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(menu);
+//                        break;
+//                    case 4:
+//                        Toast.makeText(HomeScreen.this, "Add Order Activity launched", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(menu);
+//                        break;
+//                    case 5:
+//                        Toast.makeText(HomeScreen.this, "Add Customer Activity launched", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(menu);
+//                        break;
+//                    case 6:
+//                        Toast.makeText(HomeScreen.this, "Add Employee Activity launched", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(menu);
+//                        break;
+//                    case 7:
+//                        Toast.makeText(HomeScreen.this, "Settings Activity launched", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(menu);
+//                        break;
+//
+//                    default:
+//                        Toast.makeText(HomeScreen.this, "Touched item unrecogonizable", Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//            }
+//        });
+//        menu.setAdapter(adapter);
+//        menu.setLayoutManager(new LinearLayoutManager(this));
 
-                    case 1:
-                        Toast.makeText(HomeScreen.this, "Order List Activity launched", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(menu);
-                        break;
-                    case 2:
-                        Toast.makeText(HomeScreen.this, "Customer List Activity launched", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(menu);
-                        break;
-                    case 3:
-                        Toast.makeText(HomeScreen.this, "Employer List Activity launched", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(menu);
-                        break;
-                    case 4:
-                        Toast.makeText(HomeScreen.this, "Add Order Activity launched", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(menu);
-                        break;
-                    case 5:
-                        Toast.makeText(HomeScreen.this, "Add Customer Activity launched", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(menu);
-                        break;
-                    case 6:
-                        Toast.makeText(HomeScreen.this, "Add Employee Activity launched", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(menu);
-                        break;
-                    case 7:
-                        Toast.makeText(HomeScreen.this, "Settings Activity launched", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(menu);
-                        break;
+        TextView countOrder = (TextView)navigationView.getMenu().getItem(0).getActionView();
+        countOrder.setText("12");
+        TextView countCustomer = (TextView)navigationView.getMenu().getItem(1).getActionView();
+        countCustomer.setText("5");
+        TextView countEmployee = (TextView)navigationView.getMenu().getItem(2).getActionView();
+        countEmployee.setText("10");
 
-                    default:
-                        Toast.makeText(HomeScreen.this, "Touched item unrecogonizable", Toast.LENGTH_SHORT).show();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            Intent intent;
+            switch(item.getItemId()){
+                case R.id.drawer_add_order :
+                        //drawerLayout.closeDrawer(GravityCompat.START);
+                         intent = new Intent(HomeScreen.this,OrderAddActivity.class);
+                        startActivity(intent);
                         break;
-                }
+                case R.id.drawer_add_customer :
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+                     intent = new Intent(HomeScreen.this,CustomerAddActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.drawer_add_employee :
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+                     Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.drawer_orders :
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+                    intent = new Intent(HomeScreen.this,OrderListActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.drawer_customers :
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+                    intent = new Intent(HomeScreen.this,CustomerListActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.drawer_employees :
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+                    Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.drawer_setting_activity :
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+//                    intent = new Intent(HomeScreen.this,CustomerListActivity.class);
+//                    startActivity(intent);
+                    Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                    break;
+
+                default:
+                    break;
             }
-        });
-        menu.setAdapter(adapter);
-        menu.setLayoutManager(new LinearLayoutManager(this));
-
-
+            return true;
+        }
+    });
 
         String projection[] = {"_id","name", "doo", "doc", "cid","eid"};
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,null);
@@ -137,8 +193,7 @@ public class HomeScreen extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-//        getActionBar().setHomeButtonEnabled(true);
+
 
     }
     private void startOrderViewActivity(Long _id){
@@ -147,22 +202,22 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-
-        public void selectItem(int position){
-            drawerLayout.closeDrawer(menu);
-        }
-
-    }
+//    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+//        @Override
+//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            selectItem(position);
+//        }
+//
+//        public void selectItem(int position){
+//            drawerLayout.closeDrawer(menu);
+//        }
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-            drawerLayout.openDrawer(menu);
+            drawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
     }

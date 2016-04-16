@@ -1,13 +1,10 @@
 package com.pranjals.nsit.jobtracker;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ public class NavDrawerListAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public NavDrawerListAdapter.mViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType==TYPE_ITEM){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_list_item,parent,false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_list_count,parent,false);
             mViewHolder viewHolder = new mViewHolder(v,viewType);
             return viewHolder;
         }
