@@ -11,18 +11,29 @@
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        <android.support.v7.widget.Toolbar
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/my_toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#01579B"
-            app:title="Job Tracker"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:titleTextColor="#ffffff"
-            android:elevation="4dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.Toolbar
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#01579B"
+                app:title="Job Tracker"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:titleTextColor="#ffffff"
+                android:elevation="4dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/OrderRecyclerView_homescreen"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                />
+        </LinearLayout>
     </FrameLayout>
 
     <!-- Listview to display slider menu -->
