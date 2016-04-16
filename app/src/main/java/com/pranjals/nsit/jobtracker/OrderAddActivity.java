@@ -108,8 +108,11 @@ public class OrderAddActivity extends AppCompatActivity {
                 for(int i=0;i<extraCols.size();i++)
                     values.put(extraCols.get(i),((EditText)findViewById(i)).getText().toString());
 
+
                 getContentResolver().insert(DBContentProvider.ORDER_URI, values);
-                Toast.makeText(OrderAddActivity.this, "Added stage id :"+stageId, Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderAddActivity.this, "Added stage id :" + stageId, Toast.LENGTH_SHORT).show();
+                Intent intent= getIntent();
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });
