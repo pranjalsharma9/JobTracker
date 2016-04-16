@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +28,7 @@ import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentFinish;
 import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentOrder;
 import com.pranjals.nsit.jobtracker.CustomFields;
 import com.pranjals.nsit.jobtracker.DBHelper;
+import com.pranjals.nsit.jobtracker.MainActivity;
 import com.pranjals.nsit.jobtracker.R;
 
 public class BuildDBActivity extends FragmentActivity {
@@ -263,7 +265,7 @@ public class BuildDBActivity extends FragmentActivity {
         createEmployeeTableString = stringBuilder.toString();
         DBHelper.getInstance(this).createTables(createOrderTableString, createCustomerTableString, createEmployeeTableString);
 
-        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isFirstTime", false);
         editor.commit();
