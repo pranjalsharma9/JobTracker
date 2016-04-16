@@ -125,9 +125,22 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        orders = new ArrayList<>();
+        recyclerView = (RecyclerView) findViewById(R.id.OrderRecyclerView_homescreen);
+        orderAdapter = new OrderRecyclerView(orders);
+        orderAdapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startOrderViewActivity(orders.get(position).get_id());
+
+            }
+        });
+        recyclerView.setAdapter(orderAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(sharedPreferences.contains(isFirstTime)) {
-            orders = new ArrayList<>();
+            Log.e("sdsdsddss","sdsdsds");
+           // orders = new ArrayList<>();
             String projection[] = {"_id", "name", "doo", "doc", "cid", "eid"};
             Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, null);
             if (c.moveToFirst()) {
@@ -142,17 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 } while (c.moveToNext());
             }
 
-            recyclerView = (RecyclerView) findViewById(R.id.OrderRecyclerView_homescreen);
-            orderAdapter = new OrderRecyclerView(orders);
-            orderAdapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    startOrderViewActivity(orders.get(position).get_id());
 
-                }
-            });
-            recyclerView.setAdapter(orderAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
     }
