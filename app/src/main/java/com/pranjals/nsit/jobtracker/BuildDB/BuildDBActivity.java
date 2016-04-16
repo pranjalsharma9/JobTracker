@@ -1,6 +1,8 @@
 package com.pranjals.nsit.jobtracker.BuildDB;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -260,6 +262,11 @@ public class BuildDBActivity extends FragmentActivity {
         }
         createEmployeeTableString = stringBuilder.toString();
         DBHelper.getInstance(this).createTables(createOrderTableString, createCustomerTableString, createEmployeeTableString);
+
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isFirstTime", false);
+        editor.commit();
         finish();
     }
 

@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, BuildDBActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isFirstTime", false);
-            editor.commit();
         }
 
 
@@ -128,34 +125,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        orders = new ArrayList<>();
-        String projection[] = {"_id","name", "doo", "doc", "cid","eid"};
-        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,null);
-        if (c.moveToFirst()) {
-            do {
-                String _id = c.getString(c.getColumnIndex("_id"));
-                String name = c.getString(c.getColumnIndex("name"));
-                String doo = c.getString(c.getColumnIndex("doo"));
-                String doc = c.getString(c.getColumnIndex("doc"));
-                String cid = c.getString(c.getColumnIndex("cid"));
-                String eid = c.getString(c.getColumnIndex("eid"));
-                orders.add(new Order(Long.parseLong(_id),name,Long.parseLong(cid),Long.parseLong(eid),doo,doc));
-            } while(c.moveToNext());
-        }
-
-        recyclerView = (RecyclerView)findViewById(R.id.OrderRecyclerView_homescreen);
-        orderAdapter = new OrderRecyclerView(orders);
-        orderAdapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                startOrderViewActivity(orders.get(position).get_id());
-
+        if(sharedPreferences.contains(isFirstTime)) {
+            orders = new ArrayList<>();
+            String projection[] = {"_id", "name", "doo", "doc", "cid", "eid"};
+            Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, null);
+            if (c.moveToFirst()) {
+                do {
+                    String _id = c.getString(c.getColumnIndex("_id"));
+                    String name = c.getString(c.getColumnIndex("name"));
+                    String doo = c.getString(c.getColumnIndex("doo"));
+                    String doc = c.getString(c.getColumnIndex("doc"));
+                    String cid = c.getString(c.getColumnIndex("cid"));
+                    String eid = c.getString(c.getColumnIndex("eid"));
+                    orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc));
+                } while (c.moveToNext());
             }
-        });
-        recyclerView.setAdapter(orderAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+            recyclerView = (RecyclerView) findViewById(R.id.OrderRecyclerView_homescreen);
+            orderAdapter = new OrderRecyclerView(orders);
+            orderAdapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    startOrderViewActivity(orders.get(position).get_id());
+
+                }
+            });
+            recyclerView.setAdapter(orderAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
 
     }
 
