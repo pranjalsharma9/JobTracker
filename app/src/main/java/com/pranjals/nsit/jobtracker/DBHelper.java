@@ -16,9 +16,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private Context callingActivity;
     private static DBHelper dbHelper;
-    private int DEF_ORDER_COLS = 7;
-    private int DEF_CUSTOMER_COLS = 4;
-    private int DEF_EMPLOYEE_COLS = 2;
+    public static int DEF_ORDER_COLS = 7;
+    public static int DEF_CUSTOMER_COLS = 4;
+    public static int DEF_EMPLOYEE_COLS = 2;
 
     private DBHelper(Context context) {
         super(context, "DB.db", null, 1);
