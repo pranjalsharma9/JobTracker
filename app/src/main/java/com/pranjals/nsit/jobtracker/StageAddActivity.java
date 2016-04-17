@@ -116,7 +116,7 @@ public class StageAddActivity extends FragmentActivity {
                 values.put("type", type);
                 values.put("total", totalStages);
                Uri uri = getContentResolver().insert(DBContentProvider.STAGE_URI, values);
-                Toast.makeText(StageAddActivity.this, "STAGE ADDED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(StageAddActivity.this, "STAGE ADDED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
                 String id = uri.getLastPathSegment();
               //  Log.e("lsmlmdlsmlsmlmsdlmds",id);
@@ -129,14 +129,14 @@ public class StageAddActivity extends FragmentActivity {
 
     public void createDynamicViews(){
 
-        Log.e("dsssdsd","ppppppppppppppppppppppppppppppppppppppppppp");
+        //Log.e("dsssdsd","ppppppppppppppppppppppppppppppppppppppppppp");
 
         LinearLayout container = (LinearLayout)secondFragViewGroup.findViewById(R.id.stageFragSecond_container);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
         for(int i=0;i<totalStages;i++){
 
-            Log.e("dsssdsd","ppppppppppppppppppppppppppppppppppppppppppp");
+            //Log.e("dsssdsd","ppppppppppppppppppppppppppppppppppppppppppp");
             View toAdd = inflater.inflate(R.layout.stage_add_each_stage_row,null);
             EditText et = (EditText)toAdd.findViewById(R.id.addStage_dynamic_et);
             et.setHint("Stage "+(i+1));

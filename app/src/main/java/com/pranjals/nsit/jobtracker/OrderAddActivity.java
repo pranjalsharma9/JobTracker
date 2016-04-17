@@ -110,7 +110,7 @@ public class OrderAddActivity extends AppCompatActivity {
 
 
                 getContentResolver().insert(DBContentProvider.ORDER_URI, values);
-                Toast.makeText(OrderAddActivity.this, "Added stage id :" + stageId, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(OrderAddActivity.this, "Added stage id :" + stageId, Toast.LENGTH_SHORT).show();
                 Intent intent= getIntent();
                 setResult(RESULT_OK,intent);
                 finish();
