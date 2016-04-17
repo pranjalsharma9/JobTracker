@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#fff48fb1" >
 
     <LinearLayout
         android:id="@+id/builddb_order_view_group"
@@ -13,22 +14,54 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="All the orders have a name, date of order, date of completion and customer and employee ids associated with them. \nAdd any new fields using the button below."/>
+            android:padding="6dp"
+            android:textSize="30sp"
+            android:textColor="#ff880e4f"
+            android:text="Orders"/>
 
-        <ImageButton
-            android:id="@+id/builddb_order_add_new_field_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginBottom="150dp"
-            android:layout_gravity="center_horizontal"
-            android:background="#ff0066ff"
-            android:src="@drawable/ic_add_black_48dp"
-            android:onClick="onAddFieldButtonTapped" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:textSize="18sp"
+            android:textColor="#fffce4ec"
+            android:text="\nWhat all details do you wish your orders to have?\n\nWe have already included 'Name', 'Dates of booking and delivery' and 'Customer' as necessary details.\n\nFeel free to add any more 'text', 'numeric' or 'date' fields by using the button below.\n"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/builddb_order_slide1"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/slide1" />
+
+            <ImageButton
+                android:id="@+id/builddb_order_add_new_field_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/circle_for_buttons"
+                android:src="@drawable/ic_add_white_36_in_48dp"
+                android:onClick="onAddFieldButtonTapped" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="#fff8bbd0"
+                android:text="Done? Swipe! Remember?\n"
+                android:layout_below="@id/builddb_order_slide1"/>
+
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

@@ -3,15 +3,15 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp" >
+    android:layout_margin="12dp"
+    android:background="#88ffffff">
 
     <ImageView
         android:id="@+id/custom_field_box_datatype_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:background="#ffe8e8ff" />
+        android:minHeight="0dp" />
 
     <EditText
         android:layout_width="0dp"
@@ -24,7 +24,7 @@
         android:layout_height="48dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        android:background="#ffe8e8ff"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_clear_black_48dp" />
 
 </LinearLayout>

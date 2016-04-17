@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/builddb_fragment"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ff64ffda" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -10,19 +11,45 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Welcome\nto"
-            android:textSize="20sp"
-            android:textAlignment="center"/>
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:background="@drawable/dialog"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Welcome\nto"
+                android:textSize="30sp"
+                android:textColor="#ff004D40"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="36sp"
+                android:textColor="#ff004D40"
+                android:text="Job Tracker" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/welcome"/>
 
         <TextView
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Job Tracker" />
+            android:textColor="#ff009688"
+            android:text="swipe right \nto start configuring your databases!"
+            android:textAlignment="center" />
 
     </LinearLayout>
 

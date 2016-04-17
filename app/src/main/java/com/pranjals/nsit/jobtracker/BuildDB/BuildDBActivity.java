@@ -73,7 +73,8 @@ public class BuildDBActivity extends FragmentActivity {
         final PopupWindow popupWindow = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         currentPopupWindow = popupWindow;
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupWindow.showAsDropDown(view);
+        float offsetPosition = 48f*(getResources().getDisplayMetrics().density);
+        popupWindow.showAsDropDown(view, (int) (-offsetPosition), (int)(-offsetPosition/2));
     }
 
     //when a button from the above popup window is tapped this function creates a new input field in
@@ -156,7 +157,7 @@ public class BuildDBActivity extends FragmentActivity {
         //we check whether the onSaveInstanceState() has already been called
         if(currentFragmentViewGroup != null) {
             customFields.refreshList(callingFragment);
-            for (int i = 1; i < currentFragmentViewGroup.getChildCount() - 1; i++) {
+            for (int i = 2; i < currentFragmentViewGroup.getChildCount() - 1; i++) {
                 childField = currentFragmentViewGroup.getChildAt(i);
                 fieldElement = new CustomFields.FieldElement(((ViewGroup) childField).getChildAt(0).getTag().toString(),
                         ((EditText) ((ViewGroup) childField).getChildAt(1)).getText().toString());
@@ -195,7 +196,7 @@ public class BuildDBActivity extends FragmentActivity {
             editText.setText(fieldElement.fieldName);
 
             //adding the new view created to the current fragment's viewGroup
-            currentFragmentViewGroup.addView(customFieldBox, i + 1);
+            currentFragmentViewGroup.addView(customFieldBox, i + 2);
         }
         return fragmentRootViewGroup;
     }

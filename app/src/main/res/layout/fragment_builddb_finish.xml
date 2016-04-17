@@ -2,17 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/builddb_finish_fragment"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#ff64ffda" >
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Swipe back to alter changes...\nPress the button below to finish!" />
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="#ff004D40"
+        android:text="Done!\n" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textColor="#ff009688"
+        android:text="Swipe back to alter your database design.\nOr hit the button below!\n\n" />
 
     <Button
         android:id="@+id/builddb_finish_button"
         android:onClick="onFinishButtonTapped"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Finish!"/>
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:textColor="#ffffffff"
+        android:textSize="18sp"
+        android:background="#ff009688"
+        android:text="FINISH"/>
 </LinearLayout>

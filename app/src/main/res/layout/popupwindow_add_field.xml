@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:clipChildren="false"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
@@ -9,9 +9,11 @@
         android:id="@+id/datatype_choice_text"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="27dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        android:background="#ffe8e8ff"
+        android:background="@drawable/circle_for_buttons_border"
         android:onClick="onNewFieldDatatypeSelected"
         android:src="@drawable/ic_text_format_black_48dp" />
 
@@ -19,9 +21,10 @@
         android:id="@+id/datatype_choice_numeric"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="30dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        android:background="#ffe8e8ff"
+        android:background="@drawable/circle_for_buttons_border"
         android:onClick="onNewFieldDatatypeSelected"
         android:src="@drawable/ic_format_list_numbered_black_48dp" />
 
@@ -29,10 +32,11 @@
         android:id="@+id/datatype_choice_date"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="27dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        android:layout_marginTop="1dp"
-        android:background="#ffe8e8ff"
+        android:background="@drawable/circle_for_buttons_border"
         android:onClick="onNewFieldDatatypeSelected"
         android:src="@drawable/ic_date_range_black_48dp" />
 
