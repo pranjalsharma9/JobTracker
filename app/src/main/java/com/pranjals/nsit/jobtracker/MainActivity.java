@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.pranjals.nsit.jobtracker.BuildDB.BuildDBActivity;
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_scan);
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView = (NavigationView)findViewById(R.id.navigation_view);
@@ -125,6 +130,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                IntentIntegrator intentIntegrator = new IntentIntegrator(MainActivity.this);
+                intentIntegrator.initiateScan();
+
+            }
+        });
+
         orders = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.OrderRecyclerView_homescreen);
         orderAdapter = new OrderRecyclerView(orders);
@@ -184,6 +200,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        if(scanResult!=null&&IntentIntegrator.REQUEST_CODE==requestCode&&resultCode==RESULT_OK){
+
+            long scanned_orderId = Long.parseLong(scanResult.getContents());
+            Intent intent = new Intent(MainActivity.this,OrderViewActivity.class);
+            intent.putExtra(OrderViewActivity.START_WITH_ID,scanned_orderId);
+            startActivity(intent);
+        }
         if(requestCode==0&&resultCode==RESULT_OK){
             orders = new ArrayList<>();
             String projection[] = {"_id","name", "doo", "doc", "cid","eid"};
@@ -201,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             orderAdapter = new OrderRecyclerView(orders);
-            recyclerView.swapAdapter(orderAdapter,false);
+            recyclerView.swapAdapter(orderAdapter, false);
 
         }
 
