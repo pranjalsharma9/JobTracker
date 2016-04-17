@@ -10,19 +10,19 @@
             android:id="@+id/drawer_orders"
             app:actionLayout ="@layout/drawer_list_count"
             android:checked="true"
-            android:icon="@drawable/ic_done_black_24dp"
+            android:icon="@drawable/ic_shopping_basket_black_24dp"
             android:title="Orders"/>
 
         <item
             android:id="@+id/drawer_customers"
             app:actionLayout ="@layout/drawer_list_count"
-            android:icon="@drawable/ic_done_black_24dp"
+            android:icon="@drawable/ic_people_black_24dp"
             android:title="Customers"/>
 
         <item
             android:id="@+id/drawer_employees"
             app:actionLayout ="@layout/drawer_list_count"
-            android:icon="@drawable/ic_done_black_24dp"
+            android:icon="@drawable/ic_gavel_black_24dp"
             android:title="Employees"/>
 
     </group>
@@ -32,16 +32,16 @@
         <menu>
             <item
                 android:id="@+id/drawer_add_order"
-                android:icon="@drawable/ic_done_black_24dp"
+                android:icon="@drawable/ic_add_black_48dp"
                 android:title="Order"/>
 
             <item
                 android:id="@+id/drawer_add_customer"
-                android:icon="@drawable/ic_done_black_24dp"
+                android:icon="@drawable/ic_add_black_48dp"
                 android:title="Customer"/>
             <item
                 android:id="@+id/drawer_add_employee"
-                android:icon="@drawable/ic_done_black_24dp"
+                android:icon="@drawable/ic_add_black_48dp"
                 android:title="Employee"/>
         </menu>
     </item>
@@ -51,7 +51,7 @@
         >
         <item
             android:id="@+id/drawer_setting_activity"
-            android:icon="@drawable/ic_done_black_24dp"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title="Settings"
             />
     </group>

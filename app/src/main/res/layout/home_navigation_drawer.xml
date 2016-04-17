@@ -18,8 +18,7 @@
                 android:id="@+id/appBar"
                 android:layout_width="match_parent"
                 android:background="#01579B"
-                android:layout_height="150dp"
-                android:elevation="4dp"
+                android:layout_height="180dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 
                 >
@@ -29,11 +28,8 @@
                     android:layout_height="match_parent"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:contentScrim="#01579B"
-                    app:expandedTitleMarginStart="48dp"
-                    app:expandedTitleMarginEnd="64dp"
                     android:fitsSystemWindows="true">
             <android.support.v7.widget.Toolbar
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -41,7 +37,6 @@
                 app:title="Job Tracker"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin"
-                android:minHeight="?attr/actionBarSize"
                 app:titleTextColor="#ffffff"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             />
@@ -53,8 +48,15 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:padding="10dp"
+                android:layout_marginTop="40dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 />
+
+        <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_margin="16dp" app:layout_anchor="@id/appBar"
+            app:layout_anchorGravity="bottom|end" android:src="@android:drawable/ic_dialog_email" />
+
     </android.support.design.widget.CoordinatorLayout>
     <android.support.design.widget.NavigationView
         xmlns:app="http://schemas.android.com/apk/res-auto"
