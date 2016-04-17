@@ -51,6 +51,7 @@ public class CustomerListActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CustomerViewActivity.class);
         intent.putExtra(CustomerViewActivity.START_WITH_ID,_id);
         startActivity(intent);
+        finish();
     }
 
 }

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#01579B"
+            app:title="Job Tracker"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="#ffffff"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            />
+
+        <FrameLayout
+            android:id="@+id/container_iv_customerEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#e2e1e1"
+                android:id="@+id/iv_customerEdit"
+                android:src="@drawable/ic_people_black_24dp"/>
+
+        </FrameLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="false">
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                        <ImageView
+                            android:src="@drawable/ic_people_black_24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0"/>
+                        <EditText
+                            android:padding="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/et_customerEdit_name"
+                            android:hint="Name"
+                            android:inputType="textPersonName"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <ImageView
+                        android:src="@drawable/ic_phone_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0"/>
+                    <EditText
+                        android:padding="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/et_customerEdit_mobile"
+                        android:hint="Mobile"
+                        android:inputType="phone"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <ImageView
+                        android:src="@drawable/ic_email_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0"/>
+                    <EditText
+                        android:padding="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/et_customerEdit_email"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <ImageView
+                        android:src="@drawable/ic_location_on_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0"/>
+                    <EditText
+                        android:padding="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/et_customerEdit_address"
+                        android:hint="Address"
+                        android:inputType="textPostalAddress"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#1f000000"
+                    />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/container_customerEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton android:id="@+id/fab_takeCustomerPic"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_margin="16dp" app:layout_anchor="@id/container_iv_customerEdit"
+            app:layout_anchorGravity="bottom|right|end" android:src="@drawable/ic_camera_alt_white_24dp" />
+
+</android.support.design.widget.CoordinatorLayout>

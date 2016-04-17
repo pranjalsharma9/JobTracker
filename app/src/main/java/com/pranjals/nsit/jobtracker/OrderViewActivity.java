@@ -10,10 +10,14 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -48,6 +52,13 @@ public class OrderViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_view);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+
         orderIdTobeViewed = getIntent().getLongExtra(START_WITH_ID, 1);
         stepperMinHeight = 64f*(getResources().getDisplayMetrics().density);
         doneButtonHeight = 40f*(getResources().getDisplayMetrics().density);
@@ -405,6 +416,19 @@ public class OrderViewActivity extends AppCompatActivity {
         }
         getContentResolver().update(DBContentProvider.ORDER_URI, contentValues, "_id = " + orderIdTobeViewed, null);
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
