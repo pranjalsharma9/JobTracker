@@ -2,21 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="6dp" >
 
     <ImageView
         android:id="@+id/custom_field_box_datatype_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:background="#ffe8e8ff" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_weight="1" />
 
     <ImageButton
-        android:layout_width="wrap_content"
         android:onClick="onRemoveCustomFieldButtonTapped"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:background="#ffe8e8ff"
         android:src="@drawable/ic_clear_black_48dp" />
 
 </LinearLayout>

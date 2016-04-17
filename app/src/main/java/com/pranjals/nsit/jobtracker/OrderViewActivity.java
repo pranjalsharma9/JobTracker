@@ -149,10 +149,25 @@ public class OrderViewActivity extends AppCompatActivity {
         buttonLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         buttonLayoutParams.setMargins(12, 12, 12, 12);
 
+        ViewGroup stepperCircleLineContainer;
+        ViewGroup.LayoutParams layoutParams;
+
         for(int i = 0; i < currentStage; i++){
             stepperItem = (ViewGroup) layoutInflater.inflate(R.layout.stepper_item, null);
             stepperItem.findViewById(R.id.stepper_circle_container).setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.stepper_circle_done));
             ((TextView) stepperItem.getChildAt(1)).setText(stageNames[i]);
+            stepperCircleLineContainer = (ViewGroup) stepperItem.findViewById(R.id.stepper_circle_line_container);
+            layoutParams = stepperCircleLineContainer.getLayoutParams();
+            layoutParams.height = 0;
+            stepperCircleLineContainer.setLayoutParams(layoutParams);
+            stepperItem.measure(0, 0);
+            if(stepperItem.getMeasuredHeight() < stepperMinHeight){
+                layoutParams.height = (int) stepperMinHeight;
+                stepperCircleLineContainer.setLayoutParams(layoutParams);
+            } else {
+                layoutParams.height = stepperItem.getMeasuredHeight();
+                stepperCircleLineContainer.setLayoutParams(layoutParams);
+            }
             stepperViewGroup.addView(stepperItem);
         }
 
@@ -165,6 +180,18 @@ public class OrderViewActivity extends AppCompatActivity {
             textView.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RobotoTTF/Roboto-Regular.ttf"));
             textView.setText(Integer.toString(currentStage + 1));
             ((TextView) stepperItem.getChildAt(1)).setText(stageNames[currentStage]);
+            stepperCircleLineContainer = (ViewGroup) stepperItem.findViewById(R.id.stepper_circle_line_container);
+            layoutParams = stepperCircleLineContainer.getLayoutParams();
+            layoutParams.height = 0;
+            stepperCircleLineContainer.setLayoutParams(layoutParams);
+            stepperItem.measure(0, 0);
+            if(stepperItem.getMeasuredHeight() < stepperMinHeight){
+                layoutParams.height = (int) stepperMinHeight;
+                stepperCircleLineContainer.setLayoutParams(layoutParams);
+            } else {
+                layoutParams.height = stepperItem.getMeasuredHeight();
+                stepperCircleLineContainer.setLayoutParams(layoutParams);
+            }
             stepperViewGroup.addView(stepperItem);
         }
 
@@ -175,6 +202,18 @@ public class OrderViewActivity extends AppCompatActivity {
             textView.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RobotoTTF/Roboto-Regular.ttf"));
             textView.setText(Integer.toString(i + 1));
             ((TextView) stepperItem.getChildAt(1)).setText(stageNames[i]);
+            stepperCircleLineContainer = (ViewGroup) stepperItem.findViewById(R.id.stepper_circle_line_container);
+            layoutParams = stepperCircleLineContainer.getLayoutParams();
+            layoutParams.height = 0;
+            stepperCircleLineContainer.setLayoutParams(layoutParams);
+            stepperItem.measure(0, 0);
+            if(stepperItem.getMeasuredHeight() < stepperMinHeight){
+                layoutParams.height = (int) stepperMinHeight;
+                stepperCircleLineContainer.setLayoutParams(layoutParams);
+            } else {
+                layoutParams.height = stepperItem.getMeasuredHeight();
+                stepperCircleLineContainer.setLayoutParams(layoutParams);
+            }
             stepperViewGroup.addView(stepperItem);
         }
 
@@ -193,19 +232,25 @@ public class OrderViewActivity extends AppCompatActivity {
                     stepperViewGroupHeight = stepperViewGroup.getHeight();
                     progressBarGroupHeight = findViewById(R.id.progress_bar_container).getHeight();
                     isFirstLayoutLoad = false;
-                }
 
-                findViewById(R.id.order_progress_group).getLayoutParams().height = (int) progressBarGroupHeight;
+                    ViewGroup.LayoutParams orderProgressGroupLayoutParams = findViewById(R.id.order_progress_group).getLayoutParams();
+                    orderProgressGroupLayoutParams.height = (int) progressBarGroupHeight;
+                    findViewById(R.id.order_progress_group).setLayoutParams(orderProgressGroupLayoutParams);
 
-                //adjusting the steppers' vertical 1dp thick lines to suit the height of the stepper.
-                for(int i = 0; i < totalStages; i++){
-                    View stepperItem = ((ViewGroup) stepperViewGroup).getChildAt(i);
-                    if(stepperItem.getHeight() > stepperMinHeight){
-                        stepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = stepperItem.getHeight();
-                    }
-                    else{
-                        stepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = (int) stepperMinHeight;
-                    }
+                    /*adjusting the steppers' vertical 1dp thick lines to suit the height of the stepper.
+                    for (int i = 0; i < totalStages; i++) {
+                        View stepperItem = ((ViewGroup) stepperViewGroup).getChildAt(i);
+                        ViewGroup.LayoutParams layoutParams;
+                        if (stepperItem.getHeight() > stepperMinHeight) {
+                            layoutParams = stepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams();
+                            layoutParams.height = stepperItem.getHeight();
+                            stepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
+                        } else {
+                            layoutParams = stepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams();
+                            layoutParams.height = (int) stepperMinHeight;
+                            stepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
+                        }
+                    }*/
                 }
 
                 ViewTreeObserver viewTreeObserver = orderProgressGroup.getViewTreeObserver();
@@ -287,13 +332,18 @@ public class OrderViewActivity extends AppCompatActivity {
         View currentStepperItem = ((ViewGroup) stepperViewGroup).getChildAt(currentStage);
         ((ViewGroup) currentStepperItem).removeView(view);
         TextView currentStepperCircle = (TextView) currentStepperItem.findViewById(R.id.stepper_circle_container);
-        currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = 0;
+        ViewGroup.LayoutParams layoutParams;
+        layoutParams = currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams();
+        layoutParams.height = 0;
+        currentStepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
         currentStepperItem.measure(0, 0);
         if(currentStepperItem.getMeasuredHeight() >= stepperMinHeight){
-            currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = currentStepperItem.getMeasuredHeight();
+            layoutParams.height = currentStepperItem.getMeasuredHeight();
+            currentStepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
         }
         else{
-            currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = (int) stepperMinHeight;
+            layoutParams.height = (int) stepperMinHeight;
+            currentStepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
         }
         currentStepperCircle.setText("");
         currentStepperCircle.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.stepper_circle_done));
@@ -311,13 +361,17 @@ public class OrderViewActivity extends AppCompatActivity {
             Button stepperDoneButton = (Button) getLayoutInflater().inflate(R.layout.stepper_done_button, null);
             ((ViewGroup) currentStepperItem).addView(stepperDoneButton, buttonLayoutParams);
             currentStepperItem.findViewById(R.id.stepper_circle_container).setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.stepper_circle));
-            currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = 0;
+            layoutParams = currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams();
+            layoutParams.height = 0;
+            currentStepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
             currentStepperItem.measure(0, 0);
             if (currentStepperItem.getMeasuredHeight() >= stepperMinHeight) {
-                currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = currentStepperItem.getMeasuredHeight();
+                layoutParams.height = currentStepperItem.getMeasuredHeight();
+                currentStepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
             }
             else{
-                currentStepperItem.findViewById(R.id.stepper_circle_line_container).getLayoutParams().height = (int) stepperMinHeight;
+                layoutParams.height = (int) stepperMinHeight;
+                currentStepperItem.findViewById(R.id.stepper_circle_line_container).setLayoutParams(layoutParams);
             }
         }
 

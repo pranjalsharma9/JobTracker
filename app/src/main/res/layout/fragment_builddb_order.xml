@@ -6,7 +6,9 @@
         android:id="@+id/builddb_order_view_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:animateLayoutChanges="true" >
 
         <TextView
             android:layout_width="match_parent"
@@ -15,8 +17,16 @@
 
         <ImageButton
             android:id="@+id/builddb_order_add_new_field_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginBottom="150dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#ff0066ff"
             android:src="@drawable/ic_add_black_48dp"
             android:onClick="onAddFieldButtonTapped" />
 
