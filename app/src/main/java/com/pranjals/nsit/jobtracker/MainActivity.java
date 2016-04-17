@@ -202,12 +202,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(scanResult!=null&&IntentIntegrator.REQUEST_CODE==requestCode&&resultCode==RESULT_OK){
-
-            long scanned_orderId = Long.parseLong(scanResult.getContents());
-            Intent intent = new Intent(MainActivity.this,OrderViewActivity.class);
-            intent.putExtra(OrderViewActivity.START_WITH_ID,scanned_orderId);
-            startActivity(intent);
+                 long scanned_orderId;
+            try{ scanned_orderId= Long.parseLong(scanResult.getContents());
+                Intent intent = new Intent(MainActivity.this,OrderViewActivity.class);
+                intent.putExtra(OrderViewActivity.START_WITH_ID,scanned_orderId);
+                startActivity(intent);}
+            catch (Exception e){
+                Toast.makeText(MainActivity.this,"Wrong Scanned id",Toast.LENGTH_SHORT).show();
+            }
         }
+
         if(requestCode==0&&resultCode==RESULT_OK){
             orders = new ArrayList<>();
             String projection[] = {"_id","name", "doo", "doc", "cid","eid"};

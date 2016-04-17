@@ -76,6 +76,7 @@ public class OrderViewActivity extends AppCompatActivity {
 
         //Remove for testing
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, null, "_id = "+ orderIdTobeViewed, null, null);
+
         if(c!=null && c.moveToFirst()){
             for(int i=1;i<=colValues.length;i++)
                 colValues[i-1] = c.getString(i);
@@ -112,11 +113,19 @@ public class OrderViewActivity extends AppCompatActivity {
 
         //Remove for testing purposes, Remove comments when done
         String[] stageNames;
-        stageCursor.moveToFirst();
-        totalStages = stageCursor.getInt(stageCursor.getColumnIndex("total"));
-        stageNames = stageCursor.getString(stageCursor.getColumnIndex("names")).split(";");
-        currentStage = Integer.parseInt(colValues[5]);
-        stageCursor.close();
+
+        if(stageCursor!=null&&stageCursor.moveToFirst()) {
+
+            totalStages = stageCursor.getInt(stageCursor.getColumnIndex("total"));
+            stageNames = stageCursor.getString(stageCursor.getColumnIndex("names")).split(";");
+            currentStage = Integer.parseInt(colValues[5]);
+            stageCursor.close();
+        }
+        else
+        {   stageNames= new String[0];
+             finish();
+        }
+
         /*For Testing Only!!!!
         totalStages = 7;
         currentStage = 4;

@@ -14,6 +14,8 @@ import android.widget.Switch;
 
 import com.pranjals.nsit.jobtracker.DBHelper;
 
+import java.sql.SQLException;
+
 /**
  * Created by Pranjal on 15-03-2016.
  * the DBContentProvider just reads from the database defined in DBHelper and provides with Cursors
@@ -48,7 +50,7 @@ public class DBContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
         //Cursor cursor = DBHelper.getInstance(getContext()).getReadableDatabase().query("orders", projection, selection, selectionArgs, null, null, sortOrder);
         //cursor.setNotificationUri(getContext().getContentResolver(), uri);
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
@@ -66,9 +68,16 @@ public class DBContentProvider extends ContentProvider {
 
             default : break;
         }
+            try {
+                Cursor cursor = queryBuilder.query(sqLiteDatabase, projection, selection, selectionArgs, null, null, sortOrder);
+                return cursor;
+            }
+            catch (Exception e){
+                return null;
+            }
 
-        Cursor cursor = queryBuilder.query(sqLiteDatabase,projection,selection,selectionArgs,null,null,sortOrder);
-        return cursor;
+
+
     }
 
     @Nullable
