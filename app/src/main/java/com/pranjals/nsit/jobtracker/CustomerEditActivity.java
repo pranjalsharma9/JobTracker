@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
@@ -125,8 +126,14 @@ public class CustomerEditActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent,REQUEST_CAMERA);
+                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        cameraIntent.putExtra("crop", "true");
+                        cameraIntent.putExtra("aspectX", 4);
+                        cameraIntent.putExtra("aspectY", 3);
+                        cameraIntent.putExtra("scale", true);
+                        cameraIntent.putExtra("outputX", 200);
+                        cameraIntent.putExtra("outputY", 200);
+                        startActivityForResult(cameraIntent,REQUEST_CAMERA);
 
                     }
                 });
@@ -137,9 +144,17 @@ public class CustomerEditActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         popupWindow.dismiss();
-                        Intent intent = new Intent( Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        Intent intent = new Intent();
                         intent.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent,"Select File"),REQUEST_GALLERY);
+                        intent.setAction(Intent.ACTION_PICK);
+                        intent.putExtra("crop", "true");
+                        intent.putExtra("aspectX", 4);
+                        intent.putExtra("aspectY", 3);
+                        intent.putExtra("scale", true);
+                        intent.putExtra("outputX", 200);
+                        intent.putExtra("outputY", 200);
+                        intent.putExtra("return-data", true);
+                        startActivityForResult(Intent.createChooser(intent,"Complete action using"),REQUEST_GALLERY);
 
                     }
                 });
@@ -208,13 +223,13 @@ public class CustomerEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK){
+        if(resultCode==RESULT_OK&&data!=null&&data.getExtras()!=null){
 
             if(requestCode==REQUEST_CAMERA){
 
-                thumbnail = (Bitmap) data.getExtras().get("data");
+                thumbnail = (data.getExtras()).getParcelable("data");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                thumbnail.compress(Bitmap.CompressFormat.PNG, 100, bytes);
                 byte[] bitMapData = bytes.toByteArray();
                 imageToEdit.setImageBitmap(BitmapFactory.decodeByteArray(bitMapData, 0, bitMapData.length));
 
@@ -223,26 +238,26 @@ public class CustomerEditActivity extends AppCompatActivity {
             }
             else if(requestCode==REQUEST_GALLERY){
 
-                Uri selectedImageUri = data.getData();
-                String[] projection = { MediaStore.MediaColumns.DATA };
-                Cursor cursor =getContentResolver().query(selectedImageUri, projection, null, null, null);
-                cursor.moveToFirst();
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-                String selectedImagePath = cursor.getString(column_index);
-                cursor.close();
-                Bitmap bm = (BitmapFactory.decodeFile(selectedImagePath));
+//                Uri selectedImageUri = data.getData();
+//                String[] projection = { MediaStore.MediaColumns.DATA };
+//                Cursor cursor =getContentResolver().query(selectedImageUri, projection, null, null, null);
+//                cursor.moveToFirst();
+//                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+//                String selectedImagePath = cursor.getString(column_index);
+//                cursor.close();
+//                Bitmap bm = (BitmapFactory.decodeFile(selectedImagePath));
+                Bitmap bm = (data.getExtras()).getParcelable("data");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bm.compress(Bitmap.CompressFormat.JPEG,15, bytes);
+                bm.compress(Bitmap.CompressFormat.PNG,100, bytes);
                 byte[] bitMapData = bytes.toByteArray();
                 imageToEdit.setImageBitmap(BitmapFactory.decodeByteArray(bitMapData, 0, bitMapData.length));
-
-
-
 
 
             }
 
         }
+        else
+            Toast.makeText(CustomerEditActivity.this,"Sorry! Something went wrong.Try using another application",Toast.LENGTH_SHORT).show();
     }
 }
 
