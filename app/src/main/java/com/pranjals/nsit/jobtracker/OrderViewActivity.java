@@ -242,6 +242,12 @@ public class OrderViewActivity extends AppCompatActivity {
                 if(isFirstLayoutLoad) {
                     stepperViewGroupHeight = stepperViewGroup.getHeight();
                     progressBarGroupHeight = findViewById(R.id.progress_bar_container).getHeight();
+
+                    View fillUpView = findViewById(R.id.orderView_fill_up_view);
+                    ViewGroup.LayoutParams fillUpLayoutParams = fillUpView.getLayoutParams();
+                    fillUpLayoutParams.height = (int) progressBarGroupHeight;
+                    fillUpView.setLayoutParams(fillUpLayoutParams);
+
                     isFirstLayoutLoad = false;
 
                     ViewGroup.LayoutParams orderProgressGroupLayoutParams = findViewById(R.id.order_progress_group).getLayoutParams();
