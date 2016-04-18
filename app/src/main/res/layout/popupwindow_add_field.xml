@@ -15,7 +15,7 @@
         android:minHeight="0dp"
         android:background="@drawable/circle_for_buttons_border"
         android:onClick="onNewFieldDatatypeSelected"
-        android:src="@drawable/ic_text_format_black_48dp" />
+        android:src="@drawable/ic_datatype_text_48dp" />
 
     <ImageButton
         android:id="@+id/datatype_choice_numeric"
@@ -26,7 +26,7 @@
         android:minHeight="0dp"
         android:background="@drawable/circle_for_buttons_border"
         android:onClick="onNewFieldDatatypeSelected"
-        android:src="@drawable/ic_format_list_numbered_black_48dp" />
+        android:src="@drawable/ic_datatype_numeric_48dp" />
 
     <ImageButton
         android:id="@+id/datatype_choice_date"
@@ -38,6 +38,6 @@
         android:minHeight="0dp"
         android:background="@drawable/circle_for_buttons_border"
         android:onClick="onNewFieldDatatypeSelected"
-        android:src="@drawable/ic_date_range_black_48dp" />
+        android:src="@drawable/ic_datatype_date_48dp" />
 
 </LinearLayout>

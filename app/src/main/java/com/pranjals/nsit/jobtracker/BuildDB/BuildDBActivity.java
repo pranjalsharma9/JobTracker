@@ -110,16 +110,16 @@ public class BuildDBActivity extends FragmentActivity {
 
         switch (view.getId()){
             case R.id.datatype_choice_text : datatype = "TEXT";
-                customFieldBoxDatabaseImageResource = R.drawable.ic_text_format_black_48dp;
+                customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_text_48dp;
                 break;
             case R.id.datatype_choice_numeric : datatype = "NUMERIC";
-                customFieldBoxDatabaseImageResource = R.drawable.ic_format_list_numbered_black_48dp;
+                customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_numeric_48dp;
                 break;
             case R.id.datatype_choice_date : datatype = "DATE";
-                customFieldBoxDatabaseImageResource = R.drawable.ic_date_range_black_48dp;
+                customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_date_48dp;
                 break;
             default: datatype = "TEXT";
-                customFieldBoxDatabaseImageResource = R.drawable.ic_text_format_black_48dp;
+                customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_text_48dp;
                 break;
         }
         //setting the datatype image in the view's ImageView
@@ -176,13 +176,13 @@ public class BuildDBActivity extends FragmentActivity {
             ImageView customFieldBoxDatatypeImage = (ImageView) customFieldBox.findViewById(R.id.custom_field_box_datatype_image);
             int customFieldBoxDatabaseImageResource;
             switch (fieldElement.datatype){
-                case "TEXT" : customFieldBoxDatabaseImageResource = R.drawable.ic_text_format_black_48dp;
+                case "TEXT" : customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_text_48dp;
                     break;
-                case "NUMERIC" : customFieldBoxDatabaseImageResource = R.drawable.ic_format_list_numbered_black_48dp;
+                case "NUMERIC" : customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_numeric_48dp;
                     break;
-                case "DATE" : customFieldBoxDatabaseImageResource = R.drawable.ic_date_range_black_48dp;
+                case "DATE" : customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_date_48dp;
                     break;
-                default: customFieldBoxDatabaseImageResource = R.drawable.ic_text_format_black_48dp;
+                default: customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_text_48dp;
                     break;
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

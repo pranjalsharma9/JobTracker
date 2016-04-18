@@ -1,36 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/builddb_finish_fragment"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="#ff64ffda" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textColor="#ff004D40"
-        android:text="Done!\n" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="6dp" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="18dp"
-        android:textColor="#ff009688"
-        android:text="Swipe back to alter your database design.\nOr hit the button below!\n\n" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textColor="#ff004D40"
+            android:text="Done!\n" />
 
-    <Button
-        android:id="@+id/builddb_finish_button"
-        android:onClick="onFinishButtonTapped"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:textColor="#ffffffff"
-        android:textSize="18sp"
-        android:background="#ff009688"
-        android:text="FINISH"/>
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textColor="#ff009688"
+            android:text="Swipe back to alter your database design.\nOr hit the button below!\n\n" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/builddb_finish_slide4"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/slide4" />
+
+
+            <ImageButton
+                android:id="@+id/builddb_finish_button"
+                android:onClick="onFinishButtonTapped"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="98dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ffffffff"
+                android:textSize="18sp"
+                android:background="@drawable/circle_for_buttons"
+                android:src="@drawable/ic_done_white_48dp"
+                android:text="FINISH" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No swiping! See the button above?"
+                android:textColor="#ff009688"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/builddb_finish_slide4" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -25,6 +25,6 @@
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_clear_black_48dp" />
+        android:src="@drawable/ic_clear_black_24_in_48dp" />
 
 </LinearLayout>
