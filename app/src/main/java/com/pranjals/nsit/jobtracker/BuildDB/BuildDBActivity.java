@@ -182,7 +182,7 @@ public class BuildDBActivity extends FragmentActivity {
                     break;
                 case "DATE" : customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_date_48dp;
                     break;
-                default: customFieldBoxDatabaseImageResource = R.drawable.ic_datatype_text_48dp;
+                default: customFieldBoxDatabaseImageResource = R.drawable.ic_text_format_black_48dp;
                     break;
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -251,17 +251,17 @@ public class BuildDBActivity extends FragmentActivity {
         String createOrderTableString, createCustomerTableString, createEmployeeTableString;
         StringBuilder stringBuilder = new StringBuilder();
         for(int i = 0; i < customFields.getListLength(1); i++){
-            stringBuilder.append(", " + customFields.returnFieldElement(i,1).fieldName + " " + customFields.returnFieldElement(i,1).datatype);
+            stringBuilder.append(", " + customFields.returnFieldElement(i,1).fieldName.replace(" ", "_") + " " + customFields.returnFieldElement(i,1).datatype);
         }
         createOrderTableString = stringBuilder.toString();
         stringBuilder = new StringBuilder();
         for(int i = 0; i < customFields.getListLength(2); i++){
-            stringBuilder.append(", " + customFields.returnFieldElement(i,2).fieldName + " " + customFields.returnFieldElement(i,2).datatype);
+            stringBuilder.append(", " + customFields.returnFieldElement(i,2).fieldName.replace(" ", "_") + " " + customFields.returnFieldElement(i,2).datatype);
         }
         createCustomerTableString =  stringBuilder.toString();
         stringBuilder = new StringBuilder();
         for(int i = 0; i < customFields.getListLength(3); i++){
-            stringBuilder.append(", " + customFields.returnFieldElement(i,3).fieldName + " " + customFields.returnFieldElement(i,3).datatype);
+            stringBuilder.append(", " + customFields.returnFieldElement(i,3).fieldName.replace(" ", "_") + " " + customFields.returnFieldElement(i,3).datatype);
         }
         createEmployeeTableString = stringBuilder.toString();
         DBHelper.getInstance(this).createTables(createOrderTableString, createCustomerTableString, createEmployeeTableString);

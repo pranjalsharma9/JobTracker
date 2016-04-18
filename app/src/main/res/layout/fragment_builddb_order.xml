@@ -25,7 +25,7 @@
             android:padding="6dp"
             android:textSize="18sp"
             android:textColor="#fffce4ec"
-            android:text="\nWhat all details do you wish your orders to have?\n\nWe have already included 'Name', 'Dates of booking and delivery' and 'Customer' as necessary details.\n\nFeel free to add any more 'text', 'numeric' or 'date' fields by using the button below.\n"/>
+            android:text="What all details do you wish your orders to have?\n\nWe have already included 'Name', 'Dates of booking and delivery' and 'Customer' as necessary details.\n\nFeel free to add any more 'text', 'numeric' or 'date' fields by using the button below.\nOh, and yes! Use only alphabets and numbers to name them.\n"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
