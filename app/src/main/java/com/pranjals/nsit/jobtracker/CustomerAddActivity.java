@@ -3,7 +3,11 @@ package com.pranjals.nsit.jobtracker;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class CustomerAddActivity extends AppCompatActivity {
@@ -58,12 +63,21 @@ public class CustomerAddActivity extends AppCompatActivity {
                 editText = (EditText) findViewById(R.id.customerAdd_address);
                 String address = editText.getText().toString();
 
+                Resources res = getResources();
+                Drawable drawable = res.getDrawable(R.drawable.slide2);
+                Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bitMapData = stream.toByteArray();
+
+
                 ContentValues values = new ContentValues();
 
                 values.put("name", name);
                 values.put("mobile", mobile);
                 values.put("email", email);
                 values.put("address", address);
+                values.put("image",bitMapData);
 
                 for (int i = 0; i < extraCols.size(); i++)
                     values.put(extraCols.get(i), ((EditText) findViewById(i)).getText().toString());

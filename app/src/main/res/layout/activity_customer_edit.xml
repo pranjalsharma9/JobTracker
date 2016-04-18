@@ -4,41 +4,46 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_height="match_parent">
 
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:fitsSystemWindows="true">
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="#01579B"
+                android:fitsSystemWindows="true">
+                <ImageView
+                android:id="@+id/image_customerEdit"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:scaleType="centerCrop"
+                    android:src="@drawable/ic_people_black_24dp"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"/>
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#01579B"
-            app:title="Job Tracker"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:titleTextColor="#ffffff"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_collapseMode="pin"
             />
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
 
-        <FrameLayout
-            android:id="@+id/container_iv_customerEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#e2e1e1"
-                android:id="@+id/iv_customerEdit"
-                android:src="@drawable/ic_people_black_24dp"/>
 
-        </FrameLayout>
-
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:fillViewport="false">
             <LinearLayout
                 android:orientation="vertical"
@@ -157,12 +162,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"></LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <android.support.design.widget.FloatingActionButton android:id="@+id/fab_takeCustomerPic"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_margin="16dp" app:layout_anchor="@id/container_iv_customerEdit"
+            android:layout_margin="16dp" app:layout_anchor="@id/app_bar_layout"
             app:layout_anchorGravity="bottom|right|end" android:src="@drawable/ic_camera_alt_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

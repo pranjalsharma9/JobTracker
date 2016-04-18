@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,7 @@ import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -61,15 +63,21 @@ public class CustomerViewActivity extends AppCompatActivity {
         TextView mobile = (TextView)findViewById(R.id.customerView_mobile);
         TextView email = (TextView)findViewById(R.id.customerView_email);
         TextView address = (TextView)findViewById(R.id.customerView_address);
+        ImageView image = (ImageView)findViewById(R.id.iv_customerView);
+        colValues = new String[DBHelper.DEF_CUSTOMER_COLS + extraCols.size()-1];
 
-        colValues = new String[DBHelper.DEF_CUSTOMER_COLS + extraCols.size()];
-
-        Cursor c = getContentResolver().query(DBContentProvider.CUSTOMER_URI, null, "_id = "+ customerIdTobeViewed, null, null);
+        Cursor c = getContentResolver().query(DBContentProvider.CUSTOMER_URI, null, "_id = " + customerIdTobeViewed, null, null);
         if(c!=null && c.moveToFirst()){
-            for(int i=1;i<=colValues.length;i++)
-                colValues[i-1] = c.getString(i);
+            for(int i=0;i<colValues.length;i++) {
+                colValues[i] = c.getString(i+2);
+            }
+            byte[] bb = c.getBlob(c.getColumnIndex("image"));
+            image.setImageBitmap(BitmapFactory.decodeByteArray(bb, 0, bb.length));
+
             c.close();
         }
+
+
 
         colNames = c.getColumnNames();
 
@@ -82,7 +90,7 @@ public class CustomerViewActivity extends AppCompatActivity {
             View viewToAdd = inflater.inflate(R.layout.customer_view_dynamic_row,null);
             TextView tv = (TextView)viewToAdd.findViewById(R.id.customerViewDynamic_tv);
             tv.setId(i);
-            tv.setText(colValues[i+DBHelper.DEF_CUSTOMER_COLS]);
+            tv.setText(colValues[i+4]);
             container.addView(viewToAdd);
         }
 
@@ -101,12 +109,12 @@ public class CustomerViewActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.edit_customer:
                 Intent intent = new Intent(CustomerViewActivity.this,CustomerEditActivity.class);
-                intent.putExtra("customerId",customerIdTobeViewed);
+                intent.putExtra("customerId", customerIdTobeViewed);
                 startActivityForResult(intent, 15);
             break;
 
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
@@ -119,20 +127,28 @@ public class CustomerViewActivity extends AppCompatActivity {
             TextView mobile = (TextView)findViewById(R.id.customerView_mobile);
             TextView email = (TextView)findViewById(R.id.customerView_email);
             TextView address = (TextView)findViewById(R.id.customerView_address);
+            ImageView image = (ImageView)findViewById(R.id.iv_customerView);
+
+
             Cursor c = getContentResolver().query(DBContentProvider.CUSTOMER_URI, null, "_id = "+ customerIdTobeViewed, null, null);
             if(c!=null&&c.moveToFirst()){
-//
-                name.setText(c.getString(1));
-                mobile.setText(c.getString(2));
-                email.setText(c.getString(3));
-                address.setText(c.getString(4));
+////
+               name.setText(c.getString(2));
+                mobile.setText(c.getString(3));
+               email.setText(c.getString(4));
+                address.setText(c.getString(5));
 
                 for(int i=0;i<extraCols.size();i++)
                 {
-                    ((TextView)findViewById(i)).setText(c.getString(i+5));
+                    ((TextView)findViewById(i)).setText(c.getString(i+6));
                 }
 
-           }
+                byte[] bb = c.getBlob(c.getColumnIndex("image"));
+                image.setImageBitmap(BitmapFactory.decodeByteArray(bb, 0, bb.length));
+
+                c.close();
+//
+          }
 
 
         }

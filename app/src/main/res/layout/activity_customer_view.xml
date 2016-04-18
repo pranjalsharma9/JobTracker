@@ -5,11 +5,13 @@
     android:id="@+id/customerView_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.pranjals.nsit.jobtracker.CustomerViewActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
+        android:elevation="4dp"
         android:layout_height="?attr/actionBarSize"
         android:background="#01579B"
         app:title="Job Tracker"
@@ -33,4 +35,8 @@
         android:id="@+id/customerView_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/iv_customerView"/>
 </LinearLayout>
