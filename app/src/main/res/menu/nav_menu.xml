@@ -54,5 +54,10 @@
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="Settings"
             />
+        <item
+            android:id="@+id/drawer_signIn_activity"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Sign in"
+            />
     </group>
 </menu>

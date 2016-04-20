@@ -23,14 +23,22 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.pranjals.nsit.jobtracker.BuildDB.BuildDBActivity;
+import com.pranjals.nsit.jobtracker.GoogleSignIn.SignInActivity;
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
     private final String isFirstTime = "isFirstTime";
     NavigationView navigationView;
@@ -38,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Order> orders;
     OrderRecyclerView orderAdapter;
     RecyclerView recyclerView;
+    private GoogleApiClient apiClient;
+    private int BUILDB_INTENT = 3,SIGN_IN = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +58,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);;
         if(!(sharedPreferences.contains(isFirstTime))){
             Intent intent = new Intent(this, BuildDBActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityForResult(intent,BUILDB_INTENT);
         }
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+        apiClient =  new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -75,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout.setDrawerListener(barDrawerToggle);
         barDrawerToggle.syncState();
+
+        //checks whether user has signed in and sets the
+        // title of menu in navigation drawer
+        setSignInMenu(chechIfSignedIn());
+
+
 
         TextView countOrder = (TextView)navigationView.getMenu().getItem(0).getActionView();
         countOrder.setText("12");
@@ -123,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
 //                    startActivity(intent);
                         Toast.makeText(MainActivity.this, "COMING SOON", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.drawer_signIn_activity:
+                        intent = new Intent(MainActivity.this, SignInActivity.class);
+                        startActivityForResult(intent,SIGN_IN);
 
                     default:
                         break;
@@ -155,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(sharedPreferences.contains(isFirstTime)) {
-            Log.e("sdsdsddss","sdsdsds");
+           // Log.e("sdsdsddss","sdsdsds");
            // orders = new ArrayList<>();
             String projection[] = {"_id", "name", "doo", "doc", "cid", "eid"};
             Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, null);
@@ -185,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar_main,menu);
+        getMenuInflater().inflate(R.menu.action_bar_main, menu);
         return true;
     }
 
@@ -200,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(scanResult!=null&&IntentIntegrator.REQUEST_CODE==requestCode&&resultCode==RESULT_OK){
                  long scanned_orderId;
             try{ scanned_orderId= Long.parseLong(scanResult.getContents());
@@ -233,6 +258,77 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if(requestCode==BUILDB_INTENT&&resultCode==RESULT_OK){
+//            Log.e("ghgjhgj","yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+            Intent signInIntent = new Intent(MainActivity.this,SignInActivity.class);
+            startActivityForResult(signInIntent,SIGN_IN);
+        }
+
+        if(requestCode==SIGN_IN&&resultCode==RESULT_OK){
+
+            if((data.getStringExtra("isSignedIn")).equals("true")){
+                setSignInMenu(true);
+                String ownerName = data.getStringExtra("name");
+                String ownerEmail = data.getStringExtra("email");
+                setNavigationMenuHeader(ownerName,ownerEmail);
+            }
+
+            else{
+
+                setNavigationMenuHeader("You are not logged in","Sign in from below");
+                setSignInMenu(false);
+            }
+
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    public boolean chechIfSignedIn(){
+
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(apiClient);
+
+        if(opr.isDone()){
+            GoogleSignInResult result = opr.get();
+            if(result.isSuccess()){
+                GoogleSignInAccount acct = result.getSignInAccount();
+                setNavigationMenuHeader(acct.getDisplayName(), acct.getEmail());
+                return true;
+            }
+        }
+
+        else{
+            setNavigationMenuHeader("You are not logged in","Sign in from below");
+        }
+
+        return false;
+    }
+
+
+    public void setSignInMenu(boolean isSignedIn){
+        if(isSignedIn){
+            MenuItem item = navigationView.getMenu().getItem(5);
+            item.setTitle("Sign out");
+        }
+        else
+        {
+            MenuItem item = navigationView.getMenu().getItem(5);
+            item.setTitle("Sign in");
+        }
+    }
+
+    public void setNavigationMenuHeader(String ownerName,String ownerEmail){
+        View headerView = navigationView.getHeaderView(0);
+        TextView ownerNametv = (TextView)headerView.findViewById(R.id.owner_name);
+        TextView ownerEmailtv = (TextView)headerView.findViewById(R.id.owner_email);
+        ownerNametv.setText(ownerName);
+        ownerEmailtv.setText(ownerEmail);
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 }
