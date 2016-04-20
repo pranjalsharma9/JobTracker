@@ -102,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.v("DBHelper", "I created the tables!");*/
     }
 
-    //function returns the list of all the column names of table 'orders' added dynaically in beginning.
+    //function returns the list of all the column names of table 'orders' added dynamically in beginning.
     public ArrayList<String> getExtraOrderCols(int tableSelection){
 
         ArrayList<String> cols = new ArrayList<>();
@@ -130,11 +130,42 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.query(tableToQuery,null,null,null,null,null,null);
         String[] allCols = c.getColumnNames();
         for(int i=constantToRefer+1;i<c.getColumnCount();i++)
-            cols.add(allCols[i]);
+            cols.add(allCols[i].substring(0, allCols[i].length() - 4));
         c.close();
         return cols;
     }
 
 
+    public ArrayList<String> getExtraOrderColDataTypes(int tableSelection){
+
+        ArrayList<String> colDataTypes = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String tableToQuery;
+        int constantToRefer;
+        switch(tableSelection){
+            case 0:
+                tableToQuery = "orders";
+                constantToRefer = DEF_ORDER_COLS;
+                break;
+            case 1:
+                tableToQuery = "customers";
+                constantToRefer = DEF_CUSTOMER_COLS;
+                break;
+            case 2:
+                tableToQuery = "employees";
+                constantToRefer = DEF_EMPLOYEE_COLS;
+                break;
+            default:
+                tableToQuery = "orders";
+                constantToRefer = DEF_ORDER_COLS;
+                break;
+        }
+        Cursor c = db.query(tableToQuery,null,null,null,null,null,null);
+        String[] allColDataTypes = c.getColumnNames();
+        for(int i=constantToRefer+1;i<c.getColumnCount();i++)
+            colDataTypes.add(allColDataTypes[i].substring(allColDataTypes[i].length() - 4));
+        c.close();
+        return colDataTypes;
+    }
 
 }

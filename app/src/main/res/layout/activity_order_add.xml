@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_order_view_parent_viewGroup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
@@ -36,15 +37,26 @@
         android:layout_alignEnd="@id/orderAdd_cid"
         android:hint="Employee ID" />
 
-    <EditText
-        android:id="@+id/orderAdd_doo"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:id="@+id/orderAdd_doo_group"
+        android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textLongMessage"
-        android:hint="Date of Order"
-        android:ems="10"
         android:layout_below="@id/orderAdd_eid"
-        android:layout_alignEnd="@id/orderAdd_eid" />
+        android:layout_alignEnd="@id/orderAdd_eid" >
+        <TextView
+            android:id="@+id/orderAdd_date_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Date of Order"
+            android:ems="10" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cal"
+            android:onClick="onAddDateClicked" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/orderAdd_doc"
@@ -53,8 +65,8 @@
         android:inputType="textLongMessage"
         android:hint="Date of Completion"
         android:ems="10"
-        android:layout_below="@id/orderAdd_doo"
-        android:layout_alignEnd="@id/orderAdd_doo" />
+        android:layout_below="@id/orderAdd_doo_group"
+        android:layout_alignEnd="@id/orderAdd_doo_group" />
 
     <LinearLayout
         android:id="@+id/orderAdd_container"
