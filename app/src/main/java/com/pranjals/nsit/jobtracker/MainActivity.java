@@ -1,5 +1,6 @@
 package com.pranjals.nsit.jobtracker;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     DrawerLayout drawerLayout;
     ArrayList<Order> orders;
     OrderRecyclerView orderAdapter;
+    SharedPreferences sharedPreferences;
     RecyclerView recyclerView;
     private GoogleApiClient apiClient;
     private int BUILDB_INTENT = 3,SIGN_IN = 4;
@@ -55,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.home_navigation_drawer);
 
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);;
+         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);;
         if(!(sharedPreferences.contains(isFirstTime))){
             Intent intent = new Intent(this, BuildDBActivity.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(intent,BUILDB_INTENT);
+            startActivityForResult(intent, BUILDB_INTENT);
         }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -92,9 +94,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         drawerLayout.setDrawerListener(barDrawerToggle);
         barDrawerToggle.syncState();
 
-        //checks whether user has signed in and sets the
-        // title of menu in navigation drawer
-        setSignInMenu(chechIfSignedIn());
+
 
 
 
@@ -265,20 +265,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         if(requestCode==SIGN_IN&&resultCode==RESULT_OK){
-
-            if((data.getStringExtra("isSignedIn")).equals("true")){
-                setSignInMenu(true);
-                String ownerName = data.getStringExtra("name");
-                String ownerEmail = data.getStringExtra("email");
-                setNavigationMenuHeader(ownerName,ownerEmail);
-            }
-
-            else{
-
-                setNavigationMenuHeader("You are not logged in","Sign in from below");
-                setSignInMenu(false);
-            }
-
+                setSignInMenu(sharedPreferences.contains("ownerName"));
+                String ownerName = sharedPreferences.getString("ownerName","You are not logged in");
+                String ownerEmail = sharedPreferences.getString("ownerEmail", "Sign in from below");
+                setNavigationMenuHeader(ownerName, ownerEmail);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -287,22 +277,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     public boolean chechIfSignedIn(){
 
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(apiClient);
-
-        if(opr.isDone()){
-            GoogleSignInResult result = opr.get();
-            if(result.isSuccess()){
-                GoogleSignInAccount acct = result.getSignInAccount();
-                setNavigationMenuHeader(acct.getDisplayName(), acct.getEmail());
-                return true;
-            }
-        }
-
-        else{
-            setNavigationMenuHeader("You are not logged in","Sign in from below");
+        if(sharedPreferences.contains("ownerName")){
+            return true;
         }
 
         return false;
+
+//        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(apiClient);
+//
+//        if(opr.isDone()){
+//            GoogleSignInResult result = opr.get();
+//            if(result.isSuccess()){
+//                GoogleSignInAccount acct = result.getSignInAccount();
+//                setNavigationMenuHeader(acct.getDisplayName(), acct.getEmail());
+//                return true;
+//            }
+//        }
+//
+//        else{
+//            setNavigationMenuHeader("You are not logged in","Sign in from below");
+//        }
+//
+//        return false;
     }
 
 
@@ -329,6 +325,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //checks whether user has signed in and sets the
+        // title of menu in navigation drawer
+        setSignInMenu(chechIfSignedIn());
+        setNavigationMenuHeader(sharedPreferences.getString("ownerName","You are not logged in"),sharedPreferences.getString("ownerEmail", "Sign in from below"));
+
 
     }
 }

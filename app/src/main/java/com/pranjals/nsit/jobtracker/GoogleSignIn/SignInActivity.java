@@ -2,7 +2,9 @@ package com.pranjals.nsit.jobtracker.GoogleSignIn;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -75,19 +77,26 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 break;
             case R.id.sign_out_button:
                 signOut();
-                Intent data = new Intent();
-                data.putExtra("isSignedIn","false");
-                setResult(RESULT_OK, data);
+                removeUserDetailsFromSharedPrefs();
+                setResult(RESULT_OK);
                 finish();
                 break;
             case R.id.disconnect_button:
                 revokeAccess();
-                Intent data2 = new Intent();
-                data2.putExtra("isSignedIn","false");
-                setResult(RESULT_OK, data2);
+                removeUserDetailsFromSharedPrefs();
+                setResult(RESULT_OK);
                 break;
 
         }
+    }
+
+
+    public void removeUserDetailsFromSharedPrefs(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("ownerName");
+        editor.remove("ownerEmail");
+        editor.commit();
     }
 
     public void signIn(){
@@ -137,18 +146,22 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             statusTv.setText("Signed in as: " + acct.getDisplayName());
-            Intent data = new Intent();
-            data.putExtra("isSignedIn", "true");
-            data.putExtra("name", acct.getDisplayName());
-            data.putExtra("email", acct.getEmail());
-            setResult(RESULT_OK, data);
+//            Intent data = new Intent();
+//            data.putExtra("isSignedIn", "true");
+//            data.putExtra("name", acct.getDisplayName());
+//            data.putExtra("email", acct.getEmail());
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("ownerName",acct.getDisplayName());
+            editor.putString("ownerEmail", acct.getEmail());
+            editor.commit();
+            setResult(RESULT_OK);
             updateUI(true);
 
         } else {
             // Signed out, show unauthenticated UI.
-            Intent data = new Intent();
-            data.putExtra("isSignedIn", "false");
-            setResult(RESULT_OK,data);
+
+            setResult(RESULT_OK);
             updateUI(false);
         }
     }
