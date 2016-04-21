@@ -2,6 +2,7 @@ package com.pranjals.nsit.jobtracker.BuildDB;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,6 +29,7 @@ import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentFinish;
 import com.pranjals.nsit.jobtracker.BuildDB.BuildDBFragmentOrder;
 import com.pranjals.nsit.jobtracker.CustomFields;
 import com.pranjals.nsit.jobtracker.DBHelper;
+import com.pranjals.nsit.jobtracker.GoogleSignIn.SignInActivity;
 import com.pranjals.nsit.jobtracker.MainActivity;
 import com.pranjals.nsit.jobtracker.R;
 
@@ -245,6 +247,7 @@ public class BuildDBActivity extends FragmentActivity {
 
     //from the last fragment
     public void onFinishButtonTapped(View view) {
+
         saveCustomFields(1);
         saveCustomFields(2);
         saveCustomFields(3);
@@ -270,6 +273,7 @@ public class BuildDBActivity extends FragmentActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isFirstTime", false);
         editor.commit();
+        setResult(RESULT_OK);
         finish();
     }
 

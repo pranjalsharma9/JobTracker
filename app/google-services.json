@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_id": "job-tracker-b4077",
+    "project_number": "675591670902",
+    "name": "Job Tracker"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675591670902:android:8955da378bdf4156",
+        "client_id": "android:com.pranjals.nsit.jobtracker",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.pranjals.nsit.jobtracker",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675591670902:android:5f9aa4f15015474f",
+        "client_id": "android:com.pranjals.nsit.jobtacker",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.pranjals.nsit.jobtacker",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675591670902:android:8d670ba4fd3e0ca7",
+        "client_id": "android:com.pranjals.nsit.jobtracker",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.pranjals.nsit.jobtracker",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
