@@ -39,7 +39,7 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
     private ArrayList<String> extraCols;
     private ArrayList<String> extraColDataTypes;
 
-    private TextView textViewSelectedForDateInput;
+    private EditText editTextSelectedForDateInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,33 +76,33 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
         LinearLayout container = (LinearLayout)findViewById(R.id.orderAdd_container);
         LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for(int i=0;i<extraCols.size();i++) {
-            View viewToAdd;
             EditText et;
             switch(extraColDataTypes.get(i)){
-                case "TEXT" : viewToAdd = inflater.inflate(R.layout.order_add_dynamic_row, null);
-                    et = (EditText) viewToAdd.findViewById(R.id.orderAdd_dynamic_et);
+                case "TEXT" :
+                    et = (EditText) inflater.inflate(R.layout.order_add_dynamic_row, null);
                     et.setInputType(InputType.TYPE_CLASS_TEXT);
                     et.setId(i);
                     et.setHint(extraCols.get(i));
                     break;
-                case "NUME" : viewToAdd = inflater.inflate(R.layout.order_add_dynamic_row, null);
-                    et = (EditText) viewToAdd.findViewById(R.id.orderAdd_dynamic_et);
+                case "NUME" :
+                    et = (EditText) inflater.inflate(R.layout.order_add_dynamic_row, null);
                     et.setInputType(InputType.TYPE_CLASS_NUMBER);
                     et.setId(i);
                     et.setHint(extraCols.get(i));
                     break;
-                case "DATE" : viewToAdd = inflater.inflate(R.layout.order_add_date_dynamic_row, null);
-                    TextView tv = (TextView) viewToAdd.findViewById(R.id.orderAdd_date_tv);
-                    tv.setHint(extraCols.get(i));
+                case "DATE" :
+                    et = (EditText) inflater.inflate(R.layout.order_add_date_dynamic_row, null);
+                    et.setId(i);
+                    et.setHint(extraCols.get(i));
                     break;
-                default : viewToAdd = inflater.inflate(R.layout.order_add_dynamic_row, null);
-                    et = (EditText) viewToAdd.findViewById(R.id.orderAdd_dynamic_et);
+                default :
+                    et = (EditText) inflater.inflate(R.layout.order_add_dynamic_row, null);
                     et.setInputType(InputType.TYPE_CLASS_TEXT);
                     et.setId(i);
                     et.setHint(extraCols.get(i));
                     break;
             }
-            container.addView(viewToAdd);
+            container.addView(et);
         }
 
 
@@ -124,8 +124,8 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
                 long cid = Integer.parseInt(editText.getText().toString());
                 editText = (EditText) findViewById(R.id.orderAdd_eid);
                 long eid = Integer.parseInt(editText.getText().toString());
-                TextView textView = (TextView) (findViewById(R.id.orderAdd_doo_group)).findViewById(R.id.orderAdd_date_tv);
-                String doo = textView.getText().toString();
+                editText = (EditText) findViewById(R.id.orderAdd_doo);
+                String doo = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.orderAdd_doc);
                 String doc = editText.getText().toString();
 
@@ -141,7 +141,7 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
 
 
                 for(int i=0;i<extraCols.size();i++)
-                    values.put(extraCols.get(i),((EditText)findViewById(i)).getText().toString());
+                    values.put(extraCols.get(i) + extraColDataTypes.get(i),((EditText)findViewById(i)).getText().toString());
 
 
                 getContentResolver().insert(DBContentProvider.ORDER_URI, values);
@@ -192,29 +192,14 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public static class DatePickerFragment extends DialogFragment {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
-        }
-
-    }
-
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        String date = Integer.toString(day) + "/" + Integer.toString(month) + "/" + Integer.toString(year);
-        textViewSelectedForDateInput.setText(date);
+        String date = Integer.toString(day) + "/" + Integer.toString(month + 1) + "/" + Integer.toString(year);
+        editTextSelectedForDateInput.setText(date);
     }
 
     public void onAddDateClicked (View view){
-        textViewSelectedForDateInput = ((TextView) ((ViewGroup) view.getParent()).findViewById(R.id.orderAdd_date_tv));
+        editTextSelectedForDateInput = ((EditText) view);
         DialogFragment dialogFragment = new DatePickerFragment();
         dialogFragment.show(getFragmentManager(), "date picker");
     }
