@@ -183,13 +183,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
            // Log.e("sdsdsddss","sdsdsds");
            // orders = new ArrayList<>();
             String projection[] = {"_id", "name", "doo", "doc", "cid", "eid"};
-            Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, null);
+            Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, "date(doc)");
             if (c.moveToFirst()) {
                 do {
                     String _id = c.getString(c.getColumnIndex("_id"));
                     String name = c.getString(c.getColumnIndex("name"));
-                    String doo = c.getString(c.getColumnIndex("doo"));
-                    String doc = c.getString(c.getColumnIndex("doc"));
+                    String doo = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doo")));
+                    String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
                     String cid = c.getString(c.getColumnIndex("cid"));
                     String eid = c.getString(c.getColumnIndex("eid"));
                     orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc));
@@ -239,14 +239,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         if(requestCode==0&&resultCode==RESULT_OK){
             orders = new ArrayList<>();
-            String projection[] = {"_id","name", "doo", "doc", "cid","eid"};
-            Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,null);
+            String projection[] = {"_id","name", "doo", "doc", "cid", "eid"};
+
+
+
+
+            ///// here
+
+
+
+
+            Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,"date(doc)");
             if (c.moveToFirst()) {
                 do {
                     String _id = c.getString(c.getColumnIndex("_id"));
                     String name = c.getString(c.getColumnIndex("name"));
-                    String doo = c.getString(c.getColumnIndex("doo"));
-                    String doc = c.getString(c.getColumnIndex("doc"));
+                    String doo = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doo")));
+                    String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
                     String cid = c.getString(c.getColumnIndex("cid"));
                     String eid = c.getString(c.getColumnIndex("eid"));
                     orders.add(new Order(Long.parseLong(_id),name,Long.parseLong(cid),Long.parseLong(eid),doo,doc));

@@ -1,99 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_order_view_parent_viewGroup"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context="com.pranjals.nsit.jobtracker.OrderAddActivity">
-
-    <EditText
-        android:id="@+id/orderAdd_name"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textLongMessage"
-        android:hint="Order Name"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:title="Job Tracker"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="#ffffff"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
 
-    <EditText
-        android:id="@+id/orderAdd_cid"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_below="@id/orderAdd_name"
-        android:layout_alignEnd="@id/orderAdd_name"
-        android:hint="Customer ID" />
+        android:layout_height="match_parent"
+        android:fillViewport="true" >
 
-    <EditText
-        android:id="@+id/orderAdd_eid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_below="@id/orderAdd_cid"
-        android:layout_alignEnd="@id/orderAdd_cid"
-        android:hint="Employee ID" />
-
-    <EditText
-        android:id="@+id/orderAdd_doo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Date of Booking"
-        android:onClick="onAddDateClicked"
-        android:focusable="false"
-        android:ems="10"
-        android:layout_below="@id/orderAdd_eid"
-        android:layout_alignEnd="@id/orderAdd_eid" />
-
-    <EditText
-        android:id="@+id/orderAdd_doc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Date of Completion"
-        android:onClick="onAddDateClicked"
-        android:focusable="false"
-        android:ems="10"
-        android:layout_below="@id/orderAdd_doo"
-        android:layout_alignEnd="@id/orderAdd_doo" />
-
-    <LinearLayout
-        android:id="@+id/orderAdd_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/orderAdd_doc"
-        android:orientation="vertical"></LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/orderAdd_spinner_container"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_below="@id/orderAdd_container">
-        <Spinner
-            android:layout_below="@+id/orderAdd_container"
-            android:id="@+id/addOrderStage_spinner"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_order_view_parent_viewGroup"
+            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
-            android:spinnerMode="dropdown"
-            android:layout_weight="2"
-            android:dropDownVerticalOffset="-50dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/orderAdd_imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_black_48dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
-    <Button
-        android:id="@+id/orderAdd_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ADD"
-        android:layout_below="@id/orderAdd_spinner_container"
-        android:layout_alignParentStart="true" />
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            tools:context="com.pranjals.nsit.jobtracker.OrderAddActivity">
 
-</RelativeLayout>
+            <EditText
+                android:id="@+id/orderAdd_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textLongMessage"
+                android:hint="Order Name"
+                android:ems="10"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/orderAdd_cid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_below="@id/orderAdd_name"
+                android:layout_alignEnd="@id/orderAdd_name"
+                android:hint="Customer ID" />
+
+            <EditText
+                android:id="@+id/orderAdd_eid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_below="@id/orderAdd_cid"
+                android:layout_alignEnd="@id/orderAdd_cid"
+                android:hint="Employee ID" />
+
+            <EditText
+                android:id="@+id/orderAdd_doo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date of Booking"
+                android:onClick="onAddDateClicked"
+                android:focusable="false"
+                android:ems="10"
+                android:layout_below="@id/orderAdd_eid"
+                android:layout_alignEnd="@id/orderAdd_eid" />
+
+            <EditText
+                android:id="@+id/orderAdd_doc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date of Completion"
+                android:onClick="onAddDateClicked"
+                android:focusable="false"
+                android:ems="10"
+                android:layout_below="@id/orderAdd_doo"
+                android:layout_alignEnd="@id/orderAdd_doo" />
+
+            <LinearLayout
+                android:id="@+id/orderAdd_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/orderAdd_doc"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/orderAdd_spinner_container"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:layout_below="@id/orderAdd_container">
+                <Spinner
+                    android:layout_below="@+id/orderAdd_container"
+                    android:id="@+id/addOrderStage_spinner"
+                    android:layout_width="match_parent"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="2"
+                    android:dropDownVerticalOffset="-50dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/orderAdd_imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_black_48dp"
+                    android:layout_weight="0"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/orderAdd_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ADD"
+                android:layout_below="@id/orderAdd_spinner_container"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

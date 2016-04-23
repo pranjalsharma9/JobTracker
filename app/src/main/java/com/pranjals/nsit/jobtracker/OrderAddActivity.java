@@ -125,9 +125,9 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
                 editText = (EditText) findViewById(R.id.orderAdd_eid);
                 long eid = Integer.parseInt(editText.getText().toString());
                 editText = (EditText) findViewById(R.id.orderAdd_doo);
-                String doo = editText.getText().toString();
+                String doo = DBHelper.getYYYYMMDD(editText.getText().toString());
                 editText = (EditText) findViewById(R.id.orderAdd_doc);
-                String doc = editText.getText().toString();
+                String doc = DBHelper.getYYYYMMDD(editText.getText().toString());
 
                 ContentValues values = new ContentValues();
 
@@ -194,7 +194,11 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        String date = Integer.toString(day) + "/" + Integer.toString(month + 1) + "/" + Integer.toString(year);
+        String dayString = Integer.toString(day);
+        if(day < 10){dayString = "0" + dayString;}
+        String monthString = Integer.toString(month + 1);
+        if((month + 1) < 10){monthString = "0" + monthString;}
+        String date = dayString + "-" + monthString + "-" + Integer.toString(year);
         editTextSelectedForDateInput.setText(date);
     }
 

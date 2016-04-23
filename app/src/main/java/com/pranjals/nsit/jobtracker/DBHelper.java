@@ -163,9 +163,19 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.query(tableToQuery,null,null,null,null,null,null);
         String[] allColDataTypes = c.getColumnNames();
         for(int i=constantToRefer+1;i<c.getColumnCount();i++)
-            colDataTypes.add(allColDataTypes[i].substring(allColDataTypes[i].length() - 4));
+            colDataTypes.add(allColDataTypes[i].substring(allColDataTypes[i].length() - 4).replace("_", " "));
         c.close();
         return colDataTypes;
+    }
+
+    public static String getYYYYMMDD(String DDMMYYYY){
+        String YYYYMMDD = DDMMYYYY.substring(6, 10) + "-" + DDMMYYYY.substring(3, 5) + "-" + DDMMYYYY.substring(0, 2);
+        return YYYYMMDD;
+    }
+
+    public static String getDDMMYYYY(String YYYYMMDD){
+        String DDMMYYYY = YYYYMMDD.substring(8, 10) + "-" + YYYYMMDD.substring(5, 7) + "-" + YYYYMMDD.substring(0, 4);
+        return DDMMYYYY;
     }
 
 }
