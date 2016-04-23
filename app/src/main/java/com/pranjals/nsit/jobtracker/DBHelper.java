@@ -2,11 +2,9 @@ package com.pranjals.nsit.jobtracker;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -17,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private Context callingActivity;
     private static DBHelper dbHelper;
-    public static int DEF_ORDER_COLS = 7;
+    public static int DEF_ORDER_COLS = 8;
     public static int DEF_CUSTOMER_COLS = 5;
     public static int DEF_EMPLOYEE_COLS = 2;
 
@@ -73,7 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void createTables(String createOrderTableString, String createCustomerTableString, String createEmployeeTableString){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("CREATE TABLE orders (_id INTEGER PRIMARY KEY, name TEXT, cid INTEGER, eid INTEGER, doo TEXT, doc TEXT, curStage INTEGER, stageId TEXT"
+        db.execSQL("CREATE TABLE orders (_id INTEGER PRIMARY KEY, name TEXT, cid INTEGER, eid INTEGER, doo TEXT, doc TEXT, curStage INTEGER, stageId TEXT, totalStages INTEGER"
                 + createOrderTableString + ")");
         db.execSQL("CREATE TABLE customers (_id INTEGER PRIMARY KEY,image BLOB, name TEXT, mobile TEXT, email TEXT, address TEXT"
                 + createCustomerTableString + ")");

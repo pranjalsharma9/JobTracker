@@ -94,10 +94,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         drawerLayout.setDrawerListener(barDrawerToggle);
         barDrawerToggle.syncState();
 
-
-
-
-
         TextView countOrder = (TextView)navigationView.getMenu().getItem(0).getActionView();
         countOrder.setText("12");
         TextView countCustomer = (TextView)navigationView.getMenu().getItem(1).getActionView();
@@ -196,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 } while (c.moveToNext());
             }
 
-
         }
 
     }
@@ -240,14 +235,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if(requestCode==0&&resultCode==RESULT_OK){
             orders = new ArrayList<>();
             String projection[] = {"_id","name", "doo", "doc", "cid", "eid"};
-
-
-
-
-            ///// here
-
-
-
 
             Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,"date(doc)");
             if (c.moveToFirst()) {

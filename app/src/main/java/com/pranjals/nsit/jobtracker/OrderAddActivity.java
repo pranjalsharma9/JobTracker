@@ -34,6 +34,7 @@ import java.util.Calendar;
 public class OrderAddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private String stageId = "1";
+    private int totalStages;
     private StageSpinnerAdapter spinnerAdapter;
 
     private ArrayList<String> extraCols;
@@ -65,7 +66,12 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 stageId = position + 1 +"";
-
+                String projection[] = {"total"};
+                String selectionArgs[] = {stageId};
+                Cursor c = getContentResolver().query(DBContentProvider.STAGE_URI,projection,"_id = ?",selectionArgs,null);
+                if (c.moveToFirst()) {
+                    totalStages = Integer.parseInt(c.getString(c.getColumnIndex("total")));
+                }
             }
 
             @Override
@@ -131,13 +137,14 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
 
                 ContentValues values = new ContentValues();
 
-                    values.put("name", name);
-                    values.put("cid", cid);
-                    values.put("eid",eid);
-                    values.put("doo", doo);
-                    values.put("doc", doc);
-                    values.put("stageId", stageId);
-                    values.put("curStage", 0);
+                values.put("name", name);
+                values.put("cid", cid);
+                values.put("eid", eid);
+                values.put("doo", doo);
+                values.put("doc", doc);
+                values.put("stageId", stageId);
+                values.put("curStage", 0);
+                values.put("totalStages", totalStages);
 
 
                 for(int i=0;i<extraCols.size();i++)
@@ -185,6 +192,7 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
         if(requestCode==2 && resultCode ==RESULT_OK){
             String projection[] = {"_id","type"};
             stageId = data.getExtras().getString("stageId");
+            totalStages = data.getExtras().getInt("totalStages");
             spinnerAdapter.changeCursor( getContentResolver().query(DBContentProvider.STAGE_URI,projection,null,null,null));
             spinnerAdapter.notifyDataSetChanged();
         }

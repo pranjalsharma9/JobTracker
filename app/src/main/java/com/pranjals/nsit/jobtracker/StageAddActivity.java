@@ -121,6 +121,7 @@ public class StageAddActivity extends FragmentActivity {
                 String id = uri.getLastPathSegment();
               //  Log.e("lsmlmdlsmlsmlmsdlmds",id);
                 intent.putExtra("stageId",id);
+                intent.putExtra("totalStages",totalStages);
                 setResult(RESULT_OK,intent);
                 finish();
             }

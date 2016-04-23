@@ -12,44 +12,44 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/appBar"
-                android:layout_width="match_parent"
-                android:background="#01579B"
-                android:layout_height="180dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_height="wrap_content" >
 
-                >
-                <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/collapsing_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    app:contentScrim="#01579B"
-                    android:fitsSystemWindows="true">
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/my_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="Job Tracker"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:layout_collapseMode="pin"
-                app:titleTextColor="#ffffff"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            />
-                </android.support.design.widget.CollapsingToolbarLayout>
-            </android.support.design.widget.AppBarLayout>
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="180dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/OrderRecyclerView_homescreen"
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:padding="10dp"
-                android:layout_marginTop="30dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                />
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="@color/colorPrimaryDark"
+                android:fitsSystemWindows="true">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/my_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="Job Tracker"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:layout_collapseMode="pin"
+                    app:titleTextColor="#ffffff"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/OrderRecyclerView_homescreen"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_marginTop="30dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.FloatingActionButton android:id="@+id/fab_scan"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -57,6 +57,7 @@
             app:layout_anchorGravity="bottom|end" android:src="@drawable/ic_qrcode_white_36dp" />
 
     </android.support.design.widget.CoordinatorLayout>
+
     <android.support.design.widget.NavigationView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/navigation_view"
@@ -64,5 +65,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/nav_menu"/>
+        app:menu="@menu/nav_menu" />
+
 </android.support.v4.widget.DrawerLayout>
