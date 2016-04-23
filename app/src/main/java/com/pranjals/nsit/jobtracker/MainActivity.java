@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if(sharedPreferences.contains(isFirstTime)) {
            // Log.e("sdsdsddss","sdsdsds");
            // orders = new ArrayList<>();
-            String projection[] = {"_id", "name", "doo", "doc", "cid", "eid"};
+            String projection[] = {"_id", "name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
             Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, "date(doc)");
             if (c.moveToFirst()) {
                 do {
@@ -188,7 +188,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
                     String cid = c.getString(c.getColumnIndex("cid"));
                     String eid = c.getString(c.getColumnIndex("eid"));
-                    orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc));
+                    int curStage = c.getInt(c.getColumnIndex("curStage"));
+                    int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                    orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
                 } while (c.moveToNext());
             }
 
@@ -234,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         if(requestCode==0&&resultCode==RESULT_OK){
             orders = new ArrayList<>();
-            String projection[] = {"_id","name", "doo", "doc", "cid", "eid"};
+            String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
 
             Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,"date(doc)");
             if (c.moveToFirst()) {
@@ -245,7 +247,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
                     String cid = c.getString(c.getColumnIndex("cid"));
                     String eid = c.getString(c.getColumnIndex("eid"));
-                    orders.add(new Order(Long.parseLong(_id),name,Long.parseLong(cid),Long.parseLong(eid),doo,doc));
+                    int curStage = c.getInt(c.getColumnIndex("curStage"));
+                    int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                    orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
                 } while(c.moveToNext());
             }
 

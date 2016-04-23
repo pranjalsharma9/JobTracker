@@ -36,7 +36,7 @@ public class OrderListActivity extends AppCompatActivity {
 
         sortOrder = null;
 
-        String projection[] = {"_id","name", "doo", "doc", "cid", "eid"};
+        String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,sortOrder);
         if (c.moveToFirst()) {
             do {
@@ -46,7 +46,9 @@ public class OrderListActivity extends AppCompatActivity {
                 String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
                 String cid = c.getString(c.getColumnIndex("cid"));
                 String eid = c.getString(c.getColumnIndex("eid"));
-                orders.add(new Order(Long.parseLong(_id),name,Long.parseLong(cid),Long.parseLong(eid),doo,doc));
+                int curStage = c.getInt(c.getColumnIndex("curStage"));
+                int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
             } while(c.moveToNext());
         }
 
@@ -111,7 +113,7 @@ public class OrderListActivity extends AppCompatActivity {
     public void refreshListOnSort(String sortOrder){
 
         orders = new ArrayList<>();
-        String projection[] = {"_id","name", "doo", "doc", "cid", "eid"};
+        String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
 
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,sortOrder);
         if (c.moveToFirst()) {
@@ -122,7 +124,9 @@ public class OrderListActivity extends AppCompatActivity {
                 String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
                 String cid = c.getString(c.getColumnIndex("cid"));
                 String eid = c.getString(c.getColumnIndex("eid"));
-                orders.add(new Order(Long.parseLong(_id),name,Long.parseLong(cid),Long.parseLong(eid),doo,doc));
+                int curStage = c.getInt(c.getColumnIndex("curStage"));
+                int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
             } while(c.moveToNext());
         }
 

@@ -166,18 +166,20 @@ public class HomeScreen extends AppCompatActivity {
         }
     });
 
-        String projection[] = {"_id","name", "doo", "doc", "cid","eid"};
-        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,null);
+        String projection[] = {"_id", "name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
+        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, "date(doc)");
         if (c.moveToFirst()) {
             do {
                 String _id = c.getString(c.getColumnIndex("_id"));
                 String name = c.getString(c.getColumnIndex("name"));
-                String doo = c.getString(c.getColumnIndex("doo"));
-                String doc = c.getString(c.getColumnIndex("doc"));
+                String doo = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doo")));
+                String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
                 String cid = c.getString(c.getColumnIndex("cid"));
                 String eid = c.getString(c.getColumnIndex("eid"));
-                orders.add(new Order(Long.parseLong(_id),name,Long.parseLong(cid),Long.parseLong(eid),doo,doc));
-            } while(c.moveToNext());
+                int curStage = c.getInt(c.getColumnIndex("curStage"));
+                int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
+            } while (c.moveToNext());
         }
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.OrderRecyclerView_homescreen);

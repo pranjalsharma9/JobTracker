@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -70,12 +71,15 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((MyItemHolder_detailed)holder).setName(order.getName());
             ((MyItemHolder_detailed)holder).setCid(order.getCid() + "");
             ((MyItemHolder_detailed)holder).setDoc(order.getDoc());
-            ((MyItemHolder_detailed)holder).setDoo(order.getDoo());}
+            ((MyItemHolder_detailed)holder).setDoo(order.getDoo());
+            ((MyItemHolder_detailed)holder).setProgressBar(order.getCurStage(), order.getTotalStages());
+        }
         else {
             ((MyItemHolder)holder).setName(order.getName());
             ((MyItemHolder)holder).setCid(order.getCid() + "");
             ((MyItemHolder)holder).setDoc(order.getDoc());
-            ((MyItemHolder)holder).setDoo(order.getDoo());
+            ((MyItemHolder) holder).setDoo(order.getDoo());
+            ((MyItemHolder)holder).setProgressBar(order.getCurStage(), order.getTotalStages());
         }
 
 
@@ -102,6 +106,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         TextView name,doo,doc,cid;
         ImageView orderImg;
+        ProgressBar progressBar;
 
         public MyItemHolder(final CardView itemView) {
             super(itemView);
@@ -110,6 +115,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             doc = (TextView)itemView.findViewById(R.id.cardView_doc);
             cid = (TextView)itemView.findViewById(R.id.cardView_cid);
             orderImg = (ImageView)itemView.findViewById(R.id.cardView_image);
+            progressBar = (ProgressBar)itemView.findViewById(R.id.order_card_progress_bar);
 
             // Setup the click listener
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +142,13 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public void setName(String s) {
             name.setText(s);
+        }
+
+        public void setProgressBar(int curStage, int totalStages) {
+            progressBar.setIndeterminate(false);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            progressBar.setProgress(curStage);
+            progressBar.setMax(totalStages);
         }
 
     }
@@ -145,6 +158,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         TextView name,doo,doc,cid;
         ImageView orderImg;
+        ProgressBar progressBar;
 
         public MyItemHolder_detailed(final CardView itemView) {
             super(itemView);
@@ -152,7 +166,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             doo = (TextView)itemView.findViewById(R.id.cardView_detail_doo);
             doc = (TextView)itemView.findViewById(R.id.cardView_detail_doc);
             cid = (TextView)itemView.findViewById(R.id.cardView_detail_cid);
-            orderImg = (ImageView)itemView.findViewById(R.id.cardView_detail_image);
+            progressBar = (ProgressBar)itemView.findViewById(R.id.order_card_progress_bar);
 
             // Setup the click listener
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +193,13 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public void setName(String s) {
             name.setText(s);
+        }
+
+        public void setProgressBar(int curStage, int totalStages) {
+            progressBar.setIndeterminate(false);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            progressBar.setProgress(curStage);
+            progressBar.setMax(totalStages);
         }
 
     }

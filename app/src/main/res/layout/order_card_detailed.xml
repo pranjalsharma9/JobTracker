@@ -48,10 +48,16 @@
                 android:layout_height="wrap_content"
                 android:text="New Text" />
         </LinearLayout>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_text_format_black_48dp"
-            android:layout_weight="0"/>
+
+        <ProgressBar
+            android:id="@+id/order_card_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:padding="6dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/progress_bar_circular_drawable" />
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
