@@ -1,5 +1,7 @@
 package com.pranjals.nsit.jobtracker;
 
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.view.ViewGroup.LayoutParams;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -22,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,10 +40,12 @@ import java.util.ArrayList;
 /**
  * Created by Pranjal Verma on 4/17/2016.
  */
-public class CustomerEditActivity extends AppCompatActivity {
+public class CustomerEditActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private long customerId;
     private ArrayList<String> extraCols;
+    private ArrayList<String> extraColDataTypes;
+    private EditText editTextSelectedForDateInput;
     private int REQUEST_CAMERA=13,REQUEST_GALLERY=14;
     private ImageView imageToEdit;
     private Bitmap thumbnail;
@@ -60,19 +66,22 @@ public class CustomerEditActivity extends AppCompatActivity {
         FloatingActionButton takeImage = (FloatingActionButton)findViewById(R.id.fab_takeCustomerPic);
 
         extraCols = DBHelper.getInstance(CustomerEditActivity.this).getExtraCols(1);
+        extraColDataTypes = DBHelper.getInstance(CustomerEditActivity.this).getExtraOrderColDataTypes(1);
 
         LinearLayout container = (LinearLayout) findViewById(R.id.container_customerEdit);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
         customerId = getIntent().getLongExtra("customerId",0);
-        String[] value = new String[DBHelper.DEF_CUSTOMER_COLS+extraCols.size()-1];
+        String[] value = new String[DBHelper.DEF_CUSTOMER_COLS + extraCols.size()];
 
         if(customerId!=0){
             Cursor c = getContentResolver().query(DBContentProvider.CUSTOMER_URI,null,"_id = "+customerId,null,null);
             if(c!=null && c.moveToFirst()){
-                for(int i=0;i<value.length;i++)
-                    value[i] = c.getString(i+2);
+                for(int i=2;i<=value.length;i++) { // 0 is _id and 1 is blob image
+                    value[i - 2] = c.getString(i);
+                    //Log.v("values", c.getString(i));
+                }
             }
             byte[] bb = c.getBlob(c.getColumnIndex("image"));
             imageToEdit.setImageBitmap(BitmapFactory.decodeByteArray(bb, 0, bb.length));
@@ -89,13 +98,34 @@ public class CustomerEditActivity extends AppCompatActivity {
         et = (EditText)findViewById(R.id.et_customerEdit_address);
         et.setText(value[3]);
 
-        for (int i = 0; i < extraCols.size(); i++) {
 
-            View viewToAdd = inflater.inflate(R.layout.customer_add_dynamic_row, null);
-            EditText det = (EditText) viewToAdd.findViewById(R.id.customerAdd_dynamic_et);
-            det.setId(i);
-            det.setText(value[4+i]);
-            container.addView(viewToAdd);
+        for (int i = 0; i < extraCols.size(); i++) {
+            switch(extraColDataTypes.get(i)){
+                case "TEXT" :
+                    et = (EditText) inflater.inflate(R.layout.order_add_dynamic_row, null);
+                    et.setInputType(InputType.TYPE_CLASS_TEXT);
+                    et.setId(i);
+                    et.setText(value[i + DBHelper.DEF_CUSTOMER_COLS - 1]);
+                    break;
+                case "NUME" :
+                    et = (EditText) inflater.inflate(R.layout.order_add_dynamic_row, null);
+                    et.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    et.setId(i);
+                    et.setText(value[i + DBHelper.DEF_CUSTOMER_COLS - 1]);
+                    break;
+                case "DATE" :
+                    et = (EditText) inflater.inflate(R.layout.order_add_date_dynamic_row, null);
+                    et.setId(i);
+                    et.setText(value[i + DBHelper.DEF_CUSTOMER_COLS - 1]);
+                    break;
+                default :
+                    et = (EditText) inflater.inflate(R.layout.order_add_dynamic_row, null);
+                    et.setInputType(InputType.TYPE_CLASS_TEXT);
+                    et.setId(i);
+                    et.setText(value[i + DBHelper.DEF_CUSTOMER_COLS - 1]);
+                    break;
+            }
+            container.addView(et);
         }
 
 
@@ -184,38 +214,38 @@ public class CustomerEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-        case R.id.done_edit_customer:
-                            String name = ((EditText)findViewById(R.id.et_customerEdit_name)).getText().toString();
-                            String mobile = ((EditText)findViewById(R.id.et_customerEdit_mobile)).getText().toString();
-                            String address = ((EditText)findViewById(R.id.et_customerEdit_address)).getText().toString();
-                            String email = ((EditText)findViewById(R.id.et_customerEdit_email)).getText().toString();
+            case R.id.done_edit_customer:
+                String name = ((EditText)findViewById(R.id.et_customerEdit_name)).getText().toString();
+                String mobile = ((EditText)findViewById(R.id.et_customerEdit_mobile)).getText().toString();
+                String address = ((EditText)findViewById(R.id.et_customerEdit_address)).getText().toString();
+                String email = ((EditText)findViewById(R.id.et_customerEdit_email)).getText().toString();
 
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            thumbnail = ((BitmapDrawable)imageToEdit.getDrawable()).getBitmap();
-            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] bitMapData = stream.toByteArray();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                thumbnail = ((BitmapDrawable)imageToEdit.getDrawable()).getBitmap();
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bitMapData = stream.toByteArray();
 
 
-            ContentValues cvalues = new ContentValues();
-            cvalues.put("name",name);
-            cvalues.put("mobile", mobile);
-            cvalues.put("email", email);
-            cvalues.put("address", address);
-            cvalues.put("image", bitMapData);
+                ContentValues cvalues = new ContentValues();
+                cvalues.put("name",name);
+                cvalues.put("mobile", mobile);
+                cvalues.put("email", email);
+                cvalues.put("address", address);
+                cvalues.put("image", bitMapData);
 
 
-                             for(int i=0;i<extraCols.size();i++){
-                                 String toAdd = ((EditText)findViewById(i)).getText().toString();
-                                 cvalues.put(extraCols.get(i),toAdd);
-                             }
+                for(int i=0;i<extraCols.size();i++){
+                    String toAdd = ((EditText)findViewById(i)).getText().toString();
+                    cvalues.put(extraCols.get(i) + extraColDataTypes.get(i),toAdd);
+                }
 
-                            getContentResolver().update(DBContentProvider.CUSTOMER_URI, cvalues, "_id = " + customerId, null);
-            Log.e("dssdsdssdds", customerId + "");
+                getContentResolver().update(DBContentProvider.CUSTOMER_URI, cvalues, "_id = " + customerId, null);
+                //Log.e("dssdsdssdds", customerId + "");
 
-                            setResult(RESULT_OK);
-                            //finish();
-                            break;
+                setResult(RESULT_OK);
+                finish();
+                break;
 
 
         }
@@ -262,6 +292,22 @@ public class CustomerEditActivity extends AppCompatActivity {
         }
         else
             Toast.makeText(CustomerEditActivity.this,"Sorry! Something went wrong.Try using another application",Toast.LENGTH_SHORT).show();
+    }
+
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        // Do something with the date chosen by the user
+        String dayString = Integer.toString(day);
+        if(day < 10){dayString = "0" + dayString;}
+        String monthString = Integer.toString(month + 1);
+        if((month + 1) < 10){monthString = "0" + monthString;}
+        String date = dayString + "-" + monthString + "-" + Integer.toString(year);
+        editTextSelectedForDateInput.setText(date);
+    }
+
+    public void onAddDateClicked (View view){
+        editTextSelectedForDateInput = ((EditText) view);
+        DialogFragment dialogFragment = new DatePickerFragment();
+        dialogFragment.show(getFragmentManager(), "date picker");
     }
 }
 

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 
 public class OrderListActivity extends AppCompatActivity {
 
+    static public final String START_FOR_CID = "cidToDisplayFor";
+    private String selectionString;
     private String sortOrder;
     private PopupWindow openedPopupWindow;
     ArrayList<Order> orders;
@@ -40,6 +42,11 @@ public class OrderListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        Intent intent = getIntent();
+        if(intent.hasExtra(START_FOR_CID))
+            selectionString = "cid = " + Long.toString(getIntent().getLongExtra(START_FOR_CID, 1));
+        else selectionString = null;
 
         orders = new ArrayList<>();
         //final ArrayList<Order> ordersFinal = orders;
@@ -132,7 +139,7 @@ public class OrderListActivity extends AppCompatActivity {
         orders = new ArrayList<>();
         String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
 
-        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, sortOrder);
+        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, selectionString, null, sortOrder);
         if (c.moveToFirst()) {
             do {
                 String _id = c.getString(c.getColumnIndex("_id"));

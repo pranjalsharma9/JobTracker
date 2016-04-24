@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
@@ -29,8 +28,6 @@ public class CustomerViewActivity extends AppCompatActivity {
     public static final String START_WITH_ID = "_idOfCustomerToView";
     private ArrayList<String> extraCols;
     ArrayList<Order> orders;
-    OrderRecyclerView adapter;
-    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +57,7 @@ public class CustomerViewActivity extends AppCompatActivity {
         if(c!=null && c.moveToFirst()){
             for(int i=2;i<=colValues.length;i++) { // 0 is _id and 1 is blob image
                 colValues[i - 2] = c.getString(i);
-                Log.v("values", c.getString(i));
+                //Log.v("values", c.getString(i));
             }
             byte[] bb = c.getBlob(c.getColumnIndex("image"));
             image.setImageBitmap(BitmapFactory.decodeByteArray(bb, 0, bb.length));
@@ -84,30 +81,24 @@ public class CustomerViewActivity extends AppCompatActivity {
 
         //Setting the recycler view for customer related orders
         orders = new ArrayList<>();
-
-        recyclerView = (RecyclerView)findViewById(R.id.OrderRecyclerView);
-        adapter = new OrderRecyclerView(orders);
-        adapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, long _id) {
-                startOrderViewActivity(_id);
-            }
-        });
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
 
     @Override
     protected void onResume(){
         super.onResume();
-        refreshRecyclerView();
+        refreshOrderList();
     }
 
     private void startOrderViewActivity(Long _id){
         Intent intent = new Intent(this, OrderViewActivity.class);
         intent.putExtra(OrderViewActivity.START_WITH_ID, _id);
+        startActivity(intent);
+    }
+
+    public void onShowAllButtonClicked(View view){
+        Intent intent = new Intent(this, OrderListActivity.class);
+        intent.putExtra(OrderListActivity.START_FOR_CID, customerIdTobeViewed);
         startActivity(intent);
     }
 
@@ -165,13 +156,13 @@ public class CustomerViewActivity extends AppCompatActivity {
     }
 
 
-    public void refreshRecyclerView(){
+    public void refreshOrderList(){
 
         orders = new ArrayList<>();
         String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
         String selectionArgs[] = {Long.toString(customerIdTobeViewed)};
-        Log.v("ordercard", "customerId = " + Long.toString(customerIdTobeViewed));
-        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,"cid = ?",selectionArgs,"(curStage*1.0)/(totalStages*1.0)");
+        //Log.v("ordercard", "customerId = " + Long.toString(customerIdTobeViewed));
+        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,"cid = ?",selectionArgs,"(curStage*1.0)/(totalStages*1.0) LIMIT 5");
         if (c.moveToFirst()) {
             do {
 
@@ -188,9 +179,38 @@ public class CustomerViewActivity extends AppCompatActivity {
             } while(c.moveToNext());
         }
 
-        adapter = new OrderRecyclerView(orders);
-        recyclerView.swapAdapter(adapter, false);
+        LinearLayout orderContainer = (LinearLayout) findViewById(R.id.order_card_container);
+        orderContainer.removeAllViews();
 
+        LayoutInflater layoutInflater = getLayoutInflater();
+
+        for (int i = 0; i < orders.size(); i++) {
+            View cardView = layoutInflater.inflate(R.layout.order_list_card, null);
+            TextView tv = (TextView)cardView.findViewById(R.id.cardView_name);
+            tv.setText(orders.get(i).getName());
+            cardView.setTag(orders.get(i).get_id());
+            tv = (TextView)cardView.findViewById(R.id.cardView_doo);
+            tv.setText(orders.get(i).getDoo());
+            tv = (TextView)cardView.findViewById(R.id.cardView_doc);
+            tv.setText(orders.get(i).getDoc());
+            tv = (TextView)cardView.findViewById(R.id.cardView_cid);
+            tv.setText(Long.toString(orders.get(i).getCid()));
+            ImageView orderImg = (ImageView)cardView.findViewById(R.id.cardView_image);
+            ProgressBar progressBar = (ProgressBar)cardView.findViewById(R.id.order_card_progress_bar);
+            progressBar.setIndeterminate(false);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            progressBar.setProgress(orders.get(i).getCurStage());
+            progressBar.setMax(orders.get(i).getTotalStages());
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startOrderViewActivity(Long.parseLong(v.getTag().toString()));
+                }
+            });
+
+            orderContainer.addView(cardView);
+        }
     }
 
 
