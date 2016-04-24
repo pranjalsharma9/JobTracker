@@ -3,24 +3,20 @@ package com.pranjals.nsit.jobtracker;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -67,7 +63,7 @@ public class OrderViewActivity extends AppCompatActivity {
         isFirstLayoutLoad = true;
 
         //Remove for testing
-        ArrayList<String> extraCols = DBHelper.getInstance(OrderViewActivity.this).getExtraOrderCols(0);
+        ArrayList<String> extraCols = DBHelper.getInstance(OrderViewActivity.this).getExtraCols(0);
 
         /*Just for testing, Temporary code
         ArrayList<String> extraCols = new ArrayList<>();

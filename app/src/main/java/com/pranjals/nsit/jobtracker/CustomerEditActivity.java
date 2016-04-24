@@ -2,15 +2,11 @@ package com.pranjals.nsit.jobtracker;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.ViewGroup.LayoutParams;
 import android.database.Cursor;
@@ -24,7 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,7 +31,6 @@ import android.widget.Toast;
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -64,7 +59,7 @@ public class CustomerEditActivity extends AppCompatActivity {
         imageToEdit = (ImageView)findViewById(R.id.image_customerEdit);
         FloatingActionButton takeImage = (FloatingActionButton)findViewById(R.id.fab_takeCustomerPic);
 
-        extraCols = DBHelper.getInstance(CustomerEditActivity.this).getExtraOrderCols(1);
+        extraCols = DBHelper.getInstance(CustomerEditActivity.this).getExtraCols(1);
 
         LinearLayout container = (LinearLayout) findViewById(R.id.container_customerEdit);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -163,6 +158,15 @@ public class CustomerEditActivity extends AppCompatActivity {
                 float offsetPositiony = 150f*(getResources().getDisplayMetrics().density);
                 popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupWindow.showAsDropDown(imageToEdit, (int) (offsetPosition), (int) (-offsetPositiony));
+
+                //to dim the background as  popup window is opened
+
+                View container = (View) popupWindow.getContentView().getParent();
+                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                p.dimAmount = 0.5f;
+                wm.updateViewLayout(container, p);
 
             }
         });

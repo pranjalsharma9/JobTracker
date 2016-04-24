@@ -101,7 +101,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //function returns the list of all the column names of table 'orders' added dynamically in beginning.
-    public ArrayList<String> getExtraOrderCols(int tableSelection){
+    public ArrayList<String> getExtraCols(int tableSelection){
 
         ArrayList<String> cols = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
