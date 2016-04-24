@@ -5,11 +5,16 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,6 +36,11 @@ public class OrderListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         orders = new ArrayList<>();
         //final ArrayList<Order> ordersFinal = orders;
 
@@ -54,6 +64,7 @@ public class OrderListActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView)findViewById(R.id.OrderRecyclerView);
         adapter = new OrderRecyclerView(orders);
+        refreshListOnSort(sortOrder);
         adapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, long _id) {
@@ -69,7 +80,7 @@ public class OrderListActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        refreshListOnSort(sortOrder);
+       // refreshListOnSort(sortOrder);
     }
 
     private void startOrderViewActivity(Long _id){
@@ -121,7 +132,7 @@ public class OrderListActivity extends AppCompatActivity {
         orders = new ArrayList<>();
         String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
 
-        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,sortOrder);
+        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, sortOrder);
         if (c.moveToFirst()) {
             do {
                 String _id = c.getString(c.getColumnIndex("_id"));
@@ -137,8 +148,72 @@ public class OrderListActivity extends AppCompatActivity {
         }
 
         adapter = new OrderRecyclerView(orders);
-        recyclerView.swapAdapter(adapter, false);
+        recyclerView.swapAdapter(adapter, true);
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_view);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("Search orders");
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                        recyclerView.swapAdapter(adapter,true);
+
+                        return true;
+                    }
+                }
+        );
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                String selection = "name = '" + query + "'";
+                String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
+                orders = new ArrayList<Order>() ;
+                Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, selection, null, null);
+                if (c.moveToFirst()) {
+                    do {
+                        String _id = c.getString(c.getColumnIndex("_id"));
+                        String name = c.getString(c.getColumnIndex("name"));
+                        String doo = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doo")));
+                        String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
+                        String cid = c.getString(c.getColumnIndex("cid"));
+                        String eid = c.getString(c.getColumnIndex("eid"));
+                        int curStage = c.getInt(c.getColumnIndex("curStage"));
+                        int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                        orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
+                    } while(c.moveToNext());
+                }
+
+
+                OrderRecyclerView oadapter = new OrderRecyclerView(orders);
+                recyclerView.swapAdapter(oadapter, true);
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
+        return true;
+    }
+
 
 }
