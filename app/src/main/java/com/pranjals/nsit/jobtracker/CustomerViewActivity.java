@@ -41,7 +41,7 @@ public class CustomerViewActivity extends AppCompatActivity {
         LinearLayout container = (LinearLayout)findViewById(R.id.customerView_container);
         LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        extraCols = DBHelper.getInstance(CustomerViewActivity.this).getExtraOrderCols(1);
+        extraCols = DBHelper.getInstance(CustomerViewActivity.this).getExtraCols(1);
 
         TextView name = (TextView)findViewById(R.id.customerView_name);
         TextView mobile = (TextView)findViewById(R.id.customerView_mobile);
