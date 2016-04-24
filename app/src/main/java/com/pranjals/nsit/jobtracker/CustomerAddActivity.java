@@ -45,7 +45,7 @@ public class CustomerAddActivity extends AppCompatActivity implements DatePicker
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_add);
 
-        extraCols = DBHelper.getInstance(CustomerAddActivity.this).getExtraOrderCols(1);
+        extraCols = DBHelper.getInstance(CustomerAddActivity.this).getExtraCols(1);
         extraColDataTypes = DBHelper.getInstance(CustomerAddActivity.this).getExtraOrderColDataTypes(1);
 
         Button add = (Button) findViewById(R.id.customerAdd_button);
