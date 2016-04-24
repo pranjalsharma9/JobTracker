@@ -167,8 +167,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         orderAdapter = new OrderRecyclerView(orders);
         orderAdapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                startOrderViewActivity(orders.get(position).get_id());
+            public void onItemClick(View view, long _id) {
+                startOrderViewActivity(_id);
 
             }
         });

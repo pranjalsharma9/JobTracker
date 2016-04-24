@@ -26,7 +26,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static OnItemClickListener listener;
     // Define the listener interface
     public interface OnItemClickListener {
-        void onItemClick(View itemView, int position);
+        void onItemClick(View itemView, long _id);
     }
     // Define the method that allows the parent activity or fragment to define the listener
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -68,23 +68,22 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         Order order = orders.get(position);
         if(position==0){
-            ((MyItemHolder_detailed)holder).setName(order.getName());
+            ((MyItemHolder_detailed)holder).setName(order.getName(), order.get_id());
             ((MyItemHolder_detailed)holder).setCid(order.getCid() + "");
             ((MyItemHolder_detailed)holder).setDoc(order.getDoc());
             ((MyItemHolder_detailed)holder).setDoo(order.getDoo());
             ((MyItemHolder_detailed)holder).setProgressBar(order.getCurStage(), order.getTotalStages());
         }
         else {
-            ((MyItemHolder)holder).setName(order.getName());
+            ((MyItemHolder)holder).setName(order.getName(), order.get_id());
             ((MyItemHolder)holder).setCid(order.getCid() + "");
             ((MyItemHolder)holder).setDoc(order.getDoc());
-            ((MyItemHolder) holder).setDoo(order.getDoo());
+            ((MyItemHolder)holder).setDoo(order.getDoo());
             ((MyItemHolder)holder).setProgressBar(order.getCurStage(), order.getTotalStages());
         }
 
 
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -123,7 +122,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     // Triggers click upwards to the adapter on click
                     if (listener != null)
-                        listener.onItemClick(itemView, getLayoutPosition());
+                        listener.onItemClick(itemView,  Long.parseLong(itemView.findViewById(R.id.cardView_name).getTag().toString()));
                 }
             });
         }
@@ -140,8 +139,9 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             doo.setText(s);
         }
 
-        public void setName(String s) {
+        public void setName(String s, long _id) {
             name.setText(s);
+            name.setTag(_id);
         }
 
         public void setProgressBar(int curStage, int totalStages) {
@@ -174,7 +174,7 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     // Triggers click upwards to the adapter on click
                     if (listener != null)
-                        listener.onItemClick(itemView, getLayoutPosition());
+                        listener.onItemClick(itemView, Long.parseLong(itemView.findViewById(R.id.cardView_detail_name).getTag().toString()));
                 }
             });
         }
@@ -191,8 +191,9 @@ public class OrderRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             doo.setText(s);
         }
 
-        public void setName(String s) {
+        public void setName(String s, long _id) {
             name.setText(s);
+            name.setTag(_id);
         }
 
         public void setProgressBar(int curStage, int totalStages) {

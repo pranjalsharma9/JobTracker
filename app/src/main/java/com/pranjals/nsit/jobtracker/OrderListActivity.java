@@ -32,11 +32,11 @@ public class OrderListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
         orders = new ArrayList<>();
-        final ArrayList<Order> ordersFinal = orders;
+        //final ArrayList<Order> ordersFinal = orders;
 
         sortOrder = null;
 
-        String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
+        /*String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,sortOrder);
         if (c.moveToFirst()) {
             do {
@@ -50,20 +50,26 @@ public class OrderListActivity extends AppCompatActivity {
                 int totalStages = c.getInt(c.getColumnIndex("totalStages"));
                 orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
             } while(c.moveToNext());
-        }
+        }*/
 
         recyclerView = (RecyclerView)findViewById(R.id.OrderRecyclerView);
         adapter = new OrderRecyclerView(orders);
         adapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                startOrderViewActivity(ordersFinal.get(position).get_id());
+            public void onItemClick(View view, long _id) {
+                startOrderViewActivity(_id);
 
             }
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        refreshListOnSort(sortOrder);
     }
 
     private void startOrderViewActivity(Long _id){
