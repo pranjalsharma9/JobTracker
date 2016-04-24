@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.home_navigation_drawer);
 
 
-         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);;
         if(!(sharedPreferences.contains(isFirstTime))){
             Intent intent = new Intent(this, BuildDBActivity.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build();
+                .requestEmail()
+                .build();
         apiClient =  new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
 
@@ -176,8 +176,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(sharedPreferences.contains(isFirstTime)) {
-           // Log.e("sdsdsddss","sdsdsds");
-           // orders = new ArrayList<>();
+            // Log.e("sdsdsddss","sdsdsds");
+            // orders = new ArrayList<>();
             String projection[] = {"_id", "name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
             Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, "date(doc)");
             if (c.moveToFirst()) {
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(scanResult!=null&&IntentIntegrator.REQUEST_CODE==requestCode&&resultCode==RESULT_OK){
-                 long scanned_orderId;
+            long scanned_orderId;
             try{ scanned_orderId= Long.parseLong(scanResult.getContents());
                 Intent intent = new Intent(MainActivity.this,OrderViewActivity.class);
                 intent.putExtra(OrderViewActivity.START_WITH_ID,scanned_orderId);
@@ -265,10 +265,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         if(requestCode==SIGN_IN&&resultCode==RESULT_OK){
-                setSignInMenu(sharedPreferences.contains("ownerName"));
-                String ownerName = sharedPreferences.getString("ownerName","You are not logged in");
-                String ownerEmail = sharedPreferences.getString("ownerEmail", "Sign in from below");
-                setNavigationMenuHeader(ownerName, ownerEmail);
+            setSignInMenu(sharedPreferences.contains("ownerName"));
+            String ownerName = sharedPreferences.getString("ownerName","You are not logged in");
+            String ownerEmail = sharedPreferences.getString("ownerEmail", "Sign in from below");
+            setNavigationMenuHeader(ownerName, ownerEmail);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -338,4 +338,37 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshRecyclerView();
+    }
+
+    public void refreshRecyclerView(){
+
+        orders = new ArrayList<>();
+        String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
+        Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI,projection,null,null,"date(doc)");
+        if (c.moveToFirst()) {
+            do {
+
+                Log.v("ordercard", "Got a result!");
+                String _id = c.getString(c.getColumnIndex("_id"));
+                String name = c.getString(c.getColumnIndex("name"));
+                String doo = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doo")));
+                String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
+                String cid = c.getString(c.getColumnIndex("cid"));
+                String eid = c.getString(c.getColumnIndex("eid"));
+                int curStage = c.getInt(c.getColumnIndex("curStage"));
+                int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
+            } while(c.moveToNext());
+        }
+
+        orderAdapter = new OrderRecyclerView(orders);
+        recyclerView.swapAdapter(orderAdapter, false);
+
+    }
+
 }
