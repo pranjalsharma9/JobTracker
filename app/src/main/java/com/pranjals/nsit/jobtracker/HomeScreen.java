@@ -11,13 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pranjals.nsit.jobtracker.ViewTables.TableListActivity;
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
 import java.util.ArrayList;
@@ -42,11 +42,11 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.home_navigation_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-         navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
         ActionBarDrawerToggle barDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_closed){
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -118,53 +118,59 @@ public class HomeScreen extends AppCompatActivity {
         countCustomer.setText("5");
         TextView countEmployee = (TextView)navigationView.getMenu().getItem(2).getActionView();
         countEmployee.setText("10");
+        TextView countTable = (TextView)navigationView.getMenu().getItem(3).getActionView();
+        countTable.setText("7");
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(MenuItem item) {
-            Intent intent;
-            switch(item.getItemId()){
-                case R.id.drawer_add_order :
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                Intent intent;
+                switch(item.getItemId()){
+                    case R.id.drawer_add_order :
                         //drawerLayout.closeDrawer(GravityCompat.START);
-                         intent = new Intent(HomeScreen.this,OrderAddActivity.class);
+                        intent = new Intent(HomeScreen.this,OrderAddActivity.class);
                         startActivity(intent);
                         break;
-                case R.id.drawer_add_customer :
-                    //drawerLayout.closeDrawer(GravityCompat.START);
-                     intent = new Intent(HomeScreen.this,CustomerAddActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.drawer_add_employee :
-                    //drawerLayout.closeDrawer(GravityCompat.START);
-                     Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.drawer_orders :
-                    //drawerLayout.closeDrawer(GravityCompat.START);
-                    intent = new Intent(HomeScreen.this,OrderListActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.drawer_customers :
-                    //drawerLayout.closeDrawer(GravityCompat.START);
-                    intent = new Intent(HomeScreen.this,CustomerListActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.drawer_employees :
-                    //drawerLayout.closeDrawer(GravityCompat.START);
-                    Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.drawer_setting_activity :
-                    //drawerLayout.closeDrawer(GravityCompat.START);
+                    case R.id.drawer_add_customer :
+                        //drawerLayout.closeDrawer(GravityCompat.START);
+                        intent = new Intent(HomeScreen.this,CustomerAddActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.drawer_add_employee :
+                        //drawerLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.drawer_orders :
+                        //drawerLayout.closeDrawer(GravityCompat.START);
+                        intent = new Intent(HomeScreen.this,OrderListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.drawer_customers :
+                        //drawerLayout.closeDrawer(GravityCompat.START);
+                        intent = new Intent(HomeScreen.this,CustomerListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.drawer_employees :
+                        //drawerLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.drawer_tables :
+                        intent = new Intent(HomeScreen.this,TableListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.drawer_setting_activity :
+                        //drawerLayout.closeDrawer(GravityCompat.START);
 //                    intent = new Intent(HomeScreen.this,CustomerListActivity.class);
 //                    startActivity(intent);
-                    Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
-                    break;
+                        Toast.makeText(HomeScreen.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+                return true;
             }
-            return true;
-        }
-    });
+        });
 
         String projection[] = {"_id", "name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
         Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, null, null, "date(doc)");
@@ -184,7 +190,7 @@ public class HomeScreen extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.OrderRecyclerView_homescreen);
         OrderRecyclerView orderAdapter = new OrderRecyclerView(orders);
-       orderAdapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
+        orderAdapter.setOnItemClickListener(new OrderRecyclerView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, long _id) {
                 startOrderViewActivity(_id);

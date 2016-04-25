@@ -25,6 +25,12 @@
             android:icon="@drawable/ic_gavel_black_24dp"
             android:title="Employees"/>
 
+        <item
+            android:id="@+id/drawer_tables"
+            app:actionLayout ="@layout/drawer_list_count"
+            android:icon="@drawable/ic_toc_black_24dp"
+            android:title="Tables"/>
+
     </group>
     <item
         android:id="@+id/drawer_add_new"

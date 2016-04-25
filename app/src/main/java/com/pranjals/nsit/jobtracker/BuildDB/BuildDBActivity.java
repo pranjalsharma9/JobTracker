@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -77,6 +78,13 @@ public class BuildDBActivity extends FragmentActivity {
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         float offsetPosition = 48f*(getResources().getDisplayMetrics().density);
         popupWindow.showAsDropDown(view, (int) (-offsetPosition), (int)(-offsetPosition/2));
+
+        View container = (View) popupWindow.getContentView().getParent();
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        p.dimAmount = 0.5f;
+        wm.updateViewLayout(container, p);
     }
 
     //when a button from the above popup window is tapped this function creates a new input field in

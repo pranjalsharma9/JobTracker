@@ -1,8 +1,5 @@
 package com.pranjals.nsit.jobtracker;
 
-import android.app.ProgressDialog;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -25,16 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.pranjals.nsit.jobtracker.BuildDB.BuildDBActivity;
 import com.pranjals.nsit.jobtracker.GoogleSignIn.SignInActivity;
+import com.pranjals.nsit.jobtracker.ViewTables.ViewTableActivity;
+import com.pranjals.nsit.jobtracker.ViewTables.TableListActivity;
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
 import java.util.ArrayList;
@@ -100,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         countCustomer.setText("5");
         TextView countEmployee = (TextView)navigationView.getMenu().getItem(2).getActionView();
         countEmployee.setText("10");
+        TextView countTable = (TextView)navigationView.getMenu().getItem(3).getActionView();
+        countTable.setText("7");
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -134,6 +132,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     case R.id.drawer_employees:
                         //drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(MainActivity.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.drawer_tables :
+                        intent = new Intent(MainActivity.this,TableListActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.drawer_setting_activity:
                         //drawerLayout.closeDrawer(GravityCompat.START);
@@ -275,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
 
-    public boolean chechIfSignedIn(){
+    public boolean checkIfSignedIn(){
 
         if(sharedPreferences.contains("ownerName")){
             return true;
@@ -333,16 +335,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onStart();
         //checks whether user has signed in and sets the
         // title of menu in navigation drawer
-        setSignInMenu(chechIfSignedIn());
-        setNavigationMenuHeader(sharedPreferences.getString("ownerName","You are not logged in"),sharedPreferences.getString("ownerEmail", "Sign in from below"));
-
+        setSignInMenu(checkIfSignedIn());
+        setNavigationMenuHeader(sharedPreferences.getString("ownerName", "You are not logged in"), sharedPreferences.getString("ownerEmail", "Sign in from below"));
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        refreshRecyclerView();
+        if(sharedPreferences.contains(isFirstTime)) {
+            refreshRecyclerView();
+        }
     }
 
     public void refreshRecyclerView(){

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:color="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@color/colorPrimary"
+            android:fitsSystemWindows="true">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="Tables"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_collapseMode="pin"
+                app:titleTextColor="#ffffff"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/view_order_table_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Orders"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="6dp"
+                android:textColor="#eeffffff"
+                android:onClick="onViewTableButtonTapped" />
+
+            <Button
+                android:id="@+id/view_customer_table_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Customers"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="6dp"
+                android:textColor="#eeffffff"
+                android:onClick="onViewTableButtonTapped" />
+
+            <Button
+                android:id="@+id/view_employee_table_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Employees"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="6dp"
+                android:textColor="#eeffffff"
+                android:onClick="onViewTableButtonTapped" />
+
+            <Button
+                android:id="@+id/view_stage_table_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Stages"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="6dp"
+                android:textColor="#eeffffff"
+                android:onClick="onViewTableButtonTapped" />
+
+            <Button
+                android:id="@+id/view_order_customer_table_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Orders Customers"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="6dp"
+                android:textColor="#eeffffff"
+                android:onClick="onViewTableButtonTapped" />
+
+            <Button
+                android:id="@+id/view_order_employee_table_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Orders Employees"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="6dp"
+                android:textColor="#eeffffff"
+                android:onClick="onViewTableButtonTapped" />
+
+            <Button
+                android:id="@+id/view_order_stage_table_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Orders Stages"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="6dp"
+                android:textColor="#eeffffff"
+                android:onClick="onViewTableButtonTapped" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
