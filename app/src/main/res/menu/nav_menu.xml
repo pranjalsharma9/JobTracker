@@ -65,5 +65,15 @@
             android:icon="@drawable/ic_login_black_24dp"
             android:title="Sign in"
             />
+        <item
+            android:id="@+id/drawer_backup_activity"
+            android:icon="@drawable/ic_login_black_24dp"
+            android:title="Backup"
+            />
+        <item
+            android:id="@+id/drawer_restore_activity"
+            android:icon="@drawable/ic_login_black_24dp"
+            android:title="Restore"
+            />
     </group>
 </menu>

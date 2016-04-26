@@ -1,5 +1,8 @@
 package com.pranjals.nsit.jobtracker;
 
+import android.app.backup.BackupAgentHelper;
+import android.app.backup.BackupManager;
+import android.app.backup.RestoreObserver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -28,6 +31,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.pranjals.nsit.jobtracker.BuildDB.BuildDBActivity;
+import com.pranjals.nsit.jobtracker.GoogleSignIn.BackupActivity;
 import com.pranjals.nsit.jobtracker.GoogleSignIn.SignInActivity;
 import com.pranjals.nsit.jobtracker.ViewTables.ViewTableActivity;
 import com.pranjals.nsit.jobtracker.ViewTables.TableListActivity;
@@ -145,7 +149,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
                     case R.id.drawer_signIn_activity:
                         intent = new Intent(MainActivity.this, SignInActivity.class);
-                        startActivityForResult(intent,SIGN_IN);
+                        startActivityForResult(intent, SIGN_IN);
+
+                    case R.id.drawer_backup_activity:
+
+                        Intent intentB = new Intent(MainActivity.this, BackupActivity.class);
+                        startActivity(intentB);
+                        break;
+                    case R.id.drawer_restore_activity:
 
                     default:
                         break;
