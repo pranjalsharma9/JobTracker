@@ -111,8 +111,26 @@ public class DBContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+        int rowsUpdated=0;
 
-        return 0;
+        switch(dbURIMatcher.match(uri)){
+            case 1 :
+                rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().delete("oders",selection,selectionArgs);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return rowsUpdated;
+            case 2 :
+                rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().delete("customers", selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return rowsUpdated;
+            case 3 :
+                rowsUpdated = DBHelper.getInstance(getContext()).getWritableDatabase().delete("stages", selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return rowsUpdated;
+
+            default:
+                return rowsUpdated;
+
+        }
     }
 
     @Override

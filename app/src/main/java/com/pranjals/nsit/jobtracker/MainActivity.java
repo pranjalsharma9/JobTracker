@@ -90,14 +90,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         drawerLayout.setDrawerListener(barDrawerToggle);
         barDrawerToggle.syncState();
 
-        TextView countOrder = (TextView)navigationView.getMenu().getItem(0).getActionView();
-        countOrder.setText("12");
-        TextView countCustomer = (TextView)navigationView.getMenu().getItem(1).getActionView();
-        countCustomer.setText("5");
-        TextView countEmployee = (TextView)navigationView.getMenu().getItem(2).getActionView();
-        countEmployee.setText("10");
-        TextView countTable = (TextView)navigationView.getMenu().getItem(3).getActionView();
-        countTable.setText("7");
+//        TextView countOrder = (TextView)navigationView.getMenu().getItem(0).getActionView();
+//        countOrder.setText(((DBHelper.getInstance(this)).countRecordsIn("orders"))+"");
+//        TextView countCustomer = (TextView)navigationView.getMenu().getItem(1).getActionView();
+//        countCustomer.setText(((DBHelper.getInstance(this)).countRecordsIn("customers"))+"");
+//        TextView countEmployee = (TextView)navigationView.getMenu().getItem(2).getActionView();
+//        countEmployee.setText("0");
+//        TextView countTable = (TextView)navigationView.getMenu().getItem(3).getActionView();
+//        countTable.setText("7");
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -306,13 +306,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     public void setSignInMenu(boolean isSignedIn){
         if(isSignedIn){
-            MenuItem item = navigationView.getMenu().getItem(5);
+            MenuItem item = navigationView.getMenu().getItem(6);
             item.setTitle("Sign out");
+            item.setIcon(R.drawable.ic_logout_black_24dp);
         }
         else
         {
-            MenuItem item = navigationView.getMenu().getItem(5);
+            MenuItem item = navigationView.getMenu().getItem(6);
             item.setTitle("Sign in");
+            item.setIcon(R.drawable.ic_login_black_24dp);
         }
     }
 
@@ -330,6 +332,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -343,8 +347,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onResume() {
         super.onResume();
+
         if(sharedPreferences.contains(isFirstTime)) {
             refreshRecyclerView();
+            TextView countOrder = (TextView)navigationView.getMenu().getItem(0).getActionView();
+            countOrder.setText(((DBHelper.getInstance(this)).countRecordsIn("orders"))+"");
+            TextView countCustomer = (TextView)navigationView.getMenu().getItem(1).getActionView();
+            countCustomer.setText(((DBHelper.getInstance(this)).countRecordsIn("customers"))+"");
+            TextView countEmployee = (TextView)navigationView.getMenu().getItem(2).getActionView();
+            countEmployee.setText("0");
+            TextView countTable = (TextView)navigationView.getMenu().getItem(3).getActionView();
+            countTable.setText("7");
         }
     }
 

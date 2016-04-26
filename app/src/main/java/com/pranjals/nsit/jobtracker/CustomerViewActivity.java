@@ -113,12 +113,23 @@ public class CustomerViewActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.edit_customer:
-                Intent intent = new Intent(CustomerViewActivity.this,CustomerEditActivity.class);
-                intent.putExtra("customerId", customerIdTobeViewed);
-                startActivityForResult(intent, 15);
-                break;
+                 Intent intent = new Intent(CustomerViewActivity.this,CustomerEditActivity.class);
+                 intent.putExtra("customerId", customerIdTobeViewed);
+                 startActivityForResult(intent, 15);
+                 break;
+
+
+            case R.id.delete_customer:
+                getContentResolver().delete(DBContentProvider.CUSTOMER_URI,"_id = "+customerIdTobeViewed,null);
+                finish();
+
 
         }
+
+
+
+
+
         return true;
     }
 

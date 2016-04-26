@@ -176,4 +176,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return DDMMYYYY;
     }
 
+    public int countRecordsIn(String table){
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query(table,null,null,null,null,null,null);
+        if(c!=null && c.moveToFirst())
+            return c.getCount();
+
+        return 0;
+    }
+
+
 }

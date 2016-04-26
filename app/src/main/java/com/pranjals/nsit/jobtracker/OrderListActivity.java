@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,7 +88,7 @@ public class OrderListActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-       // refreshListOnSort(sortOrder);
+        refreshListOnSort(sortOrder);
     }
 
     private void startOrderViewActivity(Long _id){
@@ -197,7 +198,7 @@ public class OrderListActivity extends AppCompatActivity {
 
                 String selection = "name = '" + query + "'";
                 String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
-                orders = new ArrayList<Order>() ;
+                orders = new ArrayList<>() ;
                 Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, selection, null, null);
                 if (c.moveToFirst()) {
                     do {

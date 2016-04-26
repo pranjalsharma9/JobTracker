@@ -1,6 +1,7 @@
 package com.pranjals.nsit.jobtracker;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -54,6 +55,8 @@ public class CustomerRecyclerView extends RecyclerView.Adapter<RecyclerView.View
         ((MyItemHolder) holder).setMobile(customer.getMobile());
         ((MyItemHolder) holder).setEmail(customer.getEmail());
         ((MyItemHolder) holder).setAddress(customer.getAddress());
+        ((MyItemHolder) holder).setCustomerImg(customer.getProfilePic());
+
     }
 
 
@@ -106,6 +109,10 @@ public class CustomerRecyclerView extends RecyclerView.Adapter<RecyclerView.View
 
         public void setName(String s) {
             name.setText(s);
+        }
+
+        public void setCustomerImg(Bitmap b){
+            customerImg.setImageBitmap(b);
         }
 
     }
