@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="18dp"
+    android:background="@android:drawable/dialog_holo_light_frame" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:onClick="onSortBySelected"
+        android:tag="name"
+        android:padding="6dp" >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Customer Name" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:onClick="onSortBySelected"
+        android:tag="_id"
+        android:padding="6dp" >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Date Added" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp" />
+    </LinearLayout>
+
+</LinearLayout>

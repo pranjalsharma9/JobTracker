@@ -36,6 +36,7 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
     private ArrayList<String> extraColDataTypes;
 
     private EditText editTextSelectedForDateInput;
+    private EditText editTextSelectedForTextInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +123,8 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
                 EditText editText = (EditText) findViewById(R.id.orderAdd_name);
                 String name = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.orderAdd_cid);
-                long cid = Integer.parseInt(editText.getText().toString());
+                String cidString = editText.getTag().toString();
+                long cid = Integer.parseInt(cidString);
                 editText = (EditText) findViewById(R.id.orderAdd_eid);
                 long eid = Integer.parseInt(editText.getText().toString());
                 editText = (EditText) findViewById(R.id.orderAdd_doo);
@@ -191,6 +193,10 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
             spinnerAdapter.changeCursor( getContentResolver().query(DBContentProvider.STAGE_URI,projection,null,null,null));
             spinnerAdapter.notifyDataSetChanged();
         }
+        else if(requestCode==CustomerListActivity.CALL_CUSTOMER_LIST_FOR_EDIT_TEXT && resultCode ==RESULT_OK){
+            editTextSelectedForTextInput.setText(data.getStringExtra("customerName"));
+            editTextSelectedForTextInput.setTag(data.getLongExtra("cid", 0));
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -209,6 +215,13 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
         editTextSelectedForDateInput = ((EditText) view);
         DialogFragment dialogFragment = new DatePickerFragment();
         dialogFragment.show(getFragmentManager(), "date picker");
+    }
+
+    public void onPickCustomerEditTextClicked(View view){
+        editTextSelectedForTextInput = ((EditText) view);
+        Intent newIntent = new Intent(this, CustomerListActivity.class);
+        newIntent.putExtra("CallingForCustomerNameEditText", true);
+        startActivityForResult(newIntent, CustomerListActivity.CALL_CUSTOMER_LIST_FOR_EDIT_TEXT);
     }
 
 }

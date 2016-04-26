@@ -25,7 +25,7 @@ public class CustomerRecyclerView extends RecyclerView.Adapter<RecyclerView.View
 
     // Define the listener interface
     public interface OnItemClickListener {
-        void onItemClick(View itemView, int position);
+        void onItemClick(View itemView, long _id, String name);
     }
 
     // Define the method that allows the parent activity or fragment to define the listener
@@ -50,7 +50,7 @@ public class CustomerRecyclerView extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         Customer customer = customers.get(position);
-        ((MyItemHolder) holder).setName(customer.getName());
+        ((MyItemHolder) holder).setName(customer.getName(), customer.get_id());
         ((MyItemHolder) holder).setMobile(customer.getMobile());
         ((MyItemHolder) holder).setEmail(customer.getEmail());
         ((MyItemHolder) holder).setAddress(customer.getAddress());
@@ -87,7 +87,9 @@ public class CustomerRecyclerView extends RecyclerView.Adapter<RecyclerView.View
                 public void onClick(View v) {
                     // Triggers click upwards to the adapter on click
                     if (listener != null)
-                        listener.onItemClick(itemView, getLayoutPosition());
+                        listener.onItemClick(itemView,
+                                Long.parseLong(itemView.findViewById(R.id.cardView_customer_name).getTag().toString()),
+                                ((TextView) itemView.findViewById(R.id.cardView_customer_name)).getText().toString());
                 }
             });
         }
@@ -104,8 +106,9 @@ public class CustomerRecyclerView extends RecyclerView.Adapter<RecyclerView.View
             address.setText(s);
         }
 
-        public void setName(String s) {
+        public void setName(String s, long _id) {
             name.setText(s);
+            name.setTag(_id);
         }
 
     }

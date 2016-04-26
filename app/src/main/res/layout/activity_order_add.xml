@@ -45,11 +45,12 @@
                 android:id="@+id/orderAdd_cid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:onClick="onPickCustomerEditTextClicked"
+                android:focusable="false"
                 android:ems="10"
                 android:layout_below="@id/orderAdd_name"
                 android:layout_alignEnd="@id/orderAdd_name"
-                android:hint="Customer ID" />
+                android:hint="Customer" />
 
             <EditText
                 android:id="@+id/orderAdd_eid"

@@ -195,7 +195,7 @@ public class OrderListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                String selection = "name = '" + query + "'";
+                String selection = "name LIKE '%" + query + "%'";
                 String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
                 orders = new ArrayList<Order>() ;
                 Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, selection, null, null);
@@ -222,6 +222,30 @@ public class OrderListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+
+                String selection = "name LIKE '%" + newText + "%'";
+                String projection[] = {"_id","name", "doo", "doc", "cid", "eid", "curStage", "totalStages"};
+                orders = new ArrayList<Order>() ;
+                Cursor c = getContentResolver().query(DBContentProvider.ORDER_URI, projection, selection, null, null);
+                if (c.moveToFirst()) {
+                    do {
+                        String _id = c.getString(c.getColumnIndex("_id"));
+                        String name = c.getString(c.getColumnIndex("name"));
+                        String doo = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doo")));
+                        String doc = DBHelper.getDDMMYYYY(c.getString(c.getColumnIndex("doc")));
+                        String cid = c.getString(c.getColumnIndex("cid"));
+                        String eid = c.getString(c.getColumnIndex("eid"));
+                        int curStage = c.getInt(c.getColumnIndex("curStage"));
+                        int totalStages = c.getInt(c.getColumnIndex("totalStages"));
+                        orders.add(new Order(Long.parseLong(_id), name, Long.parseLong(cid), Long.parseLong(eid), doo, doc, curStage, totalStages));
+                    } while(c.moveToNext());
+                }
+
+
+                OrderRecyclerView oadapter = new OrderRecyclerView(orders);
+                recyclerView.swapAdapter(oadapter, true);
+
                 return false;
             }
         });
