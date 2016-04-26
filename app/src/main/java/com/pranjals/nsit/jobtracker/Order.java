@@ -1,5 +1,7 @@
 package com.pranjals.nsit.jobtracker;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Pranjal on 12-03-2016.
  */
@@ -8,6 +10,7 @@ public class Order {
     private String name, doo, doc;
     private long _id, cid, eid;
     private int curStage, totalStages;
+    private Bitmap image;
 
     Order(long _id, String name, long cid, long eid, String doo, String doc, int curStage, int totalStages){
         this._id = _id;
@@ -41,4 +44,8 @@ public class Order {
     public int getCurStage() { return curStage; }
 
     public int getTotalStages() { return totalStages; }
+
+    public Bitmap getImage() {
+        return image;
+    }
 }

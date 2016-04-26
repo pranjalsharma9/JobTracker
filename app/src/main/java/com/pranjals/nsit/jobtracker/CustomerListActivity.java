@@ -2,6 +2,8 @@ package com.pranjals.nsit.jobtracker;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
@@ -52,6 +54,7 @@ public class CustomerListActivity extends AppCompatActivity {
         customers = new ArrayList<>();
 
         /*String projection[] = {"_id", "name", "mobile", "email", "address"};
+        String projection[] = {"_id", "name", "mobile", "email", "address","image"};
         Cursor c = getContentResolver().query(DBContentProvider.CUSTOMER_URI,projection,null,null,null);
         if (c.moveToFirst()) {
             do {
@@ -60,7 +63,9 @@ public class CustomerListActivity extends AppCompatActivity {
                 String mobile = c.getString(c.getColumnIndex("mobile"));
                 String email = c.getString(c.getColumnIndex("email"));
                 String address = c.getString(c.getColumnIndex("address"));
-                customers.add(new Customer(Long.parseLong(_id), name, mobile, email, address));
+                byte[] bb = c.getBlob(c.getColumnIndex("image"));
+                Bitmap pic = BitmapFactory.decodeByteArray(bb, 0, bb.length);
+                customers.add(new Customer(Long.parseLong(_id), name, mobile, email, address,pic));
             } while(c.moveToNext());
         }*/
 
@@ -267,11 +272,14 @@ public class CustomerListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
+                String projection[] = {"_id", "name", "mobile", "email", "address","image"};
+                String selection = "name = '"+query+"'";
+                ArrayList<Customer> customers = new ArrayList<>();
                 customers = new ArrayList<Customer>();
                 String selection = "name like '%" + query + "%'";
                 String projection[] = {"_id", "name", "mobile", "email", "address"};
                 Cursor c = getContentResolver().query(DBContentProvider.CUSTOMER_URI,projection,selection,null,null);
-                if (c.moveToFirst()) {
+                if (c!=null&&c.moveToFirst()) {
                     do {
                         String _id = c.getString(c.getColumnIndex("_id"));
                         String name = c.getString(c.getColumnIndex("name"));
@@ -280,6 +288,10 @@ public class CustomerListActivity extends AppCompatActivity {
                         String address = c.getString(c.getColumnIndex("address"));
                         customers.add(new Customer(Long.parseLong(_id), name, mobile, email, address));
                     } while (c.moveToNext());
+                        byte[] bb = c.getBlob(c.getColumnIndex("image"));
+                        Bitmap pic = BitmapFactory.decodeByteArray(bb, 0, bb.length);
+                        customers.add(new Customer(Long.parseLong(_id), name, mobile, email, address,pic));
+                    } while(c.moveToNext());
                 }
 
                 CustomerRecyclerView cadapter = new CustomerRecyclerView(customers);

@@ -95,7 +95,7 @@ public class CustomerAddActivity extends AppCompatActivity implements DatePicker
                 String address = editText.getText().toString();
 
                 Resources res = getResources();
-                Drawable drawable = res.getDrawable(R.drawable.slide2);
+                Drawable drawable = res.getDrawable(R.mipmap.ic_launcher);
                 Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
