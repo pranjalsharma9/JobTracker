@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class CustomerAddActivity extends AppCompatActivity implements DatePicker
 
     private ArrayList<String> extraCols;
     private ArrayList<String> extraColDataTypes;
+    public static final int CALL_CUSTOMER_ADD_FOR_EDIT_TEXT = 36;
+    Intent intent;
 
     private EditText editTextSelectedForDateInput;
 
@@ -44,6 +47,7 @@ public class CustomerAddActivity extends AppCompatActivity implements DatePicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_add);
+        intent = getIntent();
 
         extraCols = DBHelper.getInstance(CustomerAddActivity.this).getExtraCols(1);
         extraColDataTypes = DBHelper.getInstance(CustomerAddActivity.this).getExtraOrderColDataTypes(1);
@@ -114,10 +118,23 @@ public class CustomerAddActivity extends AppCompatActivity implements DatePicker
                     values.put(extraCols.get(i) + extraColDataTypes.get(i), ((EditText) findViewById(i)).getText().toString());
                     //Log.v("values", ((EditText) findViewById(i)).getText().toString());
                 }
-                getContentResolver().insert(DBContentProvider.CUSTOMER_URI, values);
-                finish();
+                Uri uri = getContentResolver().insert(DBContentProvider.CUSTOMER_URI, values);
+                String id = uri.getLastPathSegment();
+                if(intent.hasExtra("CallingForCustomerNameEditText")) {
+                    returnToOrderAddActivity(name, Long.parseLong(id));
+                }
+                else{
+                    finish();
+                }
             }
         });
+    }
+
+    private void returnToOrderAddActivity(String name, long id){
+        intent.putExtra("cid", id);
+        intent.putExtra("customerName", name);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {

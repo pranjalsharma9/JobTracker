@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.pranjals.nsit.jobtracker.contentprovider.DBContentProvider;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class OrderAddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -197,6 +199,11 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
             editTextSelectedForTextInput.setText(data.getStringExtra("customerName"));
             editTextSelectedForTextInput.setTag(data.getLongExtra("cid", 0));
         }
+        else if(requestCode==CustomerAddActivity.CALL_CUSTOMER_ADD_FOR_EDIT_TEXT && resultCode ==RESULT_OK){
+            EditText editText = (EditText) findViewById(R.id.orderAdd_cid);
+            editText.setText(data.getStringExtra("customerName"));
+            editText.setTag(data.getLongExtra("cid", 0));
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -222,6 +229,12 @@ public class OrderAddActivity extends AppCompatActivity implements DatePickerDia
         Intent newIntent = new Intent(this, CustomerListActivity.class);
         newIntent.putExtra("CallingForCustomerNameEditText", true);
         startActivityForResult(newIntent, CustomerListActivity.CALL_CUSTOMER_LIST_FOR_EDIT_TEXT);
+    }
+
+    public void onAddCustomerButtonClicked(View view){
+        Intent newIntent = new Intent(this, CustomerAddActivity.class);
+        newIntent.putExtra("CallingForCustomerNameEditText", true);
+        startActivityForResult(newIntent, CustomerAddActivity.CALL_CUSTOMER_ADD_FOR_EDIT_TEXT);
     }
 
 }

@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -477,7 +478,7 @@ public class OrderViewActivity extends AppCompatActivity {
 
     public void onViewCustomerButtonClicked (View view){
         Intent intent = new Intent(this, CustomerViewActivity.class);
-        intent.putExtra(CustomerViewActivity.START_WITH_ID, colValues[1]);
+        intent.putExtra(CustomerViewActivity.START_WITH_ID, Long.parseLong(colValues[1]));
         startActivity(intent);
     }
 

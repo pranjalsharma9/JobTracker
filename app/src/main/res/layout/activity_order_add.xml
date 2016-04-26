@@ -41,16 +41,34 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true" />
 
-            <EditText
-                android:id="@+id/orderAdd_cid"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onPickCustomerEditTextClicked"
-                android:focusable="false"
-                android:ems="10"
+                android:id="@+id/orderAdd_cid_container"
+                android:orientation="horizontal"
                 android:layout_below="@id/orderAdd_name"
-                android:layout_alignEnd="@id/orderAdd_name"
-                android:hint="Customer" />
+                android:layout_alignEnd="@id/orderAdd_name" >
+
+                <EditText
+                    android:id="@+id/orderAdd_cid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onPickCustomerEditTextClicked"
+                    android:focusable="false"
+                    android:ems="10"
+                    android:hint="Customer" />
+
+                <ImageButton
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="onAddCustomerButtonClicked"
+                    android:src="@drawable/ic_add_white_36_in_48dp"
+                    android:background="@drawable/circle_36dp" />
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/orderAdd_eid"
@@ -58,8 +76,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:layout_below="@id/orderAdd_cid"
-                android:layout_alignEnd="@id/orderAdd_cid"
+                android:layout_below="@id/orderAdd_cid_container"
+                android:layout_alignEnd="@id/orderAdd_cid_container"
                 android:hint="Employee ID" />
 
             <EditText
@@ -108,17 +126,24 @@
                     android:layout_height="wrap_content"/>
                 <ImageButton
                     android:id="@+id/orderAdd_imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_black_48dp"
-                    android:layout_weight="0"/>
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="0"
+                    android:layout_marginRight="6dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="onAddCustomerButtonClicked"
+                    android:src="@drawable/ic_add_white_36_in_48dp"
+                    android:background="@drawable/circle_36dp" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/orderAdd_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginTop="12dp"
                 android:text="ADD"
+                android:textColor="#ffffffff"
+                android:background="@color/colorPrimaryDark"
                 android:layout_below="@id/orderAdd_spinner_container"
                 android:layout_alignParentStart="true" />
 
