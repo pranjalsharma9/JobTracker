@@ -247,6 +247,8 @@ public class CustomerEditActivity extends AppCompatActivity implements DatePicke
                 finish();
                 break;
 
+            case android.R.id.home : finish();
+                break;
 
         }
         return true;
@@ -291,7 +293,7 @@ public class CustomerEditActivity extends AppCompatActivity implements DatePicke
 
         }
         else
-            Toast.makeText(CustomerEditActivity.this,"Sorry! Something went wrong.Try using another application",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CustomerEditActivity.this,"Sorry! Something went wrong. Try using another application",Toast.LENGTH_SHORT).show();
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {

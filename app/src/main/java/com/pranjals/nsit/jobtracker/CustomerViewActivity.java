@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,10 +25,11 @@ import java.util.ArrayList;
 public class CustomerViewActivity extends AppCompatActivity {
 
     private long customerIdTobeViewed;
-    private String[] colValues;
     public static final String START_WITH_ID = "_idOfCustomerToView";
     private ArrayList<String> extraCols;
+    private ArrayList<String> extraColDataTypes;
     ArrayList<Order> orders;
+    private String[] colValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class CustomerViewActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         extraCols = DBHelper.getInstance(CustomerViewActivity.this).getExtraCols(1);
+        extraColDataTypes = DBHelper.getInstance(CustomerViewActivity.this).getExtraOrderColDataTypes(1);
 
         TextView name = (TextView)findViewById(R.id.customerView_name);
         TextView mobile = (TextView)findViewById(R.id.customerView_mobile);
@@ -73,9 +76,20 @@ public class CustomerViewActivity extends AppCompatActivity {
         for(int i=0;i<extraCols.size();i++){
             View viewToAdd = inflater.inflate(R.layout.customer_view_dynamic_row,null);
             TextView tv = (TextView)viewToAdd.findViewById(R.id.customerViewDynamic_tv);
-            tv.setId(i);
-            tv.setText(colValues[i + DBHelper.DEF_CUSTOMER_COLS - 1]);
-            //Log.v("values", colValues[i+DBHelper.DEF_CUSTOMER_COLS-1]);
+            tv.setText(colValues[i+DBHelper.DEF_CUSTOMER_COLS-1]);
+            tv = (TextView)viewToAdd.findViewById(R.id.customerViewDynamicColumn_tv);
+            tv.setText(extraCols.get(i).replace("_", " "));
+            ImageView imageView = (ImageView)viewToAdd.findViewById(R.id.customerViewDynamicTypeImage_tv);
+            switch (extraColDataTypes.get(i)){
+                case "TEXT" : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_datatype_text_24dp));
+                    break;
+                case "NUME" : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_datatype_numeric_24dp));
+                    break;
+                case "DATE" : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_today_black_24dp));
+                    break;
+                default : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_datatype_text_24dp));
+                    break;
+            }
             container.addView(viewToAdd);
         }
 
@@ -113,22 +127,20 @@ public class CustomerViewActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.edit_customer:
-                 Intent intent = new Intent(CustomerViewActivity.this,CustomerEditActivity.class);
-                 intent.putExtra("customerId", customerIdTobeViewed);
-                 startActivityForResult(intent, 15);
-                 break;
-
+                Intent intent = new Intent(CustomerViewActivity.this,CustomerEditActivity.class);
+                intent.putExtra("customerId", customerIdTobeViewed);
+                startActivityForResult(intent, 15);
+                break;
 
             case R.id.delete_customer:
                 getContentResolver().delete(DBContentProvider.CUSTOMER_URI,"_id = "+customerIdTobeViewed,null);
                 finish();
+                break;
 
+            case android.R.id.home : finish();
+                break;
 
         }
-
-
-
-
 
         return true;
     }

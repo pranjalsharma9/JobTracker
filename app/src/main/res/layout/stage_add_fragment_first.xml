@@ -14,6 +14,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
+        style="@style/Widget.AppCompat.EditText"
         android:id="@+id/stagFrag_totalStages" />
 
     <TextView
@@ -26,10 +28,16 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
+        style="@style/Widget.AppCompat.EditText"
         android:id="@+id/stageFrag_type" />
+
     <Button
         android:text="NEXT"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="#eeffffff"
         android:id="@+id/stageAdd_first_next_button"/>
 </LinearLayout>
