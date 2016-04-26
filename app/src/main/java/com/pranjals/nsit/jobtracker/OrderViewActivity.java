@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -42,6 +44,7 @@ public class OrderViewActivity extends AppCompatActivity {
     private long orderIdTobeViewed;
     private String[] colValues;
     private String[] colNames;
+    private String[] stageNames;
     public static final String START_WITH_ID = "_idOfOrderToView";
 
     @Override
@@ -64,6 +67,7 @@ public class OrderViewActivity extends AppCompatActivity {
 
         //Remove for testing
         ArrayList<String> extraCols = DBHelper.getInstance(OrderViewActivity.this).getExtraCols(0);
+        ArrayList<String> extraColDataTypes = DBHelper.getInstance(OrderViewActivity.this).getExtraOrderColDataTypes(0);
 
         /*Just for testing, Temporary code
         ArrayList<String> extraCols = new ArrayList<>();
@@ -78,6 +82,7 @@ public class OrderViewActivity extends AppCompatActivity {
         TextView eid = (TextView)findViewById(R.id.orderView_eid);
         TextView doo = (TextView)findViewById(R.id.orderView_doo);
         TextView doc = (TextView)findViewById(R.id.orderView_doc);
+        TextView curStageName = (TextView)findViewById(R.id.orderView_curStage);
 
         colValues = new String[DBHelper.DEF_ORDER_COLS + extraCols.size()];
 
@@ -99,10 +104,18 @@ public class OrderViewActivity extends AppCompatActivity {
         //testing code ends*/
 
         name.setText(colValues[0]);
-        cid.setText(colValues[1]);
+
+        String customerName = "";
+        Cursor customerCursor = getContentResolver().query(DBContentProvider.CUSTOMER_URI, new String[]{"name"}, "_id = ?", new String[]{colValues[1]}, null);
+        if(customerCursor!=null&&customerCursor.moveToFirst()){
+            customerName = customerCursor.getString(0);
+        }
+        cid.setText(customerName);
+
+        //Same for eid here later on
         eid.setText(colValues[2]);
-        doo.setText(colValues[3]);
-        doc.setText(colValues[4]);
+        doo.setText(DBHelper.getDDMMYYYY(colValues[3]));
+        doc.setText(DBHelper.getDDMMYYYY(colValues[4]));
 
         //Remove for testing purposes, Remove comments when testing is complete
         String stageId = colValues[6];
@@ -112,6 +125,19 @@ public class OrderViewActivity extends AppCompatActivity {
             View viewToAdd = inflater.inflate(R.layout.order_view_dynamic_row,null);
             TextView tv = (TextView)viewToAdd.findViewById(R.id.orderViewDynamic_tv);
             tv.setText(colValues[i+DBHelper.DEF_ORDER_COLS]);
+            tv = (TextView)viewToAdd.findViewById(R.id.orderViewDynamicColumn_tv);
+            tv.setText(extraCols.get(i).replace("_", " "));
+            ImageView imageView = (ImageView)viewToAdd.findViewById(R.id.orderViewDynamicTypeImage_tv);
+            switch (extraColDataTypes.get(i)){
+                case "TEXT" : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_datatype_text_24dp));
+                    break;
+                case "NUME" : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_datatype_numeric_24dp));
+                    break;
+                case "DATE" : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_today_black_24dp));
+                    break;
+                default : imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_datatype_text_24dp));
+                    break;
+            }
             container.addView(viewToAdd);
         }
 
@@ -119,13 +145,18 @@ public class OrderViewActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.view_order_progress_bar);
 
         //Remove for testing purposes, Remove comments when done
-        String[] stageNames;
 
         if(stageCursor!=null&&stageCursor.moveToFirst()) {
 
             totalStages = stageCursor.getInt(stageCursor.getColumnIndex("total"));
             stageNames = stageCursor.getString(stageCursor.getColumnIndex("names")).split(";");
             currentStage = Integer.parseInt(colValues[5]);
+            if(currentStage < stageNames.length) {
+                curStageName.setText(stageNames[currentStage]);
+            }
+            else{
+                curStageName.setText("Order Complete!");
+            }
             stageCursor.close();
         }
         else
@@ -418,6 +449,14 @@ public class OrderViewActivity extends AppCompatActivity {
         }
         getContentResolver().update(DBContentProvider.ORDER_URI, contentValues, "_id = " + orderIdTobeViewed, null);
 
+        TextView curStageName = (TextView)findViewById(R.id.orderView_curStage);
+        if(currentStage < stageNames.length) {
+            curStageName.setText(stageNames[currentStage]);
+        }
+        else{
+            curStageName.setText("Order Complete!");
+        }
+
     }
 
 
@@ -434,6 +473,16 @@ public class OrderViewActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onViewCustomerButtonClicked (View view){
+        Intent intent = new Intent(this, CustomerViewActivity.class);
+        intent.putExtra(CustomerViewActivity.START_WITH_ID, colValues[1]);
+        startActivity(intent);
+    }
+
+    public void onViewEmployeeButtonClicked (View view){
+
     }
 
 }

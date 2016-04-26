@@ -2,7 +2,7 @@
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="30dp"
-    android:background="#ff0066ff"
+    android:background="@color/colorPrimaryDark"
     android:text="DONE"
     android:textColor="#ffffffff"
     android:onClick="onStepperDoneButtonTapped">
